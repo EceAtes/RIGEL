@@ -1,5 +1,5 @@
-# RIGEL-Name-TBD
-    
+## RIGEL - CS319
+
 # Features for mfstaj
     Login page with authentication since system will check student ID.
     Users will be able to see some company information without login to the system.
