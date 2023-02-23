@@ -3,11 +3,15 @@
 Hi! This project is a internship managment system for Bilkent University Students.
 
 **Members**
-> Aytekin İsmail
-> Ece Ateş
-> İzgi Nur Tamcı
-> Ömer Asım Doğan
-> Zeynep Begüm Kara
+> Aytekin İsmail 22003988
+
+> Ece Ateş 22002908
+
+> İzgi Nur Tamcı 22002682
+
+> Ömer Asım Doğan 21903042
+
+> Zeynep Begüm Kara 22003880
 
 
 # Features
