@@ -53,4 +53,4 @@ Hi! This project is a internship managment system for Bilkent University Student
 	> -  Instructor user role will be able to evaluate internship reports.
 
 # Technologies
-This project will be implemented using Spring Boot for back-end, MongoDB for database and React for front-end.
+This project will be implemented using **Spring Boot** for back-end, **MongoDB** for database and **React** for front-end.
