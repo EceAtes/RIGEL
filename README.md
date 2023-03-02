@@ -16,33 +16,28 @@ Hi! This project is a internship managment system for Bilkent University Student
 
 # Features
 
- -   **Login** page with authentication since system will check student ID.
-    
--   Company information list will be available without authentication.
-    
--   Retrieve student information to **check prerequisite** for taking CS299/CS399 (CS202).
-    
--   Retrieve **previous internships** from the school database.
-    
--   List previous internships with all sort of filters.
-    
--   **Filters** for location of company, department, sector, rating.
+-	**Automatically** generated forms
 
-	> *Rating:*  Students will be able to rate their company after their internships.
-	> *Department:* Students will be able to see their departments related firms.
+- 	Upload-Download **PDF/PNG**
 
--   Ability to **search** by company name.
+- 	Comment(ish) section for **feedback/revision**
 
--   Direct students to the company page if applicable.
+- 	Notification to emails/ reminders for instructors/secreatry.
+
+- 	**Progress bar** for students and instructors (percentage of completed reports in total for instructors)
+
+-  	E-Signature(?) for instructors
 
 -   **Profile page**
 	>  - previous internships
 	> - necessary informations to automatically fill form
 	> - progress bar
-
--   Automatically generate application forms for internship.
     
--   **Announcement page** will send e-mail to students if student wants.
+-   **Main page** 
+  	> - information about interships (pdf, powerpoint)
+  	> - contact information about intructors
+  	> - link to mfstaj
+  	> - link to CS299/CS399 pages
 
 -   System will send a warning e-mail before deadline for internship documents.
     
