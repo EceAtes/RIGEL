@@ -1,6 +1,6 @@
 # Welcome to RIGEL
 
-Hi! This project is a internship managment system for Bilkent University Students.
+Hi! This project is a internship evaluation managment system for Bilkent University.
 
 **Members**
 >Aytekin İsmail 22003988
