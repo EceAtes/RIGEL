@@ -3,11 +3,11 @@
 Hi! This project is a internship managment system for Bilkent University Students.
 
 **Members**
-> Aytekin İsmail 22003988
-> Ece Ateş 22002908
-> İzgi Nur Tamcı 22002682
-> Ömer Asım Doğan 21903042
-> Zeynep Begüm Kara 22003880
+>-Aytekin İsmail 22003988
+>-Ece Ateş 22002908
+>-İzgi Nur Tamcı 22002682
+>-Ömer Asım Doğan 21903042
+>-Zeynep Begüm Kara 22003880
 
 
 # Features
@@ -25,7 +25,7 @@ Hi! This project is a internship managment system for Bilkent University Student
 -  	E-Signature(?) for instructors
 
 -   **Profile page**
-	>  - previous internships
+	> - previous internships
 	> - necessary informations to automatically fill form
 	> - progress bar
     
@@ -39,11 +39,11 @@ Hi! This project is a internship managment system for Bilkent University Student
     
 -   **FAQ** will be added to website to reach easier.
     
--   There exist 4 report:
-   	> - **Company Report:** 
-	> - **Evaluation Report:** 
-	> - **Evaluation Criteria Report:**
-	> - **Internship Report:**
+-   Admin user, student user, instructor user will be **the user roles**.
+	> -   Admin user role will maintain the system.
+	> -   Instructor user role will also be able to approve new database entry for companies.
+	> -   Instructor user role will also be able to see unapproved forms sent by students.
+	> -  Instructor user role will be able to evaluate internship reports.
 	
 -   There exist 5 roles:
 	 -  **Admin user** role will maintain the system.
