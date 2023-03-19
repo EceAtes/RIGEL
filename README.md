@@ -56,13 +56,13 @@ Hi! This project is a internship evaluation managment system for Bilkent Univers
 		>* Can see all users and change their user type in the system
 		>* Changes and sees everything from every department
 		
-	- **Secratary user** role coordinates their department
+	- **Secretary user** role coordinates their department
 		>* Can see all students and instructors of their department
 		>* Matches instructors with students
 		>* Creates final Evaluation Report of the student and sends it to student's instructor
 		>* Sees Company Reports and enters company grades to Evaluation Report
 		>* Can create and delete new Instructors, TAs and Students of their department
-		>*Has e-signature
+		>* Has e-signature
 
 	 -  **Instructor user** role can evaluate internship reports and view student profiles (only the ones they are responsible with)
 		>* Can see and edit Evaluation Reports of assigned students
