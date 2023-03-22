@@ -3,6 +3,12 @@ Toplantı No: ?
 Başlangıç: 20.46
 Bitiş: 23.21
 
+//========================================================================================================================================
+  Bu toplantıda alınan görevlerin deadlineı: 24.03.2023 Cuma Gecesi
+  Denetleme ve düzenlemeler 24.03.2023 Cumartesi günü yapılacak
+  24.03.2023 Cumartesi akşamında commentler ve öneriler için toplantı yapılacak. Raporun cumartesi günü yüklenmesi hedeflendi
+//========================================================================================================================================
+
 Herkes
 * Use case diagramda gördüğü eksikleri docsa commentleyecek.
 * Herkes raporlardan docsta kararlaştırıldığı gibi bahsedecek/kendi kısımlarını düzeltecek: Comapny Report, Grade Form, Internship Report, Criteria Report
@@ -61,7 +67,7 @@ Burada acil durumlar için (hocanın gitmesi) reassignment yapılabilecek. Tasar
 * FE designlerının birbirinden farklı olduğu konuşuldu, FE ekibince ortak palet ve font(lar) seçilip devam edilecek.
 * Tasarlanan logo kullanılırsa çok fazla kullanılmayacak, her sayfaya koyup abartılmayacak.
 
-Steakholderlara sorulacak sorular
+Stakeholderlara sorulacak sorular
 * her revision için grade form tekrar tekrar dolduruluyor mu?
 * grade formlarla secratarynin ilişkisi sadece company reportla mı ilgili? part B ve C'de rolü var mı?
 * criteria, company grade veya unsatisfactory olan raporlar için criteria doldurulacak mı?
