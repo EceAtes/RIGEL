@@ -1,0 +1,69 @@
+Toplantı No: ?
+22.03.2023 
+Başlangıç: 20.46
+Bitiş: 23.21
+
+Herkes
+* Use case diagramda gördüğü eksikleri docsa commentleyecek.
+* Herkes raporlardan docsta kararlaştırıldığı gibi bahsedecek/kendi kısımlarını düzeltecek: Comapny Report, Grade Form, Internship Report, Criteria Report
+* Herkes atanmış use case texturelarını yazacak.
+* Paylaşılıp yapılan her kısım özellikle bir başka birisi tarafından denetlenecek, vakti olan diğer kısımlara da comment yapabilir:
+ Yapan          Kontrol eden
+ Aytekin          Ömer
+ Ömer             İzgi
+ İzgi             Begüm
+ Begüm            Ece
+ Ece              Aytekin
+
+Begüm 
+* State diagramlar tamamlandı, başka öneri/iyileştirme yorumu bekleniyor.
+* Activity diagramlarda fikir var diagram yok, diagram bekleniyor.
+* Activityler çizilip, tüm diagramlara biraz açıklama yazılacak.
+
+İzgi
+* Introduction yazıldı.
+* Embeded pdf üzerine çalışılması gerekiyor, fikir ve design beğenildi.
+* Mockuplarda 2 course alındığı durumlardaki tasarım için geliştirmeler yapılacak.
+* Filtreler, admin page mockuplara eklenecek.
+* Use case diagrama konuşulan eksikler çizilecek, eksikleri İzgi not aldı. (Criteria report, generate report etc.)
+* Contents düzeltilecek, use caselerin textural açıklamaları diğer takım üyeleriine bölüştürülecek.
+
+Ömer
+* Login yapıldı.
+* State ve Activity diagramlara göz atıldı, ciddi bir şehilde incelenip docs üzerinden cornercase veya eksik yanlış düzeltemeleri yapılacak.
+* Login yapmadan önce görünen kısmı (FAQ, mfstaj etc.) ve announcement kısmı yapılacak (Aytekinle birlikte kararlaştırdılar).
+* Loginden önceki kısım acaba logib page'e entegre edilebilir mi, denenecek.
+
+Ece
+* Overview, Non-functional req., auto-assignment yazıldı.
+* Class diagram büyük ölçüde tamamlandı, bazı küçük yeniden isimlendirmeler veya method yeri değişikliği yapılacak (Instructor.setGrade() veya Student.setGrade())
+* Bazı classların ve bazı methodlarının açıklaması yapılacak. Gerektiğinde Aytekin ile bölüşülebilir, koordinasyon ikisine ait.
+* Multiplicityler eklenecek.
+
+Aytekin
+* Current system yazıldı.
+* Logo önerileri yapıldı.
+* Main page (ve rapor pageleri? emin değilim) için çalışılacak. Şimdiki tasarımda az bilgi olduğu ve çok ikon olduğu bunun çok açıklayıcı olmadığı konuşuldu.
+* Takvimli design denenecek.
+
+Alınan genel kararlar
+* Toplantıyı yönetip işlerin takibine ve organizasyonunu ayarlayabilecek birinin olmasının gerektiğine beş oyla karar verildi.
+* Organizatör olmak için Begüm göüllü oldu ve dört oyla kabul edildi, Aytekin yardımcı organizatör olmaya gönüllü oldu ve dört oyla kabul edildi. İki pozisyon için de başka aday çıkmadı.
+* Company reportlarının semester başlamadan önce  gelmiş olduğunu assume ettik, ama yine de bazı cornercaselerde chek edilebilir (bknz. state diagram)
+* Featurelar için ayrı paragraflar yazmamaya karar verildi, use-caselerde zaten olduğu için hocanın repetition olmasın diye kaldırdığı konuşuldu.
+* Student profili gereksiz bulundu. Bu eforu report sayfasına vermeye karar verdik.
+* Daha önceden yapmış olduğu stajların raporuna sistemden erişebilmeyi gereksiz bulduk, kaldırdık.
+* Announcement kısmında takvim, contact info (Coordinator etc.) örnek belge olabileceği konuşuldu.
+* Announcementı kimin yapacağına karar verilemedi, şimdilik sekreter dedik. Ne announce edileceği meçhul.
+* Sekreterin instructorların hepsini ve sorumlu olduğu öğrencilerini görebileceği bir sayfa olmasının gerekli olduğuna karar verildi.
+Burada acil durumlar için (hocanın gitmesi) reassignment yapılabilecek. Tasarımı İzgi yapacak.
+* Logo seçildi, iyileştirmeleri Aytekin yapacak.
+* FE designlerının birbirinden farklı olduğu konuşuldu, FE ekibince ortak palet ve font(lar) seçilip devam edilecek.
+* Tasarlanan logo kullanılırsa çok fazla kullanılmayacak, her sayfaya koyup abartılmayacak.
+
+Steakholderlara sorulacak sorular
+* her revision için grade form tekrar tekrar dolduruluyor mu?
+* grade formlarla secratarynin ilişkisi sadece company reportla mı ilgili? part B ve C'de rolü var mı?
+* criteria, company grade veya unsatisfactory olan raporlar için criteria doldurulacak mı?
+* withdrawların raporlarında ayrı bir prosedür var mı? 
+* hangi formlara auto-generate özelliği koyalım?
