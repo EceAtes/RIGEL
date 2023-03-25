@@ -1,4 +1,4 @@
-Toplantı No: ?
+Toplantı No: 4
 22.03.2023 
 Başlangıç: 20.46
 Bitiş: 23.21
@@ -68,8 +68,66 @@ Burada acil durumlar için (hocanın gitmesi) reassignment yapılabilecek. Tasar
 * Tasarlanan logo kullanılırsa çok fazla kullanılmayacak, her sayfaya koyup abartılmayacak.
 
 Stakeholderlara sorulacak sorular
-* her revision için grade form tekrar tekrar dolduruluyor mu?
+* her revision için grade form tekrar tekrar dolduruluyor mu? -- *evetmiş*
 * grade formlarla secratarynin ilişkisi sadece company reportla mı ilgili? part B ve C'de rolü var mı?
 * criteria, company grade veya unsatisfactory olan raporlar için criteria doldurulacak mı?
 * withdrawların raporlarında ayrı bir prosedür var mı? 
 * hangi formlara auto-generate özelliği koyalım?
+
+
+Toplantı No: 5
+25.03.2023 
+Başlangıç: 20:10
+Bitiş: 21:16
+
+//========================================================================================================================================
+  Salı günü 14:30'da Begüm Hanım'a gidilecek (Ömer, İzgi, Begüm)
+  FE Pazartesi geceye dek mockupları bitirecek
+  Çarşamba 20:30'da yükleme için toplanılacak
+  Sınav takvimi açıklandıktan sonra login için midtermlerden önce deneme yapılacak
+//========================================================================================================================================
+
+Herkes
+* Use caseleri yazıp kontrol etmeye devam edecek
+* Use case açıklamalarını yazarken use casein ilgili olduğu (extend/include) caselerden de o başlıkta bahsedilecek
+* Bir önceki toplantıdaki rapor isimlerine ek olarak Comapny Report yerine Summer Training Evaluation Form denilecek.
+* Paylaşılıp yapılan her kısım özellikle bir başka birisi tarafından denetlenecek, vakti olan diğer kısımlara da comment yapabilir:
+ Yapan          Kontrol eden
+ Aytekin          Ömer
+ Ömer             İzgi
+ İzgi             Begüm
+ Begüm            Ece
+ Ece              Aytekin
+
+İzgi
+* Contents düzeltilecek
+* Atanmamış use case kalmayacak, doctaki use case önerileri değerlendirilecek
+* Mockuplar bitirilecek
+* Notification state diagram kontrol edilecek
+* Bunu wpde konuşmuştuk, toplantıda unuttuk:  Report Archiving Activity Diagram 
+
+Begüm
+* State diagramlara açıklamalar
+* Evaluate report use casei bitirilecek
+
+Aytekin
+* Mockuplar
+* Revision state diagram
+
+Ömer
+* Mockuplar
+* Atanmış use caseler
+
+Ece
+* Multiplicity
+* Diagram altına bişeyler açıklanabilir
+
+Genel kararlar
+* Öğrenci iki kurs alıyorsa instructorun öğrencileri listelediği yerde farklı dersleriyle iki kere görünecek. 
+* Öğrenci iki kurs alıyorsa sayfa dili değiştirir gibi tek butonla değiştirecek.
+* TA format check yaptığında verilen extension 3-5 gün gibi daha kısa olabilir. Instructor revision istediğindeyse 
+* Raporlara annotate şeklinde feedback verebilmek için Drive kullanılabilir. Öğrenci kendi drive linkini sisteme koyabilir ya da öğrencinin pdfi biz arkada sisteme ait drive hesabına atabiliriz. Bu konu düşünülecek.
+
+Sorular
+* Evaluator kim? Company notundan veya plagarismden kaldıysa kim imzalayacak
+* Deadline geçtiyse otomatik extension isteyelim mi? 
