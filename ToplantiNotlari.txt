@@ -131,3 +131,55 @@ Genel kararlar
 Sorular
 * Evaluator kim? Company notundan veya plagarismden kaldıysa kim imzalayacak
 * Deadline geçtiyse otomatik extension isteyelim mi? 
+
+
+Toplantı no: 6
+29.03.2023 
+Başlangıç: 20.46
+Bitiş: 22.37
+
+//========================================================================================================================================
+  Bu toplantıda alınan görevlerin deadlineı: 30.03.2023 Perşembe Gecesi
+  Denetleme ve düzenlemeler 21.03.2023 Cuma günü yapılacak ve rapor yüklenecek
+//========================================================================================================================================
+
+Herkes
+Use caseleri yazıp denetlemeye devam edecek
+Not: *Use case açıklamalarını yazarken use casein ilgili olduğu (extend/include) caselerden de o başlıkta bahsedilecek
+
+Genel Kararlar / Begüm Hanım'la görüşmenin değerlendirilmesi
+* Grade form her seferinde doldurulmuyor demiş. Değişiklik yapmadık. Her seferinde form generate etmiyoruz zaten. Kendisi Part A için olan bilgileri bir ke girecek,
+hoca da criteria için olan part C'yi bir kere dolduracak. Revision istendiğinde yarım olan formu generate edip saklayabiliriz, sadece son hali gerekliyse hepsi bittikten sonra generate edip saklarız. 
+* Withdrawlanan öğrenciyi withdraw dönemi bittikten sonra sekreter işaretleyecek.
+* Alan her öğrenci için criteria form doldurulacak (unsatisfactory olanlar / rapor sunmayanlar dahil). Withdrawların criteriasını ignorlayacağız ve statisticse dahil etmeyeceğiz (sanırım). Rapor sunmayanların criteria N/A olacak.
+* Statisticsten kasıt ABET için olan statisticslermiş, dönem sonunda tüm öğrencilerin criteriadaki notların dağılımıını tabloya dökeceğiz.
+* İstedikleri bir başka output da öğrencilerin overall satisfactory veya unsatifactory olduğu liste.
+* Yılın sonunda her öğrencinin grade formunu auto-generate edeceğiz.
+* As a design choice, company report evaluationu prereq olacak.
+* As a design choice, TA evaluationu prereq olacak.
+* TA geçen dönem 1 taneymiş. Bu yüzden hocaya TA atamaya gerek yok, tüm öğrencileri TA'e atayacağız. Raportların first checklerini yapacak.
+* As a design choice, deadline geçtikten sonra extension istenemeyecek. Ama extension vermek için deadlineın geçip geçmediğine bakmayacağız.
+* Criteria reportu doldurmayı hocaların seçimine bırakıyoruz. Revision istemedikten sonra son haliyle de doldurabilir. İsterse partially de doldurur.
+* Öğrenci listesinde ve atamasında 299/399 ayrımı yapmayacağız.
+* Notification seçeneği olacak. Herkes sistemde kendi notificationlarını görebilecek.
+* Şu anlık sekreter announcement yapıyor. Announcement yapılınca herkes notification alacak.
+
+İzgi
+Konuşulan use caseler diagrama ve textural explanationsa başlık olarak eklenecek
+(withdraval, give extension, set initial deadline, save report/submit report) ..ve unuttuğum varsa.
+Bu caseler insanlara paylaştırılacak
+Contentste use caselerin numaralarının yanı sıra isimleri de olacak
+Mockuplar bitecek
+Notification state diagramla use case karşılaştırılacak. Gerekli düzenlemeler yapılacak
+
+Ömer / Aytekin
+Her use casin ilgili FE feature var mı diye mockuplar kontrol edilecek ve bitirilecek
+Profile notification seçeneğinin eklenmesi
+
+Ece / Begüm
+Diagramlarda yukarıdaki kararlara göre düzeltmeler
+Diagramlara birkaç cümle açıklama
+
+Cevaplanmamış sorular
+Evaluator kim? kim imzalıyor bu grade formu
+Öğrenciden revision istenmişse bunun grade formunu generate edecek miyiz? Mesela 1 kez revision istenmiş öğrencinin dönem sonunda total 2 grade formu mu olacak?
