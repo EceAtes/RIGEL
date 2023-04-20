@@ -24,11 +24,12 @@ public class Users {
     private boolean notificationToMail;
     private Role role;
 
-    @ManyToOne(cascade = {CascadeType.ALL}, targetEntity = Department.class)
-    @JoinColumn(name = "department_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "users_id")
     private Set<Notification> notification;
 
 
@@ -123,6 +124,9 @@ public class Users {
 
     public void setDepartment(Department department) {
         this.department = department;
+        if(this instanceof Student){
+            department.addStudent((Student) this);
+        }
     }
 
 

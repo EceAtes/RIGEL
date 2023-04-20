@@ -19,7 +19,7 @@ public class Department {
     private String name;
     //private Map<Integer, Instructor> instructors;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "department")
     private Map<Long, Student> students;
     //private Secretary secretary;
 
@@ -50,7 +50,6 @@ public class Department {
     }
 
     public int getTotalStuNo() {
-        totalStuNo = students.size();
         return totalStuNo;
     }
 
@@ -80,5 +79,10 @@ public class Department {
 
     public void setStudents(Map<Long, Student> students) {
         this.students = students;
+    }
+
+    public void addStudent(Student student){
+        totalStuNo++;
+        this.students.put(student.getId(), student);
     }
 }

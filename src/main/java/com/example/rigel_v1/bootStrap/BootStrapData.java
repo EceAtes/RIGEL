@@ -25,19 +25,16 @@ public class BootStrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Department CS = new Department(0,0, "CS");
         Department IE = new Department(0,0, "IE");
-        Student A = new Student("A", "a@gmail.com", "1234", true, null);
-        Student B = new Student("B", "b@gmail.com", "1235", false, null);
+        departmentRepository.save(CS);
+        departmentRepository.save(IE);
         System.out.println("Started");
         System.out.println("No of IE students: " + IE.getTotalStuNo());
         System.out.println("No of CS students: " + CS.getTotalStuNo());
-        A.setDepartment(CS);
-        B.setDepartment(IE);
-        CS.getStudents().put(A.getId(), A);
-        IE.getStudents().put(B.getId(), B);
 
-        departmentRepository.save(CS);
-        departmentRepository.save(IE);
-
+        Student A = new Student("A", "a@gmail.com", "1234", true, null);
+        Student B = new Student("B", "b@gmail.com", "1235", false, null);
+        A.setDepartment(IE);
+        B.setDepartment(CS);
         userRepository.save(A);
         userRepository.save(B);
 
