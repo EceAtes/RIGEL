@@ -19,15 +19,15 @@ public class Administration extends Users{
         this.eSignature = eSignature;
     }
 
-    public Administration(String name, String email, String password, boolean notificationToMail, Role role, Department department, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature) {
-        super(name, email, password, notificationToMail, role, department);
+    public Administration(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature) {
+        super(name, email, password, notificationToMail, Role.ADMINISTRATION, department);
         this.criteriaReports = criteriaReports;
         this.statistics = statistics;
         this.eSignature = eSignature;
     }
 
-    public Administration(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature) {
-        super(name, email, password, notificationToMail, role, department, notification);
+    public Administration(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature) {
+        super(name, email, password, notificationToMail, Role.ADMINISTRATION, department, notification);
         this.criteriaReports = criteriaReports;
         this.statistics = statistics;
         this.eSignature = eSignature;

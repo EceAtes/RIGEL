@@ -19,7 +19,8 @@ public class Department {
     private String name;
     //private Map<Integer, Instructor> instructors;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany
+    @JoinColumn(name = "department_id") //id of the "one"
     private Map<Long, Student> students;
     //private Secretary secretary;
 
@@ -85,4 +86,37 @@ public class Department {
         totalStuNo++;
         this.students.put(student.getId(), student);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Department that = (Department) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", totalStuNo=" + totalStuNo +
+                ", internedStuNo=" + internedStuNo +
+                ", name='" + name + '\'' +
+                ", students=" + students +
+                '}';
+    }
+
+    /*public void initializeCourse(Course course){
+    }
+
+    public void endCourse(Course course){
+    }
+     */
 }

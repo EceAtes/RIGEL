@@ -22,16 +22,16 @@ public class Instructor extends FeedbackUser{
         this.statistics = statistics;
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Role role, Department department, Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
-        super(name, email, password, notificationToMail, role, department, students);
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
+        super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
         this.eSignature = eSignature;
         this.statistics = statistics;
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
-        super(name, email, password, notificationToMail, role, department, notification, students);
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
+        super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, notification, students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
         this.eSignature = eSignature;

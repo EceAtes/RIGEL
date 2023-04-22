@@ -48,4 +48,13 @@ public class Student extends Users {
     public void setCourses(Set<String> courses) {
         this.courses = courses;
     }
+
+    @Override
+    public String toString() {
+        String output = super.toString() + "/nStudent attributes: {" +
+                "oldReports=" + oldReports +
+                ", courses=" + courses +
+                '}';
+        return output;
+    }
 }

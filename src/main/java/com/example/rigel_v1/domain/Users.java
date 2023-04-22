@@ -24,12 +24,12 @@ public class Users {
     private boolean notificationToMail;
     private Role role;
 
+
     @ManyToOne
-    @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "users_id")
+    @OneToMany
+    @JoinColumn(name = "users_id") //id of the "one"
     private Set<Notification> notification;
 
 
@@ -65,8 +65,8 @@ public class Users {
         ADMINISTRATION
     }
 
-    //TO-DO
     public boolean deleteUser(){
+        this.notification = null;
         return true;
     }
 
@@ -139,4 +139,31 @@ public class Users {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Users users = (Users) o;
+
+        return id != null ? id.equals(users.id) : users.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", notificationToMail=" + notificationToMail +
+                ", role=" + role +
+                ", department=" + department +
+                ", notification=" + notification +
+                '}';
+    }
 }

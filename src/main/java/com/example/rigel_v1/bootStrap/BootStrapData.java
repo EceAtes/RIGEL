@@ -10,7 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-
 public class BootStrapData implements CommandLineRunner {
 
     private final DepartmentRepository departmentRepository;
@@ -27,16 +26,26 @@ public class BootStrapData implements CommandLineRunner {
         Department IE = new Department(0,0, "IE");
         departmentRepository.save(CS);
         departmentRepository.save(IE);
-        System.out.println("Started");
-        System.out.println("No of IE students: " + IE.getTotalStuNo());
-        System.out.println("No of CS students: " + CS.getTotalStuNo());
 
         Student A = new Student("A", "a@gmail.com", "1234", true, null);
-        Student B = new Student("B", "b@gmail.com", "1235", false, null);
-        A.setDepartment(IE);
-        B.setDepartment(CS);
+        A.setDepartment(CS);
+
         userRepository.save(A);
+        departmentRepository.save(CS);
+
+        Student B = new Student("B", "b@gmail.com", "1235", false, null);
+        B.setDepartment(IE);
+
         userRepository.save(B);
+        departmentRepository.save(IE);
+
+        Student C = new Student("C", "c@gmail.com", "1236", true, null);
+        C.setDepartment(IE);
+
+        userRepository.save(C);
+        departmentRepository.save(IE);
+
+        System.out.println("Started");
 
         System.out.println("No of users: " + userRepository.count());
         System.out.println("No of departments: " + departmentRepository.count());

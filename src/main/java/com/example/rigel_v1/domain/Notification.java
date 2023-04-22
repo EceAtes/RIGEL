@@ -19,8 +19,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.ALL}, targetEntity = Users.class)
-    @JoinColumn(name="user_id", nullable=false)
+    @ManyToOne
     private Users sender;
 
     private LocalDateTime date;
@@ -96,5 +95,38 @@ public class Notification {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Notification that = (Notification) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", sender=" + sender +
+                ", date=" + date +
+                ", receiverID=" + receiverID +
+                ", message='" + message + '\'' +
+                ", priority=" + priority +
+                ", title='" + title + '\'' +
+                '}';
+    }
+
+    //TO_DO
+    public boolean deleteNotification(){
+        return false;
     }
 }

@@ -10,30 +10,34 @@ public class FeedbackUser extends Users{
 
 
     //private Map<Integer, List<Course>> students;
-    private Map<Integer, Student> students;
+    private Map<Long, Student> students;
 
     public FeedbackUser() {
     }
 
-    public FeedbackUser(Map<Integer, Student> students) {
+    public FeedbackUser(Map<Long, Student> students) {
         this.students = students;
     }
 
-    public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Map<Integer, Student> students) {
+    public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Map<Long, Student> students) {
         super(name, email, password, notificationToMail, role, department);
         this.students = students;
     }
 
-    public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Integer, Student> students) {
+    public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Long, Student> students) {
         super(name, email, password, notificationToMail, role, department, notification);
         this.students = students;
     }
 
-    public Map<Integer, Student> getStudents() {
+    public void addStudent(Student student){
+        this. students.put(student.getId(), student);
+    }
+
+    public Map<Long, Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Map<Integer, Student> students) {
+    public void setStudents(Map<Long, Student> students) {
         this.students = students;
     }
 }

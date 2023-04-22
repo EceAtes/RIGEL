@@ -17,14 +17,14 @@ public class Secretary extends Administration{
         this.gradeForms = gradeForms;
     }
 
-    public Secretary(String name, String email, String password, boolean notificationToMail, Role role, Department department, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature, Map<Integer, EvaluationForms> evaluationForms, Map<Integer, GradeForm> gradeForms) {
-        super(name, email, password, notificationToMail, role, department, criteriaReports, statistics, eSignature);
+    public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature, Map<Integer, EvaluationForms> evaluationForms, Map<Integer, GradeForm> gradeForms) {
+        super(name, email, password, notificationToMail, Role.SECRETARY, department, criteriaReports, statistics, eSignature);
         this.evaluationForms = evaluationForms;
         this.gradeForms = gradeForms;
     }
 
-    public Secretary(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature, Map<Integer, EvaluationForms> evaluationForms, Map<Integer, GradeForm> gradeForms) {
-        super(name, email, password, notificationToMail, role, department, notification, criteriaReports, statistics, eSignature);
+    public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, Statistics statistics, File eSignature, Map<Integer, EvaluationForms> evaluationForms, Map<Integer, GradeForm> gradeForms) {
+        super(name, email, password, notificationToMail, Role.SECRETARY, department, notification, criteriaReports, statistics, eSignature);
         this.evaluationForms = evaluationForms;
         this.gradeForms = gradeForms;
     }
