@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Instructor extends FeedbackUser{
-/*
+
     private Map<Integer, Student> graded;
     private Map<Integer, Student> toBeGraded;
     private File eSignature;
@@ -68,5 +71,5 @@ public class Instructor extends FeedbackUser{
 
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
-    }*/
+    }
 }

@@ -29,7 +29,7 @@ public class Users {
     private Department department;
 
     @OneToMany
-    @JoinColumn(name = "users_id") //id of the "one"
+    @JoinColumn(name = "users_id") 
     private Set<Notification> notification;
 
 
