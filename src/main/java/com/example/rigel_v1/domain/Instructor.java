@@ -4,20 +4,20 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 
 @Entity
 public class Instructor extends FeedbackUser{
 
-    private Map<Integer, Student> graded;
-    private Map<Integer, Student> toBeGraded;
+    private Map<Long, Student> graded;
+    private Map<Long, Student> toBeGraded;
     private File eSignature;
     private Statistics statistics;
 
     public Instructor() {
     }
 
-    public Instructor(Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
+    public Instructor(Map<Long, Student> students, Map<Long, Student> graded, Map<Long, Student> toBeGraded, File eSignature, Statistics statistics) {
         super(students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
@@ -25,7 +25,7 @@ public class Instructor extends FeedbackUser{
         this.statistics = statistics;
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, Map<Long, Student> graded, Map<Long, Student> toBeGraded, File eSignature, Statistics statistics) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
@@ -33,7 +33,7 @@ public class Instructor extends FeedbackUser{
         this.statistics = statistics;
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, Student> students, Map<Integer, Student> graded, Map<Integer, Student> toBeGraded, File eSignature, Statistics statistics) {
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students, Map<Long, Student> graded, Map<Long, Student> toBeGraded, File eSignature, Statistics statistics) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, notification, students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
@@ -41,19 +41,19 @@ public class Instructor extends FeedbackUser{
         this.statistics = statistics;
     }
 
-    public Map<Integer, Student> getGraded() {
+    public Map<Long, Student> getGraded() {
         return graded;
     }
 
-    public void setGraded(Map<Integer, Student> graded) {
+    public void setGraded(Map<Long, Student> graded) {
         this.graded = graded;
     }
 
-    public Map<Integer, Student> getToBeGraded() {
+    public Map<Long, Student> getToBeGraded() {
         return toBeGraded;
     }
 
-    public void setToBeGraded(Map<Integer, Student> toBeGraded) {
+    public void setToBeGraded(Map<Long, Student> toBeGraded) {
         this.toBeGraded = toBeGraded;
     }
 

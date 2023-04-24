@@ -30,11 +30,12 @@ public class Feedback {
     public void setFeedback(String feedback) {
         this.feedback = feedback;
     }
+    
     public FeedbackUser getGivenBy() {
         return givenBy;
     }
     public void setGivenBy(FeedbackUser givenBy) {
         this.givenBy = givenBy;
     }
-
+    
 }

@@ -6,10 +6,7 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
-enum CourseCode{
-    _299,
-    _399
-}
+
 
 enum Score{
     satisfactory, 
@@ -30,6 +27,11 @@ enum Status {
 
 @Entity
 public class Course {
+    
+    public enum CourseCode{
+        _299,
+        _399
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,63 +57,63 @@ public class Course {
     @OneToOne
     private EvaluationForm evaluationForm;
 
-    Course(){
+    public Course(){
     }
 
-    Course(CourseCode courseCode){        
+    public Course(CourseCode courseCode){        
         this.courseCode = courseCode;
     }
 
-    Course(CourseCode courseCode, Instructor instructor){       
+    public Course(CourseCode courseCode, Instructor instructor){       
         this.courseCode = courseCode;
         this.instructor = instructor;
     }
 
-    void uploadInternshipReport(File report){ 
+    public void uploadInternshipReport(File report){ 
     }
     
-    void uploadGradeForm(GradeForm report){ 
+    public void uploadGradeForm(GradeForm report){ 
     }
 
-    void uploadCriteriaReport(CriteriaReport report){ 
+    public void uploadCriteriaReport(CriteriaReport report){ 
     }
 
-    void uploadEvaluationForm(EvaluationForm report){ 
+    public void uploadEvaluationForm(EvaluationForm report){ 
     }
 
-    InternshipReport confirmInternshipReport(){ 
-        return internshipReports[0];        // last iteration
+    public InternshipReport confirmInternshipReport(){ 
+        return internshipReports.get(0);        // last iteration
     }
     
-    GradeForm confirmGradeForm(){
+    public GradeForm confirmGradeForm(){
         return gradeForm;
     }
 
-    CriteriaReport confirmCriteriaReport(){
+    public CriteriaReport confirmCriteriaReport(){
         return criteriaReport;
     }
 
-    EvaluationForm confirmEvaluationForm(){
+    public EvaluationForm confirmEvaluationForm(){
         return evaluationForm;
     }
 
-    InternshipReport[] getInternshipReports(){
+    public List<InternshipReport> getInternshipReports(){
         return internshipReports;
     }
 
-    InternshipReport getFinalInternshipReport(){
-        return internshipReports[0];        // last iteration
+    public InternshipReport getFinalInternshipReport(){
+        return internshipReports.get(0);        // last iteration
     }
     
-    GradeForm getGradeForm(){
+    public GradeForm getGradeForm(){
         return gradeForm;
     }
 
-    CriteriaReport getCriteriaReport(){
+    public CriteriaReport getCriteriaReport(){
         return criteriaReport;
     }
 
-    EvaluationForm getEvaluationForm(){
+    public EvaluationForm getEvaluationForm(){
         return evaluationForm;
     }
 
