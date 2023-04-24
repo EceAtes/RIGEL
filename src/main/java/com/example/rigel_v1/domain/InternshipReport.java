@@ -23,7 +23,7 @@ public class InternshipReport extends Report{
     }
 
     InternshipReport(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus, String description){
-        super(isSatisfactory, courseName, student, evaluator, reportStatus);
+        //super(isSatisfactory, courseName, student, evaluator, reportStatus);
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;

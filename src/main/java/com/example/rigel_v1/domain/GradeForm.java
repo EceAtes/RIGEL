@@ -2,6 +2,7 @@ package com.example.rigel_v1.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -12,12 +13,12 @@ public class GradeForm extends Report {
 
     @OneToMany
     @JoinColumn(name = "gradeform_id")
-    private ArrayList<Question> questions;
+    private List<Question> questions;
 
     public GradeForm(){
     }
 
-    public GradeForm(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus){
+    public GradeForm(boolean isSatisfactory, CourseName courseName, Student student, String evaluator, ReportStatus reportStatus){
         super(isSatisfactory, courseName, student, evaluator, reportStatus);
         willBeRevised = true;
         questions = new ArrayList<Question>();
@@ -42,7 +43,7 @@ public class GradeForm extends Report {
         this.dueDate = dueDate;
     }*/
 
-    public ArrayList<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 

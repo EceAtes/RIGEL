@@ -2,25 +2,24 @@ package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
 
-enum ReportStatus{
-    changable,
-    unchangable
-}
-
-enum CourseName{
-    CS299,
-    CS399,
-    ME299,
-    ME399,
-    IE299,
-    IE399,
-    EE299,
-    EE399
-}
-
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
+    public enum CourseName{
+        CS299,
+        CS399,
+        ME299,
+        ME399,
+        IE299,
+        IE399,
+        EE299,
+        EE399
+    }
+
+    public enum ReportStatus{
+        changable,
+        unchangable
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,13 +32,14 @@ public class Report {
     @OneToOne
     private Student student;        
     
-    @OneToOne
-    private Instructor evaluator;
+    //@OneToOne
+    //private Instructor evaluator;
+    private String evaluator;
 
     public Report(){
     }
 
-    public Report(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus) {
+    public Report(boolean isSatisfactory, CourseName courseName, Student student, String evaluator, ReportStatus reportStatus) {
         this.isSatisfactory = isSatisfactory;
         this.courseName = courseName;
         this.student = student;
@@ -94,11 +94,11 @@ public class Report {
         this.student = student;
     }
 
-    public Instructor getEvaluator() {
+    public String getEvaluator() {
         return evaluator;
     }
 
-    public void setEvaluator(Instructor evaluator) {
+    public void setEvaluator(String evaluator) {
         this.evaluator = evaluator;
     }
 

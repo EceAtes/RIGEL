@@ -13,10 +13,14 @@ public class BootStrapData implements CommandLineRunner {
 
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
+    CourseRepository courseRepository;
+    ReportRepository reportRepository;
 
-    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository) {
+    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, ReportRepository reportRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
+        this.courseRepository = courseRepository;
+        this.reportRepository = reportRepository;
     }
 
     @Override
@@ -51,19 +55,34 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("No of CS students: " + CS.getTotalStuNo());
         System.out.println("No of IE students: " + IE.getTotalStuNo());
 
-        Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "319319", false, CS, null, null, null, null, null, null);
-        Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS, null, null, null, null, null, null);
+        //Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "319319", false, CS, null, null, null, null, null, null);
+        //Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS, null, null, null, null, null, null);
 
-        Course cs299 = new Course(Course.CourseCode._299, instructor1);
-        Course ie299 = new Course(Course.CourseCode._399);
-        ie299.setInstructor(instructor2);
-        Course cs399 = new Course(Course.CourseCode._399, instructor1);
 
-        A.enrollCourse(cs399);
-        B.enrollCourse(ie299);
-        A.enrollCourse(cs299);
+        Course stuA_cs299 = new Course(Course.CourseCode._299, "instructor1");
+        Course stuB_ie299 = new Course(Course.CourseCode._399);
+        stuB_ie299.setInstructor("instructor2");
+        Course stuA_cs399 = new Course(Course.CourseCode._399, "instructor1");
 
-        System.out.println("No of users: " + userRepository.count());
+        courseRepository.save(stuA_cs299);
+        courseRepository.save(stuB_ie299);
+        courseRepository.save(stuA_cs399);
+
+        //enroll section will include enrollCourse
+        A.enrollCourse(stuA_cs299);
+        B.enrollCourse(stuB_ie299);
+        A.enrollCourse(stuA_cs399);
+
+        GradeForm stuA_gradeForm = new GradeForm(true, Report.CourseName.CS299, A, "instructor1", Report.ReportStatus.changable);
+        reportRepository.save(stuA_gradeForm);
+
+        stuA_cs299.uploadGradeForm(stuA_gradeForm);
+        userRepository.save(A);
+
+        System.out.println("\n\nNo of courses: " + courseRepository.count());
+        System.out.println("No of reports: " + reportRepository.count());
+
+
 
     }
 }

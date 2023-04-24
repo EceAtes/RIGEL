@@ -19,7 +19,7 @@ public class CriteriaReport extends Report{
     }
 
     public CriteriaReport(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus){
-        super(isSatisfactory, courseName, student, evaluator, reportStatus);
+        //super(isSatisfactory, courseName, student, evaluator, reportStatus);
         questions = new ArrayList<Question>();
         isCompleted = false;
     }

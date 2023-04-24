@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class TA extends FeedbackUser{
+    /*/
     public TA() {
     }
 
@@ -18,4 +19,5 @@ public class TA extends FeedbackUser{
     public TA(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students) {
         super(name, email, password, notificationToMail, Role.TA, department, notification, students);
     }
+    */
 }

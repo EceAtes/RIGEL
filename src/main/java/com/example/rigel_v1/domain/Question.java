@@ -13,6 +13,9 @@ public class Question {
     private String answer;
     private String evidence;
     
+    @ManyToOne
+    private GradeForm gradeForm;
+    
     public Question(){
     }
 
@@ -48,4 +51,11 @@ public class Question {
     public void setEvidence(String evidence) {
         this.evidence = evidence;
     }
+    public GradeForm getGradeForm() {
+        return gradeForm;
+    }
+    public void setGradeForm(GradeForm gradeForm) {
+        this.gradeForm = gradeForm;
+    }
+
 }

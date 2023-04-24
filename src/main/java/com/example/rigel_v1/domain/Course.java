@@ -45,8 +45,9 @@ public class Course {
     @ElementCollection
     private List<InternshipReport> internshipReports;
     
-    @OneToOne
-    private Instructor instructor;
+    //@OneToOne
+    private String instructor;
+    //private Instructor instructor;
 
     @OneToOne
     private GradeForm gradeForm;
@@ -64,7 +65,7 @@ public class Course {
         this.courseCode = courseCode;
     }
 
-    public Course(CourseCode courseCode, Instructor instructor){       
+    public Course(CourseCode courseCode, String instructor){       
         this.courseCode = courseCode;
         this.instructor = instructor;
     }
@@ -133,10 +134,10 @@ public class Course {
         this.courseCode = courseCode;
     }
 
-    public Instructor getInstructor() {
+    public String getInstructor() {
         return instructor;
     }
-    public void setInstructor(Instructor instructor) {
+    public void setInstructor(String instructor) {
         this.instructor = instructor;
     }
 

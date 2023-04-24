@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Instructor extends FeedbackUser{
-
+/*
     private Map<Long, Student> graded;
     private Map<Long, Student> toBeGraded;
     private File eSignature;
@@ -71,5 +71,5 @@ public class Instructor extends FeedbackUser{
 
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
-    }
+    }*/
 }
