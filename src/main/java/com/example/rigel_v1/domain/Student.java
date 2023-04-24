@@ -4,6 +4,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,8 +27,8 @@ public class Student extends Users {
         this.courses = new HashSet<>();
     }
 
-    public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Set<String> oldReports, Set<String> courses) {
-        super(name, email, password, notificationToMail, role, department, notification);
+    public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Set<String> oldReports, Set<String> courses, List<Section> sections) {
+        super(name, email, password, notificationToMail, role, department, notification, sections);
         this.oldReports = oldReports;
         this.courses = courses;
     }
