@@ -8,8 +8,6 @@ import java.util.Set;
 
 public class FeedbackUser extends Users{
 
-/*
-    //private Map<Integer, List<Course>> students;
     private Map<Long, Student> students;
 
     public FeedbackUser() {
@@ -30,7 +28,7 @@ public class FeedbackUser extends Users{
     }
 
     public void addStudent(Student student){
-        this. students.put(student.getId(), student);
+        this.students.put(student.getId(), student);
     }
 
     public Map<Long, Student> getStudents() {
@@ -39,5 +37,5 @@ public class FeedbackUser extends Users{
 
     public void setStudents(Map<Long, Student> students) {
         this.students = students;
-    }*/
+    }
 }
