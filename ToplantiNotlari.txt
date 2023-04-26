@@ -183,3 +183,63 @@ Diagramlara birkaç cümle açıklama
 Cevaplanmamış sorular
 Evaluator kim? kim imzalıyor bu grade formu
 Öğrenciden revision istenmişse bunun grade formunu generate edecek miyiz? Mesela 1 kez revision istenmiş öğrencinin dönem sonunda total 2 grade formu mu olacak?
+
+
+Toplantı no: 7
+31.03.2023 
+Başlangıç: 18.05
+Bitiş: 23.59
+Analysis Report değişikliklerinin tespiti
+
+
+Toplantı no: 8 
+31.03.2023 
+Başlangıç: 18.05
+Bitiş: 23.59
+Analysis Report'un ilk iterationunun yüklenmesi
+
+Toplantı no: 9 
+5.04.2023 
+Başlangıç: 20.10
+Bitiş: 21.20
+Analysis Report'un eksiklerimizin ve motivasyonumuzun değerlendirmesi ve öz eleştirisi
+
+Toplantı no: 10 
+20.04.2023 
+Başlangıç: 11.15
+Bitiş: 12.30 (?)
+Analysis Report feedbackinin değerlendirilmesi
+Class implementationlarına başlandı, classlar bölüşüldü.
+* Userlar ve Department, Ece
+* Reportlar ve Course, Begüm
+
+
+Toplantı no: 11
+27.04.2023 
+Başlangıç: 20.05
+Bitiş: 20.50
+
+* Design report çalışmalarına subsystem çizilerek başlanacak. Önümüzdeki cuma gününe kadar herkes ilgili userın tüm layerlarını çizecek.
+Cuma günü topluca değerlendirip sorumuz varsa Eray hocaya soracağız.
+Ömer : Admin 
+Ece : Student 
+Aytekin : Secretary
+Begüm : TA & Instructor
+İzgi : Chair & Non - reg user
+
+* Back-end: Class relationları en geç pazar gününe dek bitmeli. Rapor yükleme için Google Docs düşünüldü API pazar gününe dek incelenecek.
+Ayrıca Ece login'e de bakmaya çalışacak.
+* Sisteme student, secretary ekleme gibi user oluşturduğumuz bir functionalitynin backend ve frontend'ini birleştirmeyi deneyeceğiz. (Muhtemelen pazar)
+* Front-end daha sonra kendi toplantısına devam etti:
+  1- Admin ve sekreter kullanıcı ekleyebiliyor, bunların websitesini tasarlayacağız.  
+  2- Başlamışken bu userların birbirlerine çok benzeyen main pagelerini de yapmaya karar verdik
+  3- Ömer login yapacak, eceyle de konuşup featureı tamamlamasını bekliyoruz.
+Tasarlanan sayfaların kodu githuba yüklendi. 
+
+* Ömer mockupları güncelledi, Analysis raporuna da güncel mokupları ekleyecek.
+* Ömer yarım kalmış use case'i tamamlayabileceğini söyledi (Use Case#8).
+* Begüm kendi çizdiği diagramlardaki hataları giderdi.
+* Ece class diagramı sürekli güncelliyor.
+* İzgi system boundaryi çizip, logoyu kaldırıp ve diagrama iki kere yazılmış use case'i düzeltip rapora ekleyecek.
+
+Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söylemeyi ve üstteki cevaplanmamış soruları sormayı unutmayalım.
