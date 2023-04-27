@@ -8,6 +8,16 @@ import jakarta.persistence.*;
 @Entity
 public class InternshipReport extends Report{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    private Course course;
+
+    @ManyToOne
+    private Student ownerStudent;
+
     private String description;
     private boolean TA_check;
 
@@ -19,17 +29,19 @@ public class InternshipReport extends Report{
     @JoinColumn(name = "internshipreport_id")
     private List<Feedback> instructorFeedback;
 
-    InternshipReport(){
+    public InternshipReport(){
     }
 
-    InternshipReport(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus, String description){
+    public InternshipReport(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus, String description){
         super(isSatisfactory, courseName, student, evaluator, reportStatus);
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
         this.description = description;
     }
-    
+
+
+
     void giveFeedback(int id, Feedback feedback){ 
     }
 

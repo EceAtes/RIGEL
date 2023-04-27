@@ -12,7 +12,8 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //private Instructor instructor;
+    @ManyToOne
+    private Instructor instructor;
 
     @ManyToMany
     @JoinTable(name = "section_student", joinColumns = @JoinColumn(name = "section_id"),

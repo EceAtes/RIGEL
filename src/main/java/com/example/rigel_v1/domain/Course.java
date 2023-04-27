@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.example.rigel_v1.repositories.InstructorRepository;
 import jakarta.persistence.*;
 
 
@@ -40,12 +41,16 @@ public class Course {
     private Date deadline;                                  
     private Score score;
     private Status status;
-    private CourseCode courseCode;    
+    private CourseCode courseCode;
 
-    @ElementCollection
+    @ManyToOne
+    private Student courseTaker;
+
+    @OneToMany
+    @JoinColumn(name = "intern_report_id")
     private List<InternshipReport> internshipReports;
     
-    @OneToOne
+    @ManyToOne
     private Instructor instructor;
 
     @OneToOne
@@ -67,6 +72,7 @@ public class Course {
     public Course(CourseCode courseCode, Instructor instructor){       
         this.courseCode = courseCode;
         this.instructor = instructor;
+        instructor.addCourse(this);
     }
 
     public void uploadInternshipReport(File report){ 
@@ -159,6 +165,32 @@ public class Course {
     }
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Student getCourseTaker() {
+        return courseTaker;
+    }
+
+    public void setCourseTaker(Student courseTaker) {
+        this.courseTaker = courseTaker;
+        instructor.addStudent(courseTaker);
+        instructor.addCourse(this);
+    }
+
+    public void setInternshipReports(List<InternshipReport> internshipReports) {
+        this.internshipReports = internshipReports;
+    }
+
+    public void setGradeForm(GradeForm gradeForm) {
+        this.gradeForm = gradeForm;
+    }
+
+    public void setCriteriaReport(CriteriaReport criteriaReport) {
+        this.criteriaReport = criteriaReport;
+    }
+
+    public void setEvaluationForm(EvaluationForm evaluationForm) {
+        this.evaluationForm = evaluationForm;
     }
 
     @Override
