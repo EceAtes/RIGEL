@@ -1,0 +1,247 @@
+.headers {
+    background-color: #105BA5;
+    padding: 11px 62px 0 48px;
+    display: flex;
+    align-items: flex-start;
+  }
+  .bilkentLogo {
+    width: 13.01%;
+    height: 90.31%;
+    margin-right: 124px;
+  }
+  .bilkentInternshipManagementSystem {
+    height: 72.96%;
+    width: 63.61%;
+    color: #FFFFFF;
+    font-size: 56px;
+    display: flex;
+    position: relative;
+    align-self: center;
+    /*margin-top: 53px;
+    margin-right: 67px;*/
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .oklar {
+    margin-top: 59px;
+    display: flex;
+    align-items: center;
+  }
+  .solOk {
+    width: 38.02%;
+    align-self: stretch;
+    margin-right: 27.58px;
+    object-fit: cover;
+  }
+  .sagOk {
+    width: 39%;
+    height: 97.31%;
+  }
+  
+  .progressBar {
+    display:flex;
+    position:relative;
+    padding-top:20px;
+    padding-right: 35px;
+  }
+  .relativeWrapperOne {
+    padding-right: 100px;
+    position: relative;
+    top:10px;
+    right:-35px;
+    width:670px;
+    margin:0;
+  }
+  .allRect {
+    width: 670px;
+    height: 24px;
+    background-color: rgba(245, 245, 245, 1);
+    border-radius: 25px;
+    position: relative;
+    border: 1px solid rgba(0,0,0);
+  }
+  
+  .completeRect {
+    width: 252px;
+    height: 24px;
+    background-color: rgba(16, 91, 165, 0.7);
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    top: 0.72px;
+    border: 1px solid rgba(0,0,0);
+  }
+  .completionLabel {
+    height: 35px;
+    width: 279px;
+    color: rgba(0,0,0);
+    font-size:24px;
+    display: flex;
+    position: relative;
+    margin: auto;
+    left: 59px;
+    top:20px;
+  }
+  
+  .announceReportCard {
+    padding: 3.86px 0 0.51px 4.28px;
+    left: 50px;
+    top: 120px;
+    width: 580px;
+    height: 665px ;
+    background-color: rgba(16, 84, 164, 1);
+    position: relative;
+    text-align:center;
+  }
+  .announcementsImage {
+    width: 99.49%;
+    height: 98.98%;
+    position: absolute;
+  }
+  .anouncementLabel {
+    display: grid;
+    place-items: center;
+    height: 7%;
+    width: 50%;
+    font-family: "Inter";
+    font-size: 30px;
+    font-weight: 400;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    position: relative;
+    left:150px;
+    top:10px;
+  }
+  
+  .reportPageLabel {
+    display: grid;
+    place-items: center;
+    height: 7%;
+    width: 50%;
+    font-family: "Inter";
+    font-size: 30px;
+    font-weight: 400;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    position: relative;
+    left:150px;
+    bottom:-25px;
+  }
+  .announcementsImageTwo {
+    width: 50%;
+    height: 30%;
+    padding: 2.16px 0 0.29px 1.66px;
+    align-items: center;
+    position:relative;
+  }
+  .announcementsImage {
+    width: 99.33%;
+    height: 99.22%;
+    box-shadow: 0 4px 4px 0 rgb(0,0,0,0.25);
+    border: 1px solid rgb(0,0,0);
+  }
+  .reportsImgTwo {
+    width: 50%;
+    height: 30%;
+    padding: 2.16px 0 0.29px 1.66px;
+    align-items: center;
+    position:relative;
+  }
+  .reportsImg {
+    width: 99.49%;
+    height: 98.98%;
+    position: absolute;
+  }
+  
+  .notification {
+    width:200px;
+    display: flex;
+    align-items: flex-start;
+  }
+  .notificationsIcon {
+    width: 23.64%;
+    align-self: stretch;
+    margin-right: 11.72px;
+    object-fit: cover;
+  }
+  .notifications {
+    height: 57.13%;
+    width: 69.95%;
+    color: rgb(0,0,0);
+    display: flex;
+    margin-top: 6.37px;
+    font-family: "Inter";
+    font-size: 20px;
+  }
+  
+  .profileContainer {
+    width:200px;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .profileIcon {
+    width: 28.9%;
+    height: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+  .profile {
+    height: 100%;
+    width: 100%;
+    color: rgb(0,0,0);
+    display: flex;
+    position: relative;
+    font-family: "Inter";
+    font-size: 20px;
+  }
+  
+  .languageContainer {
+    width:250px;
+    display: flex;
+    align-items: flex-start;
+  }
+  .languageIcon {
+    width: 23.08%;
+    align-self: stretch;
+    margin-right: 18.44px;
+    object-fit: cover;
+  }
+  .language {
+    height: 57.14%;
+    width: 68.27%;
+    color: rgb(0,0,0);
+    display: flex;
+    margin-top: 17.79px;
+    font-family: "Inter";
+    font-size: 20px;
+  }
+  
+  .MenuContainer{
+    width: 65%;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position:relative;
+    margin:0;
+  }
+  
+  .logOutButton {
+    background-color: #105BA5;
+    border-radius: 60px;
+    padding: 26.16px 41.97px 19.89px 56.66px;
+    width:500px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logOut {
+    height: 100%;
+    font-family: "Inter";
+    font-size: 50px;
+    font-weight: 400;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+  }
+    
