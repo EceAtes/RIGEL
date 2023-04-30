@@ -1,11 +1,8 @@
 package com.example.rigel_v1.bootStrap;
 import com.example.rigel_v1.domain.*;
+import com.example.rigel_v1.domain.enums.*;
 import com.example.rigel_v1.repositories.*;
 
-import java.io.File;
-import java.util.Set;
-
-import org.aspectj.apache.bcel.generic.Instruction;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +13,16 @@ public class BootStrapData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
+    private final ReportRepository reportRepository;
+    private final EvaluationFormRepository evaluationFormRepository;
 
-    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository) {
+    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, ReportRepository reportRepository, EvaluationFormRepository evaluationFormRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
+        this.reportRepository = reportRepository;
+        this.evaluationFormRepository = evaluationFormRepository;
     }
 
     @Override
@@ -59,37 +60,64 @@ public class BootStrapData implements CommandLineRunner {
 
         Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "2345", false, CS );
         Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS);
-        System.out.println("here1");
 
         instructorRepository.save(instructor1);
         instructorRepository.save(instructor2);
 
-        System.out.println("here2");
+        System.out.println("No of users: " + userRepository.count());
+
         StudentCourse cs299 = new StudentCourse(A, CourseName.CS299, instructor1);
-        System.out.println("here3");
-
         StudentCourse ie299 = new StudentCourse(B, CourseName.IE299);
-        System.out.println("here4");
-
         ie299.setInstructor(instructor2);
-        System.out.println("here5");
-
-        StudentCourse cs399 = new StudentCourse(C, CourseName.CS299, instructor1);
-        System.out.println("here6");
+        StudentCourse cs399 = new StudentCourse(C, CourseName.CS399, instructor1);
 
         courseRepository.save(cs299);
-        System.out.println("here6.1");
-
         courseRepository.save(ie299);
-        System.out.println("here6.2");
-
         courseRepository.save(cs399);
-        System.out.println("here7");
+
+        GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
+        CriteriaReport CS299_criteriaReport = new CriteriaReport(false, CourseName.CS299, cs299, ReportStatus.changable);
+        EvaluationForm CS299_evaluationForm = new EvaluationForm(7, true, true, true, Recommendation.satisfactory,  "companyName", cs299);
+
+        cs299.uploadGradeForm(C299_gradeForm);
+        cs299.uploadCriteriaReport(CS299_criteriaReport);
+        cs299.uploadEvaluationForm(CS299_evaluationForm);
+
+        reportRepository.save(C299_gradeForm);
+        reportRepository.save(CS299_criteriaReport);
+        evaluationFormRepository.save(CS299_evaluationForm);
+       
+        GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
+        CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399, ReportStatus.changable);
+        EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
+
+        cs399.uploadGradeForm(C399_gradeForm);
+        cs399.uploadCriteriaReport(CS399_criteriaReport);
+        cs399.uploadEvaluationForm(CS399_evaluationForm);
+
+        reportRepository.save(C399_gradeForm);
+        reportRepository.save(CS399_criteriaReport);
+        evaluationFormRepository.save(CS399_evaluationForm);
+
+        GradeForm IE299_gradeForm = new GradeForm(false, CourseName.IE299, ie299, ReportStatus.changable);
+        CriteriaReport IE299_criteriaReport = new CriteriaReport(false, CourseName.IE299, ie299, ReportStatus.changable);
+        EvaluationForm IE299_evaluationForm = new EvaluationForm(2, false, false, false, Recommendation.satisfactory,  "companyName", cs299);
+
+        ie299.uploadGradeForm(IE299_gradeForm);
+        ie299.uploadCriteriaReport(IE299_criteriaReport);
+        ie299.uploadEvaluationForm(IE299_evaluationForm); 
+
+        reportRepository.save(IE299_gradeForm);
+        reportRepository.save(IE299_criteriaReport);
+        evaluationFormRepository.save(IE299_evaluationForm);
 
         A.enrollCourse(cs399);
         B.enrollCourse(ie299);
         A.enrollCourse(cs299);
-        System.out.println("here8");
+
+        cs299.getGradeForm().setSatisfaction(true);
+
+        reportRepository.save(C299_gradeForm);
 
         userRepository.save(A);
         userRepository.save(B);
@@ -98,45 +126,7 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        //cs299.uploadInternshipReport(null);
-        //cs299.getGradeForm().setSatisfaction(true);
-
-
-
-        System.out.println("No of users: " + userRepository.count());
+        System.out.println(cs299.getGradeForm().getReportStatus());
 
     }
 }
-  /*    //Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "319319", false, CS, null, null, null, null, null, null);
-        //Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS, null, null, null, null, null, null);
-
-
-        Course stuA_cs299 = new Course(Course.CourseCode._299, "instructor1");
-        Course stuB_ie299 = new Course(Course.CourseCode._399);
-        stuB_ie299.setInstructor("instructor2");
-        Course stuA_cs399 = new Course(Course.CourseCode._399, "instructor1");
-
-        courseRepository.save(stuA_cs299);
-        courseRepository.save(stuB_ie299);
-        courseRepository.save(stuA_cs399);
-
-        //enroll section will include enrollCourse
-        A.enrollCourse(stuA_cs299);
-        B.enrollCourse(stuB_ie299);
-        A.enrollCourse(stuA_cs399);
-
-        GradeForm stuA_gradeForm = new GradeForm(true, Report.CourseName.CS299, A, "instructor1", Report.ReportStatus.changable);
-        reportRepository.save(stuA_gradeForm);
-
-        stuA_cs299.uploadGradeForm(stuA_gradeForm);
-        userRepository.save(A);
-        Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "2345", false, CS );
-        Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS);
-        instructorRepository.save(instructor1);
-        instructorRepository.save(instructor2);
-
-        System.out.println("\n\nNo of courses: " + courseRepository.count());
-        System.out.println("No of reports: " + reportRepository.count());
-
-
-*/

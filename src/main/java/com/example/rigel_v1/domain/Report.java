@@ -1,37 +1,14 @@
 package com.example.rigel_v1.domain;
 
+import com.example.rigel_v1.domain.enums.*;
+
 import jakarta.persistence.*;
-
-enum ReportStatus{
-    changable,
-    unchangable
-}
-
-enum CourseName{
-    CS299,
-    CS399,
-    ME299,
-    ME399,
-    IE299,
-    IE399,
-    EE299,
-    EE399
-}
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
 
-    public enum CourseName{
-    CS299,
-    CS399,
-    ME299,
-    ME399,
-    IE299,
-    IE399,
-    EE299,
-    EE399
-}
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

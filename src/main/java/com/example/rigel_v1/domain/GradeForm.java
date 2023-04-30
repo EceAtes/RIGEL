@@ -3,6 +3,8 @@ package com.example.rigel_v1.domain;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.rigel_v1.domain.enums.*;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +15,9 @@ public class GradeForm extends Report {
     @OneToOne
     private StudentCourse course;        
 
-    @OneToMany
+    /*@OneToMany
     @JoinColumn(name = "gradeform_id")
-    private ArrayList<Question> questions;
+    private ArrayList<Question> questions;*/
 
     public GradeForm(){
     }
@@ -24,7 +26,7 @@ public class GradeForm extends Report {
         super(isSatisfactory, courseName, reportStatus);
         willBeRevised = true;
         this.course = course;
-        questions = new ArrayList<Question>();
+        //questions = new ArrayList<Question>();
     }
 
     public void editGradeForm(){
@@ -51,7 +53,7 @@ public class GradeForm extends Report {
     }
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }*/
+    }
 
     public ArrayList<Question> getQuestions() {
         return questions;
@@ -59,7 +61,7 @@ public class GradeForm extends Report {
 
     public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
-    }
+    }*/
 
 
 }

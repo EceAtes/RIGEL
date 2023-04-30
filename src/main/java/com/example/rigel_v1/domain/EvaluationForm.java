@@ -2,13 +2,9 @@ package com.example.rigel_v1.domain;
 
 import java.io.File;
 
-import jakarta.persistence.*;
+import com.example.rigel_v1.domain.enums.*;
 
-enum Recommendation{
-    recommended,
-    satisfactory,
-    not_recommended
-}
+import jakarta.persistence.*;
 
 @Entity
 public class EvaluationForm {

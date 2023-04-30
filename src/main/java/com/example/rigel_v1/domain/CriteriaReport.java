@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.rigel_v1.domain.enums.*;
+
 
 @Entity
 public class CriteriaReport extends Report{

@@ -5,27 +5,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.example.rigel_v1.repositories.InstructorRepository;
+import com.example.rigel_v1.domain.enums.*;
 import jakarta.persistence.*;
-
-
-enum Score{
-    satisfactory, 
-    unsatisfactory
-}
-
-enum Status {
-    waitingInstructorAppointment,
-    uploadReport,
-    waitingSummerTrainingEvaluationFromCompany,
-    waitingInstructorEvaluation,
-    uploadRevision,
-    waitingFinalConfirmation,
-    gradeSatisfactory,
-    gradeUnsatisfactory,
-    withdrawn
-} 
-
 
 
 @Entity
@@ -38,7 +19,7 @@ public class StudentCourse {
     private Date deadline;                                  
     private Score score;
     private Status status;
-    private Report.CourseName courseName;
+    private CourseName courseName;
 
     @ManyToOne
     private Student courseTaker;
@@ -62,24 +43,24 @@ public class StudentCourse {
     public StudentCourse(){
     }
 
-    public StudentCourse(Student courseTaker, Report.CourseName courseName){   
+    public StudentCourse(Student courseTaker, CourseName courseName){   
         this.courseTaker = courseTaker;
         this.courseName = courseName;  
         internshipReports = new LinkedList<>();   
-        gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
-        criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
-        evaluationForm = new EvaluationForm();
+        //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
+        //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
+        //evaluationForm = new EvaluationForm();
         //courseTaker.enrollCourse(this);
     }
 
-    public StudentCourse(Student courseTaker, Report.CourseName courseName, Instructor instructor){      
+    public StudentCourse(Student courseTaker, CourseName courseName, Instructor instructor){      
         this.courseTaker = courseTaker;
         this.courseName = courseName;  
         this.instructor = instructor;
         internshipReports = new LinkedList<>();   
-        gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
-        criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
-        evaluationForm = new EvaluationForm();
+        //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
+        //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
+        //evaluationForm = new EvaluationForm();
         //courseTaker.enrollCourse(this);
         //instructor.addCourse(this);  
         //instructor.addStudent(courseTaker); // not filled yet
@@ -90,12 +71,15 @@ public class StudentCourse {
     }
     
     public void uploadGradeForm(GradeForm report){ 
+        gradeForm = report;
     }
 
     public void uploadCriteriaReport(CriteriaReport report){ 
+        criteriaReport = report;
     }
 
     public void uploadEvaluationForm(EvaluationForm report){ 
+        evaluationForm = report;
     }
 
     public InternshipReport confirmInternshipReport(){ 
@@ -142,11 +126,11 @@ public class StudentCourse {
         this.id = id;
     }
 
-    public Report.CourseName getCourseName() {
+    public CourseName getCourseName() {
         return courseName;
     }
 
-    public void setCourseName(Report.CourseName courseName) {
+    public void setCourseName(CourseName courseName) {
         this.courseName = courseName;
     }
 
