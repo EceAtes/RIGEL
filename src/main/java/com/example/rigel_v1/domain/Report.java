@@ -2,25 +2,36 @@ package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
 
+enum ReportStatus{
+    changable,
+    unchangable
+}
+
+enum CourseName{
+    CS299,
+    CS399,
+    ME299,
+    ME399,
+    IE299,
+    IE399,
+    EE299,
+    EE399
+}
+
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
+
     public enum CourseName{
-        CS299,
-        CS399,
-        ME299,
-        ME399,
-        IE299,
-        IE399,
-        EE299,
-        EE399
-    }
-
-    public enum ReportStatus{
-        changable,
-        unchangable
-    }
-
+    CS299,
+    CS399,
+    ME299,
+    ME399,
+    IE299,
+    IE399,
+    EE299,
+    EE399
+}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -29,21 +40,20 @@ public class Report {
     private CourseName courseName;
     private ReportStatus reportStatus;
 
-    @OneToOne
-    private Student student;        
+    //@OneToOne
+    //private Student student;        
     
     //@OneToOne
     //private Instructor evaluator;
-    private String evaluator;
 
     public Report(){
     }
 
-    public Report(boolean isSatisfactory, CourseName courseName, Student student, String evaluator, ReportStatus reportStatus) {
+    public Report(boolean isSatisfactory, CourseName courseName,  ReportStatus reportStatus) { //Student student, Instructor evaluator,
         this.isSatisfactory = isSatisfactory;
         this.courseName = courseName;
-        this.student = student;
-        this.evaluator = evaluator;
+        //this.student = student;
+        //this.evaluator = evaluator;
         this.reportStatus = reportStatus;
     }
 
@@ -78,6 +88,7 @@ public class Report {
         return isSatisfactory;
     }
 
+    
     public CourseName getCourseName() {
         return courseName;
     }
@@ -85,7 +96,7 @@ public class Report {
     public void setCourseName(CourseName courseName) {
         this.courseName = courseName;
     }
-
+/*
     public Student getStudent() {
         return student;
     }
@@ -93,14 +104,15 @@ public class Report {
     public void setStudent(Student student) {
         this.student = student;
     }
+    
 
-    public String getEvaluator() {
+    public Instructor getEvaluator() {
         return evaluator;
     }
 
-    public void setEvaluator(String evaluator) {
+    public void setEvaluator(Instructor evaluator) {
         this.evaluator = evaluator;
-    }
+    }*/
 
     public ReportStatus getReportStatus() {
         return reportStatus;

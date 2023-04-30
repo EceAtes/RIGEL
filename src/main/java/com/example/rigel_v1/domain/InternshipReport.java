@@ -8,6 +8,12 @@ import jakarta.persistence.*;
 @Entity
 public class InternshipReport extends Report{
 
+    @ManyToOne
+    private StudentCourse course;
+
+    @ManyToOne
+    private Student ownerStudent;
+
     private String description;
     private boolean TA_check;
 
@@ -19,17 +25,20 @@ public class InternshipReport extends Report{
     @JoinColumn(name = "internshipreport_id")
     private List<Feedback> instructorFeedback;
 
-    InternshipReport(){
+    public InternshipReport(){
     }
 
-    InternshipReport(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus, String description){
-        //super(isSatisfactory, courseName, student, evaluator, reportStatus);
+    public InternshipReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, Student ownerStudent, ReportStatus reportStatus, String description){ // Instructor evaluator,
+        super(isSatisfactory, courseName, reportStatus);
+        this.description = description;
+        this.course = course;
+        this.ownerStudent = ownerStudent;
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
-        this.description = description;
     }
-    
+
+
     void giveFeedback(int id, Feedback feedback){ 
     }
 
@@ -42,6 +51,22 @@ public class InternshipReport extends Report{
     }
 
     public void deleteFeedback(int id){
+    }
+
+    public StudentCourse getCourse() {
+        return course;
+    }
+
+    public void setCourse(StudentCourse course) {
+        this.course = course;
+    }
+
+    public Student getOwnerStudent() {
+        return ownerStudent;
+    }
+
+    public void setOwnerStudent(Student ownerStudent) {
+        this.ownerStudent = ownerStudent;
     }
 
     public String getDescription() {

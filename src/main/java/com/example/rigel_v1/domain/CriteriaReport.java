@@ -13,21 +13,33 @@ public class CriteriaReport extends Report{
     @JoinColumn(name = "criteriareport_id")
     private List<Question> questions;
 
+    @OneToOne
+    private StudentCourse course;        
+
     private boolean isCompleted;
 
     public CriteriaReport(){
     }
 
-    public CriteriaReport(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus){
-        //super(isSatisfactory, courseName, student, evaluator, reportStatus);
-        questions = new ArrayList<Question>();
-        isCompleted = false;
+    public CriteriaReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, ReportStatus reportStatus){ //Student student, Instructor evaluator, 
+        super(isSatisfactory, courseName, reportStatus);
+        this.questions = new ArrayList<Question>();
+        this.course = course;
+        this.isCompleted = false;
     }
 
     public void addQuestion(Question question){
     }
 
     public void editCriteriaForm(){
+    }
+
+    public StudentCourse getCourse() {
+        return course;
+    }
+
+    public void setCourse(StudentCourse course) {
+        this.course = course;
     }
 
     public List<Question> getQuestions() {

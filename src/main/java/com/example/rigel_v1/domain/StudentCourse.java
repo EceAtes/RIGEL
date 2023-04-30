@@ -2,10 +2,11 @@ package com.example.rigel_v1.domain;
 
 import java.io.File;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
+import com.example.rigel_v1.repositories.InstructorRepository;
 import jakarta.persistence.*;
-
 
 
 enum Score{
@@ -23,15 +24,12 @@ enum Status {
     gradeSatisfactory,
     gradeUnsatisfactory,
     withdrawn
-}
+} 
+
+
 
 @Entity
-public class Course {
-    
-    public enum CourseCode{
-        _299,
-        _399
-    }
+public class StudentCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,15 +38,18 @@ public class Course {
     private Date deadline;                                  
     private Score score;
     private Status status;
-    private CourseCode courseCode;    
+    private Report.CourseName courseName;
 
-    @ElementCollection
+    @ManyToOne
+    private Student courseTaker;
+
+    @ManyToOne
+    private Instructor instructor;
+
+    @OneToMany
+    @JoinColumn(name = "course_id")
     private List<InternshipReport> internshipReports;
     
-    //@OneToOne
-    private String instructor;
-    //private Instructor instructor;
-
     @OneToOne
     private GradeForm gradeForm;
 
@@ -58,19 +59,34 @@ public class Course {
     @OneToOne
     private EvaluationForm evaluationForm;
 
-    public Course(){
+    public StudentCourse(){
     }
 
-    public Course(CourseCode courseCode){        
-        this.courseCode = courseCode;
+    public StudentCourse(Student courseTaker, Report.CourseName courseName){   
+        this.courseTaker = courseTaker;
+        this.courseName = courseName;  
+        internshipReports = new LinkedList<>();   
+        gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
+        criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
+        evaluationForm = new EvaluationForm();
+        //courseTaker.enrollCourse(this);
     }
 
-    public Course(CourseCode courseCode, String instructor){       
-        this.courseCode = courseCode;
+    public StudentCourse(Student courseTaker, Report.CourseName courseName, Instructor instructor){      
+        this.courseTaker = courseTaker;
+        this.courseName = courseName;  
         this.instructor = instructor;
+        internshipReports = new LinkedList<>();   
+        gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
+        criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
+        evaluationForm = new EvaluationForm();
+        //courseTaker.enrollCourse(this);
+        //instructor.addCourse(this);  
+        //instructor.addStudent(courseTaker); // not filled yet
     }
 
     public void uploadInternshipReport(File report){ 
+        System.out.println("internship report of " + courseTaker.getName() + " && " + courseName + " uploaded");
     }
     
     public void uploadGradeForm(GradeForm report){ 
@@ -126,18 +142,18 @@ public class Course {
         this.id = id;
     }
 
-    public CourseCode getCourseCode() {
-        return courseCode;
-    }
-    
-    public void setCourseCode(CourseCode courseCode) {
-        this.courseCode = courseCode;
+    public Report.CourseName getCourseName() {
+        return courseName;
     }
 
-    public String getInstructor() {
+    public void setCourseName(Report.CourseName courseName) {
+        this.courseName = courseName;
+    }
+
+    public Instructor getInstructor() {
         return instructor;
     }
-    public void setInstructor(String instructor) {
+    public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
 
@@ -162,26 +178,50 @@ public class Course {
         this.status = status;
     }
 
+    public Student getCourseTaker() {
+        return courseTaker;
+    }
+
+    public void setCourseTaker(Student courseTaker) {
+        this.courseTaker = courseTaker;
+        instructor.addStudent(courseTaker);
+        instructor.addCourse(this);
+    }
+
+    public void setInternshipReports(List<InternshipReport> internshipReports) {
+        this.internshipReports = internshipReports;
+    }
+
+    public void setGradeForm(GradeForm gradeForm) {
+        this.gradeForm = gradeForm;
+    }
+
+    public void setCriteriaReport(CriteriaReport criteriaReport) {
+        this.criteriaReport = criteriaReport;
+    }
+
+    public void setEvaluationForm(EvaluationForm evaluationForm) {
+        this.evaluationForm = evaluationForm;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Course course = (Course) o;
+        StudentCourse course = (StudentCourse) o;
 
-        return courseCode.equals(course.courseCode) && instructor.equals(course.instructor);
+        return courseName.equals(course.courseName) && instructor.equals(course.instructor);
     }
 
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
-                ", courseCode='" + courseCode + '\'' +
+                ", courseName='" + courseName + '\'' +
                 ", instructor='" + instructor + '\'' +
                 ", status=" + status +
                 ", score=" + score +
                 '}';
     }
 }
-
-    

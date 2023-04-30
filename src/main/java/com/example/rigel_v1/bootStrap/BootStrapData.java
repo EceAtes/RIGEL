@@ -2,6 +2,7 @@ package com.example.rigel_v1.bootStrap;
 import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.repositories.*;
 
+import java.io.File;
 import java.util.Set;
 
 import org.aspectj.apache.bcel.generic.Instruction;
@@ -13,14 +14,14 @@ public class BootStrapData implements CommandLineRunner {
 
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
-    CourseRepository courseRepository;
-    ReportRepository reportRepository;
+    private final CourseRepository courseRepository;
+    private final InstructorRepository instructorRepository;
 
-    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, ReportRepository reportRepository) {
+    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
-        this.reportRepository = reportRepository;
+        this.instructorRepository = instructorRepository;
     }
 
     @Override
@@ -50,12 +51,63 @@ public class BootStrapData implements CommandLineRunner {
 
         System.out.println("Started");
 
+
         System.out.println("No of users: " + userRepository.count());
         System.out.println("No of departments: " + departmentRepository.count());
         System.out.println("No of CS students: " + CS.getTotalStuNo());
         System.out.println("No of IE students: " + IE.getTotalStuNo());
 
-        //Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "319319", false, CS, null, null, null, null, null, null);
+        Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "2345", false, CS );
+        Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS);
+        System.out.println("here1");
+
+        instructorRepository.save(instructor1);
+        instructorRepository.save(instructor2);
+
+        System.out.println("here2");
+        StudentCourse cs299 = new StudentCourse(A, CourseName.CS299, instructor1);
+        System.out.println("here3");
+
+        StudentCourse ie299 = new StudentCourse(B, CourseName.IE299);
+        System.out.println("here4");
+
+        ie299.setInstructor(instructor2);
+        System.out.println("here5");
+
+        StudentCourse cs399 = new StudentCourse(C, CourseName.CS299, instructor1);
+        System.out.println("here6");
+
+        courseRepository.save(cs299);
+        System.out.println("here6.1");
+
+        courseRepository.save(ie299);
+        System.out.println("here6.2");
+
+        courseRepository.save(cs399);
+        System.out.println("here7");
+
+        A.enrollCourse(cs399);
+        B.enrollCourse(ie299);
+        A.enrollCourse(cs299);
+        System.out.println("here8");
+
+        userRepository.save(A);
+        userRepository.save(B);
+
+        courseRepository.save(cs299);
+        courseRepository.save(ie299);
+        courseRepository.save(cs399);
+
+        //cs299.uploadInternshipReport(null);
+        //cs299.getGradeForm().setSatisfaction(true);
+
+
+
+        System.out.println("No of users: " + userRepository.count());
+
+    }
+}
+  /*    //Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "319319", false, CS, null, null, null, null, null, null);
         //Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS, null, null, null, null, null, null);
 
 
@@ -78,11 +130,13 @@ public class BootStrapData implements CommandLineRunner {
 
         stuA_cs299.uploadGradeForm(stuA_gradeForm);
         userRepository.save(A);
+        Instructor instructor1 = new Instructor("Eray Tuzun", "tuzun@gmail.com", "2345", false, CS );
+        Instructor instructor2 = new Instructor("Bahar Yetis", "yetis@gmail.com", "ieieie", false, CS);
+        instructorRepository.save(instructor1);
+        instructorRepository.save(instructor2);
 
         System.out.println("\n\nNo of courses: " + courseRepository.count());
         System.out.println("No of reports: " + reportRepository.count());
 
 
-
-    }
-}
+*/

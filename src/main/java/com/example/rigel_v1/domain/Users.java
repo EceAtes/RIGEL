@@ -23,8 +23,7 @@ public class Users {
     private boolean notificationToMail;
     private Role role;
 
-    @ManyToMany(mappedBy = "students")
-    private List<Section> sections;
+
 
     @ManyToOne
     private Department department;
@@ -45,10 +44,10 @@ public class Users {
         this.role = role;
         this.department = department;
         this.notification = new HashSet<>();
-        this.sections = new ArrayList<>();
+
     }
 
-    public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, List<Section> sections) {
+    public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -56,7 +55,6 @@ public class Users {
         this.role = role;
         this.department = department;
         this.notification = notification;
-        this.sections = sections;
     }
 
     public enum Role {

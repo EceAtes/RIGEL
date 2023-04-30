@@ -14,7 +14,7 @@ public class Question {
     private String evidence;
     
     @ManyToOne
-    private GradeForm gradeForm;
+    private CriteriaReport criteriaReport;
     
     public Question(){
     }
@@ -51,11 +51,14 @@ public class Question {
     public void setEvidence(String evidence) {
         this.evidence = evidence;
     }
-    public GradeForm getGradeForm() {
-        return gradeForm;
+
+    public CriteriaReport getCriteriaReport() {
+        return criteriaReport;
     }
-    public void setGradeForm(GradeForm gradeForm) {
-        this.gradeForm = gradeForm;
+
+    public void setCriteriaReport(CriteriaReport criteriaReport) {
+        this.criteriaReport = criteriaReport;
     }
+
 
 }

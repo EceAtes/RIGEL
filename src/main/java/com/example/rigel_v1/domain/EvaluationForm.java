@@ -23,17 +23,21 @@ public class EvaluationForm {
     private boolean isSatisfactory;
     private Recommendation recommendation;
     private String companyName;
+
+    @OneToOne
+    StudentCourse course;
     
     public EvaluationForm(){
     }
 
-    public EvaluationForm(int studentScore, boolean isRelated, boolean isSupervisorEngineer, boolean isSatisfactory, Recommendation recommendation, String companyName) {
+    public EvaluationForm(int studentScore, boolean isRelated, boolean isSupervisorEngineer, boolean isSatisfactory, Recommendation recommendation, String companyName, StudentCourse course) {
         this.studentScore = studentScore;
         this.isRelated = isRelated;
         this.isSupervisorEngineer = isSupervisorEngineer;
         this.isSatisfactory = isSatisfactory;
         this.recommendation = recommendation;
         this.companyName = companyName;
+        this.course = course;
     }
 
 
