@@ -12,7 +12,7 @@ public class Instructor extends FeedbackUser{
     private Map<Long, Student> graded;
     private Map<Long, Student> toBeGraded;
     private File eSignature;
-    private Statistics statistics;
+    //private Statistics statistics;
 
     public Instructor() {
     }
@@ -22,7 +22,6 @@ public class Instructor extends FeedbackUser{
         this.graded = graded;
         this.toBeGraded = toBeGraded;
         this.eSignature = eSignature;
-        this.statistics = statistics;
     }
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, Map<Long, Student> graded, Map<Long, Student> toBeGraded, File eSignature, Statistics statistics) {
@@ -30,7 +29,6 @@ public class Instructor extends FeedbackUser{
         this.graded = graded;
         this.toBeGraded = toBeGraded;
         this.eSignature = eSignature;
-        this.statistics = statistics;
     }
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students, Map<Long, Student> graded, Map<Long, Student> toBeGraded, File eSignature, Statistics statistics) {
@@ -38,7 +36,6 @@ public class Instructor extends FeedbackUser{
         this.graded = graded;
         this.toBeGraded = toBeGraded;
         this.eSignature = eSignature;
-        this.statistics = statistics;
     }
 
     public Map<Long, Student> getGraded() {
@@ -64,12 +61,5 @@ public class Instructor extends FeedbackUser{
     public void seteSignature(File eSignature) {
         this.eSignature = eSignature;
     }
-
-    public Statistics getStatistics() {
-        return statistics;
-    }
-
-    public void setStatistics(Statistics statistics) {
-        this.statistics = statistics;
-    }*/
+*/
 }

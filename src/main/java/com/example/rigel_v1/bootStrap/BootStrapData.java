@@ -25,25 +25,25 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Department CS = new Department(0,0, "CS");
-        Department IE = new Department(0,0, "IE");
+        Department CS = new Department("CS");
+        Department IE = new Department("IE");
         departmentRepository.save(CS);
         departmentRepository.save(IE);
 
         Student A = new Student("A", "a@gmail.com", "1234", true, null);
-        A.setDepartment(CS);
+        CS.addStudent(A, 299);
 
         userRepository.save(A);
         departmentRepository.save(CS);
 
         Student B = new Student("B", "b@gmail.com", "1235", false, null);
-        B.setDepartment(IE);
+        IE.addStudent(B, 399);
 
         userRepository.save(B);
         departmentRepository.save(IE);
 
         Student C = new Student("C", "c@gmail.com", "1236", true, null);
-        C.setDepartment(IE);
+        IE.addStudent(C, 399);
 
         userRepository.save(C);
         departmentRepository.save(IE);

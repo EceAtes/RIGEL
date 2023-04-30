@@ -4,8 +4,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class TA extends FeedbackUser{
+<<<<<<< HEAD
     /*/
     public TA() {
+=======
+    /*public TA() {
+>>>>>>> 2cc73e1fa6b246b55c786c9d3251bc4b27e2188d
     }
 
     public TA(Map<Long, Student> students) {

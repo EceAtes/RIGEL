@@ -4,6 +4,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity

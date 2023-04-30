@@ -8,7 +8,9 @@ import java.util.Set;
 
 @Entity
 public class FeedbackUser extends Users{
+
 /*
+    //private Map<Integer, List<Course>> students;
     private Map<Long, Student> students;
 
     public FeedbackUser() {
@@ -39,5 +41,4 @@ public class FeedbackUser extends Users{
     public void setStudents(Map<Long, Student> students) {
         this.students = students;
     }
-    */
 }
