@@ -243,3 +243,52 @@ Tasarlanan sayfaların kodu githuba yüklendi.
 * İzgi system boundaryi çizip, logoyu kaldırıp ve diagrama iki kere yazılmış use case'i düzeltip rapora ekleyecek.
 
 Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söylemeyi ve üstteki cevaplanmamış soruları sormayı unutmayalım.
+
+
+Toplantı no: 12
+30.04.2023 
+Başlangıç: 20.10
+Bitiş: 21.51
+
+Not: Ömer toplantıya katılamadı.
+
+* Önceki toplantıda subsystem için bölüşülen partitionlar konuşuldu. Birleştirmeyi Begüm en geç salı günkü derse dek yapacak.
+* Design raporu için görev bölümü yapıldı. Atanmış bu işler çarşamba günkü toplantıya dek bitmeli.
+      1.	Introduction — Aytekin
+        1.1 Purpose of the system
+        1.2 Design goals ( Usability & Functionality )
+
+      2.	High-level software architecture
+        2.1 Subsystem decomposition — Begüm
+        2.2 Hardware/software mapping — Ece
+        2.3 Persistent data management — Ece (entity)
+        2.4 Access control and security — İzgi   |  Tablo (Ömer)
+        2.5 Boundary conditions — İzgi
+
+      3.	Low-level design
+        4.1 Object design trade-offs —- Aytekin
+        4.2 Final object design  — Ömer
+        4.3 Packages
+        4.4 Class Interfaces
+
+      4.3 ve 4.4'ü anlamayıp slackten sorduk, başka gruplara da soracağız. 
+
+* Githuba veya Figmaya yüklemek için kodun harika olmasını beklemeye gerek olmadığı vurgulandı.
+* Login page functionalitysi bitmemiş gibi görünüyor (eklenmemiş). Ömer olmadığı için konuşamadık. 
+* Aytekin ve İzgi önceki toplantıda aldıkları syfaları tamamladılar. Sonraki toplantıya dek sayfalar arası geçişi halledecekler.
+Login page hazır olmadığı takdirde bu sayfalar arasında olduğu için işler aksayabilir.
+* Ece ve Begüm entitiy relationlarını bitirdi. Database'e kaydetmede sorun olmadığına inanıyorlar. Son bir kez daha kontrol edip controllerları tamamlayacaklar ve json dosyası atabilir hale getirecekler (Beklenen deadline: salı, En geç: çarşamba toplantıdan önce)
+* JSON dosyası hazır olduğunda frontendle user creation functionalitysi entegre edilecek. ( En kısa zamanda, en geç: pazar ) 
+* Automatch UI'ı tekrar konuşuldu, feedbacke göre daha web sitesine uygun bir tasarım ve functionality belirlendi.
+Automatch semester başlayınca direkt yapılacak, ayrı buton olmayacak. Öğrencilerin yanında change student butonu olaiblir. Hoca silindiğinde ise yine otomatik olarak öğrencileri dağıtacak.
+* Ece automatch functionalitysine bakacak.
+* Begüm criteria report classını düzenleyip ABET sorularını işlevsel hale getirecek functionalityi yazacak.
+* FE ekibi userların tüm sayfalarını oluşturabilir, functionaility beklemeye gerek yok. (Paylaşım için Aytekinle konuşunuz.)
+* Google Docs API'ı için Youtubeta springle birlikte tutorialları var. Onlar incelenecek, report upload functionalitysinin backendinin haftaya cumaya dek bitmesini umuyoruz.
+* Analiz raporundaki mockuplar güncellenmemiş (Ömer)
+* Takvime genel bir functionaility bitirme hedefleri konuldu. 
+* FE'de Sekreterin statisticsi yokmuş, eklemeyi unutmayacağız
+* UI geliştirildi. Butonlar yerine menü tercih edilecek. Mockuplara çok sıkı bağlı kalmak zorunda değiliz. Önemli olan profesyonel durması.
+
+Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söyledik.
+Sunumda kendimizi övmek için böyle confilictleri nasıl çözdüğümüzü yakında listeleyeceğim.
