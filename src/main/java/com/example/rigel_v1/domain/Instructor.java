@@ -17,11 +17,11 @@ public class Instructor extends FeedbackUser{
 
     @OneToMany
     @JoinColumn(name = "instructor_id")
-    private List<Course> graded = new LinkedList<>();
+    private List<StudentCourse> graded = new LinkedList<>();
 
     @OneToMany
     @JoinColumn(name = "instructor_id")
-    private List<Course> toBeGraded = new LinkedList<>();
+    private List<StudentCourse> toBeGraded = new LinkedList<>();
 
     private File eSignature;
 
@@ -36,7 +36,7 @@ public class Instructor extends FeedbackUser{
         department.addInstructor(this);
     }
 
-    public Instructor(Map<Long, Student> students, List<Course> graded, List<Course> toBeGraded, File eSignature) { //, Statistics statistics) {
+    public Instructor(Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature) { //, Statistics statistics) {
         super(students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
@@ -45,7 +45,7 @@ public class Instructor extends FeedbackUser{
         this.sections = new ArrayList<>();
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, List<Course> graded, List<Course> toBeGraded, File eSignature) {//, Statistics statistics) {
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature) {//, Statistics statistics) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
@@ -55,7 +55,7 @@ public class Instructor extends FeedbackUser{
         department.addInstructor(this);
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students, List<Course> graded, List<Course> toBeGraded, File eSignature, List<Section> sections) { //Statistics statistics
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature, List<Section> sections) { //Statistics statistics
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, notification, students);
         this.graded = graded;
         this.toBeGraded = toBeGraded;
@@ -64,19 +64,19 @@ public class Instructor extends FeedbackUser{
         this.sections = sections;
     }
 
-    public List<Course> getGraded() {
+    public List<StudentCourse> getGraded() {
         return graded;
     }
 
-    public void setGraded(List<Course> graded) {
+    public void setGraded(List<StudentCourse> graded) {
         this.graded = graded;
     }
 
-    public List<Course> getToBeGraded() {
+    public List<StudentCourse> getToBeGraded() {
         return toBeGraded;
     }
 
-    public void setToBeGraded(List<Course> toBeGraded) {
+    public void setToBeGraded(List<StudentCourse> toBeGraded) {
         this.toBeGraded = toBeGraded;
     }
 
@@ -88,15 +88,18 @@ public class Instructor extends FeedbackUser{
         this.eSignature = eSignature;
     }
 
-    public void addCourse(Course course){
+    public void addCourse(StudentCourse course){
         this.toBeGraded.add(course);
+    }
+
+    public void addStudent(Student student){
+        //this.toBeGraded.add(sections); ????????????
     }
 
     /*
     public Statistics getStatistics() {
         return statistics;
     }
-
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
     }*/

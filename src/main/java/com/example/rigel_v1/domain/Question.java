@@ -13,6 +13,9 @@ public class Question {
     private String answer;
     private String evidence;
     
+    @ManyToOne
+    private CriteriaReport criteriaReport;
+    
     public Question(){
     }
 
@@ -48,4 +51,14 @@ public class Question {
     public void setEvidence(String evidence) {
         this.evidence = evidence;
     }
+
+    public CriteriaReport getCriteriaReport() {
+        return criteriaReport;
+    }
+
+    public void setCriteriaReport(CriteriaReport criteriaReport) {
+        this.criteriaReport = criteriaReport;
+    }
+
+
 }

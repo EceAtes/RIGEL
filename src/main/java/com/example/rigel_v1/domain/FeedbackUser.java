@@ -7,10 +7,6 @@ import java.util.*;
 @Entity
 public class FeedbackUser extends Users{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @OneToMany
     @JoinColumn(name = "feedback_user_id")
     private Map<Long, Student> students = new HashMap<>();

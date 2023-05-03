@@ -3,6 +3,8 @@ package com.example.rigel_v1.domain;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.rigel_v1.domain.enums.*;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,22 +12,34 @@ public class GradeForm extends Report {
     private boolean willBeRevised;
     //private Date dueDate;           // ??????????
 
-    @OneToMany
+    @OneToOne
+    private StudentCourse course;        
+
+    /*@OneToMany
     @JoinColumn(name = "gradeform_id")
-    private ArrayList<Question> questions;
+    private ArrayList<Question> questions;*/
 
     public GradeForm(){
     }
 
-    public GradeForm(boolean isSatisfactory, CourseName courseName, Student student, Instructor evaluator, ReportStatus reportStatus){
-        super(isSatisfactory, courseName, student, evaluator, reportStatus);
+    public GradeForm(boolean isSatisfactory, CourseName courseName, StudentCourse course,  ReportStatus reportStatus){ // Student student, Instructor evaluator,Student student, Instructor evaluator,
+        super(isSatisfactory, courseName, reportStatus);
         willBeRevised = true;
-        questions = new ArrayList<Question>();
+        this.course = course;
+        //questions = new ArrayList<Question>();
     }
 
     public void editGradeForm(){
     }
 
+    public StudentCourse getCourse() {
+        return course;
+    }
+
+    public void setCourse(StudentCourse course) {
+        this.course = course;
+    }
+    
     public boolean getRevisionStatus() {
         return willBeRevised;
     }
@@ -37,10 +51,9 @@ public class GradeForm extends Report {
     /*public Date getDueDate() {
         return dueDate;
     }
-
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }*/
+    }
 
     public ArrayList<Question> getQuestions() {
         return questions;
@@ -48,7 +61,7 @@ public class GradeForm extends Report {
 
     public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
-    }
+    }*/
 
 
 }
