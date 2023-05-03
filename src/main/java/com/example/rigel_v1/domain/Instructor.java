@@ -33,6 +33,7 @@ public class Instructor extends FeedbackUser{
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, new HashMap<>());
+        department.addInstructor(this);
     }
 
     public Instructor(Map<Long, Student> students, List<Course> graded, List<Course> toBeGraded, File eSignature) { //, Statistics statistics) {
@@ -51,6 +52,7 @@ public class Instructor extends FeedbackUser{
         this.eSignature = eSignature;
         //this.statistics = statistics;
         this.sections = new ArrayList<>();
+        department.addInstructor(this);
     }
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students, List<Course> graded, List<Course> toBeGraded, File eSignature, List<Section> sections) { //Statistics statistics

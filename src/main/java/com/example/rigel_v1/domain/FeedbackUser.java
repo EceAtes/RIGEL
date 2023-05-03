@@ -2,10 +2,7 @@ package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class FeedbackUser extends Users{
@@ -16,7 +13,7 @@ public class FeedbackUser extends Users{
 
     @OneToMany
     @JoinColumn(name = "feedback_user_id")
-    private Map<Long, Student> students;
+    private Map<Long, Student> students = new HashMap<>();
 
     public FeedbackUser() {
     }

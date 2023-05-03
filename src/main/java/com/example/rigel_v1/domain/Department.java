@@ -13,21 +13,28 @@ public class Department {
     //private Statistics statistics;
     private int totalStuNo;
     private int internedStuNo;
-    //private Administration departmentHead;
+
+    @OneToMany
+    @JoinColumn(name = "department_id")
+    private Map<String, Administration> administrators = new HashMap<>();//maybe add id for them too?
+
     private String name;
-    //private Map<Integer, Instructor> instructors;
+
+    @OneToMany
+    @JoinColumn(name = "department_id")
+    private Map<String, Instructor> instructors = new HashMap<>();//maybe add id for them too?
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
-    private Map<Long, Student> students_299;
+    private Map<Long, Student> students_299 = new HashMap<>();
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
-    private Map<Long, Student> students_399;
+    private Map<Long, Student> students_399 = new HashMap<>();
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
-    private List<Department> sections;
+    private List<Department> sections = new ArrayList<>();
     //private Secretary secretary;
 
 
@@ -42,9 +49,6 @@ public class Department {
 
     public Department(String name) {
         this.name = name;
-        this.sections = new ArrayList<>();
-        this.students_299 = new HashMap<>();
-        this.students_399 = new HashMap<>();
         this.totalStuNo = 0;
         this.internedStuNo = 0;
     }
@@ -117,6 +121,26 @@ public class Department {
             this.students_399.put(student.getId(), student);
         }
         student.setDepartment(this);
+    }
+
+    public Map<String, Administration> getAdministrators() {
+        return administrators;
+    }
+
+    public void setAdministrators(Map<String, Administration> administrators) {
+        this.administrators = administrators;
+    }
+
+    public Map<String, Instructor> getInstructors() {
+        return instructors;
+    }
+
+    public void setInstructors(Map<String, Instructor> instructors) {
+        this.instructors = instructors;
+    }
+
+    public void addInstructor(Instructor instructor){
+        this.instructors.put(instructor.getName(), instructor);
     }
 
     @Override
