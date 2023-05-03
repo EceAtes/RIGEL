@@ -191,7 +191,6 @@ Başlangıç: 18.05
 Bitiş: 23.59
 Analysis Report değişikliklerinin tespiti
 
-
 Toplantı no: 8 
 31.03.2023 
 Başlangıç: 18.05
@@ -292,3 +291,52 @@ Automatch semester başlayınca direkt yapılacak, ayrı buton olmayacak. Öğre
 
 Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söyledik.
 Sunumda kendimizi övmek için böyle confilictleri nasıl çözdüğümüzü yakında listeleyeceğim.
+
+
+
+Toplantı no: 13
+03.04.2023 
+Başlangıç: 20:06
+Bitiş: 22.51
+
+Genel
+* Ece son derse gitmiş, raporun diagramlardaki açıklamalarına gerek olmadığını ama 4.3 ve 4.4'ün rapora dahil olması gerektiğini söyledi.
+* FE tüm pageleri çarşamba gününe dek bitirecek. 
+* Sekreterin company notu girişi sayfasını unutmuşuz, eklenecek.
+* Cuma günü rapor yüklemesi için tekrar buluşacağız.
+* Herkes API'a göz atacak.
+* Boş zamanlarda analysis report okunup değişiklikler güncellenecek.
+* Herkes analysis reportta kontrol ettiği kişileri kontrol etmeye devam edecek.
+
+Aytekin 
+* Login page front-end'ini Aytekin tamamladı.
+* Aytekin Design rapordaki bölümlerini yazmış, takım feedbackine göre düzenlemeler ve iyileştirmeler yapılacak.  
+* Design rapordaki Design Patterns başlığı yazılacak.
+
+Ece
+* Ece JSON file atmada sorun yaşadı, onunla uğraşıyor. Controllerı ve entitiy relationlarını henüz kontrol edememiş. 
+* Ece API'ı biraz daha incelemiş, front-end ekibine daha çok iş düşebilir gibi görünüyor. Takımdaki herkes tekrar API'ı inceleyecek. Yapamayacağımız gibiyse değiştirebiliriz ama yapmanın bize çok fazla artı katabileceğinin farkındayız. O yüzden ısrarcı davranıyoruz.
+* Design rapordaki Data Management Layer yapılacak.
+
+
+Ömer
+* Mockuplar eklendi.
+* Final Object Diagram çizildi. Özellikle Repolar için konuşuldu, iyileştirmeler ve eklemeler yapılacak. İyileştirilmiş hali perşembe günü çok geç olmadan yüklenmeli.
+* Design report 
+* Analysis report feedbackindeki use case ayrılacak.
+* User Interface Management Layer yapılacak. Gerektiğinde özellikle functionları yazarken yardım istemekten şüphe etmeyecek.
+
+
+Begüm 
+* Son toplantıdan bu yana bir şey yapmamış. 
+* Subsystem diagramı çizilecek. Diagram açıklanmadığından biraz detaylı olsun dendi. 
+* Instructorun öğrencilerini görüntğlediği yer için sketch atacak.
+* Extension için bir şeyler yazacak. Yarım use case düzeltilecek. 
+* Web Server Layer çizilecek
+* Controller ve relation testleri yapılacak.
+
+
+İzgi 
+* Son toplantıdan bu yana bir şey yapmamış. 
+* Design report için önceki toplantıda verilenler dışında bir şey vermedik. Özellikle Boundary Conditionsu çok iyi yapacağına inanıyoruz!
+* Aktörler use case diagramı system boundrysinin dışında olmalı, güncellenmeli.
