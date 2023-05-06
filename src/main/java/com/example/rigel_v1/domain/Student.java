@@ -11,10 +11,11 @@ import java.util.Set;
 
 @Entity
 public class Student extends Users {
-    @ElementCollection
+    @OneToMany
+    @JoinColumn(name = "student_id")
     private Set<InternshipReport> oldReports;
 
-    @ElementCollection
+    @OneToMany
     private Set<StudentCourse> courses;
 
 

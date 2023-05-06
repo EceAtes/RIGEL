@@ -73,7 +73,8 @@ public class Users {
         STUDENT,
         TA,
         INSTRUCTOR,
-        ADMINISTRATION
+        ADMINISTRATION,
+        NOT_REGISTERED
     }
 
     public boolean deleteUser(){

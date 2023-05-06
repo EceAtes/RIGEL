@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.example.rigel_v1.domain.enums.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 
@@ -15,13 +16,22 @@ public class StudentCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                
-    
-    private Date deadline;                                  
+
+ //   @JsonProperty("date")
+    private Date deadline;
+
+  //  @JsonProperty("score")
     private Score score;
+
+   // @JsonProperty("status")
     private Status status;
+
+    @JsonProperty("name")
     private CourseName courseName;
 
+    @JsonProperty("student")
     @ManyToOne
+    @JoinColumn(name = "student_id")
     private Student courseTaker;
 
     @ManyToOne
@@ -168,8 +178,8 @@ public class StudentCourse {
 
     public void setCourseTaker(Student courseTaker) {
         this.courseTaker = courseTaker;
-        instructor.addStudent(courseTaker);
-        instructor.addCourse(this);
+        //instructor.addStudent(courseTaker);
+        //instructor.addCourse(this);
     }
 
     public void setInternshipReports(List<InternshipReport> internshipReports) {
