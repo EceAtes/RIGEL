@@ -1,5 +1,6 @@
 package com.example.rigel_v1.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -11,13 +12,17 @@ public class Department {
     private Long id;
 
     //private Statistics statistics;
+    @JsonProperty("totalStuNo")
     private int totalStuNo;
+
+    @JsonProperty("internedStuNo")
     private int internedStuNo;
 
     @OneToMany
     @JoinColumn(name = "department_id")
     private Map<String, Administration> administrators = new HashMap<>();//maybe add id for them too?
 
+    @JsonProperty("name")
     private String name;
 
     @OneToMany
@@ -51,6 +56,12 @@ public class Department {
         this.name = name;
         this.totalStuNo = 0;
         this.internedStuNo = 0;
+    }
+
+    public Department(int totalStuNo, int internedStuNo,String name) {
+        this.name = name;
+        this.totalStuNo = totalStuNo;
+        this.internedStuNo = internedStuNo;
     }
 
     public Department() {

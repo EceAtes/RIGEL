@@ -1,9 +1,14 @@
 package com.example.rigel_v1.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
-
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
+import com.fasterxml.jackson.databind.jsontype.impl.TypeNameIdResolver;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,13 +22,18 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("email")
     private String email;
+
+    @JsonProperty("password")
     private String password;
+
+    @JsonProperty("notifToMail")
     private boolean notificationToMail;
     private Role role;
-
-
 
     @ManyToOne
     private Department department;
@@ -36,7 +46,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department) {
+    public Users( String name, String email, String password,boolean notificationToMail, Role role, Department department) {
         this.name = name;
         this.email = email;
         this.password = password;
