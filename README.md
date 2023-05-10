@@ -1,92 +1,70 @@
-# Welcome to RIGEL
+# Getting Started with Create React App
 
-Hi! This project is a internship evaluation managment system for Bilkent University.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**Members**
->Aytekin İsmail 22003988
+## Available Scripts
 
->Ece Ateş 22002908
+In the project directory, you can run:
 
->İzgi Nur Tamcı 22002682
+### `npm start`
 
->Ömer Asım Doğan 21903042
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
->Zeynep Begüm Kara 22003880
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
+### `npm test`
 
-# Features
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
--	**Automatically** generated forms
+### `npm run build`
 
-- 	Upload-Download **PDF/PNG**
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- 	Comment(ish) section for **feedback/revision**
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-- 	Notification to emails/ reminders for instructors/secreatry.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- 	**Progress bar** for students and instructors (percentage of completed reports in total for instructors)
+### `npm run eject`
 
--  	E-Signature(?) for instructors
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
--   **Profile page**
-	> - previous internships
-	> - necessary informations to automatically fill form
-	> - progress bar
-    
--   **Main page** 
-  	> - information about interships (pdf, powerpoint)
-  	> - contact information about intructors
-  	> - link to mfstaj
-  	> - link to CS299/CS399 pages
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
--   System will send a warning e-mail before deadline for internship documents.
-    
--   **FAQ** will be added to website to reach easier.
-    
--   Admin user, student user, instructor user will be **the user roles**.
-	> -   Admin user role will maintain the system.
-	> -   Instructor user role will also be able to approve new database entry for companies.
-	> -   Instructor user role will also be able to see unapproved forms sent by students.
-	> -  Instructor user role will be able to evaluate internship reports.
-	
--   There exist 5 roles:
-	 -  **Admin user** role will maintain the system.
-		>* Will initialize the system in the beginning of the semester
-		>* Can create all users
-		>* Can see all users and change their user type in the system
-		>* Changes and sees everything from every department
-		
-	- **Secretary user** role coordinates their department
-		>* Can see all students and instructors of their department
-		>* Matches instructors with students
-		>* Creates final Evaluation Report of the student and sends it to student's instructor
-		>* Sees Company Reports and enters company grades to Evaluation Report
-		>* Can create and delete new Instructors, TAs and Students of their department
-		>* Has e-signature
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-	 -  **Instructor user** role can evaluate internship reports and view student profiles (only the ones they are responsible with)
-		>* Can see and edit Evaluation Reports of assigned students
-		>* Creates Evaluation Criteria Report of assigned students
-		>* Can see and annotate Internship Report of assigned students
-		>* Has e-signature
-		
-	 - **TA User** role checks reports initially 
-		>* Can see their mentor's students' reports
-	 	>* Quality check
-		>* Format checking
-		>* Turnitin check
-	
-	 - **Student User** role can upload internship reports to the system
-		>* Can see progress of their reports
-		>* Can see their Internship Report versions in their profile page
-		>* Can see their previous internships if any
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-	- **Department Chair** role manages their department
-		>* Sees statistics about a their department
-		>* Can change matches between students and instructors (reassign for emergency)
-		>* Sees all Evaluation Criteria Reports of their department
-		>* Sees all Evaluation Reports
-		>* Has e-signature
+## Learn More
 
-# Technologies
-This project will be implemented using **Spring Boot** for back-end, **MongoDB** for database and **React** for front-end.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
