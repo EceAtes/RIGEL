@@ -340,3 +340,24 @@ Begüm
 * Son toplantıdan bu yana bir şey yapmamış. 
 * Design report için önceki toplantıda verilenler dışında bir şey vermedik. Özellikle Boundary Conditionsu çok iyi yapacağına inanıyoruz!
 * Aktörler use case diagramı system boundrysinin dışında olmalı, güncellenmeli.
+
+
+Toplantı no: 14
+03.04.2023 
+Başlangıç: 20.30
+Bitiş: 22.30
+* FE tüm sayfaları bitirmemiş.
+* Instructor, Student ve Sekreter aktörlerini yapsak şimdilik yeter.
+* Geri kalan aktörlerle daha sonra ilgilenilecek. 
+* Begüm Instructorun öğrencilerini görüntğlediği yer tasarımını anlattı. FE yapacak. 
+* Ece json atabiliyor.
+
+Toplantı no: 15
+10.04.2023 
+Başlangıç: 21:10
+Bitiş: 22.28
+
+İlk fe-be entegrasyon denemesi user ekleme üzerinde yapılmaya çalışıldı başarısızlıkla sonuçlandı.
+Githublarını idelerine bağlamayanlar MUTLAKA bağlamalı.
+İzgi ve Aytekin entegreyi en geç cumartesi akşamına kadar bakacak.
+Begüm desya yükleme ile ilgilenecek.
