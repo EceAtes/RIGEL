@@ -45,9 +45,14 @@ public class CourseController {
 
     }
 
+    @GetMapping("/{id}")
+    public Optional<StudentCourse> getCourse(@PathVariable Long id){
+        return courseRepository.findById(id);
+    }
+
     @GetMapping//this function is a get request (fetches sth from the database)//works but since all Maps, etc. must be non-null
     public Optional<StudentCourse> getAllCourses(){
-        Long a = 5L;
+        Long a = 4L;
         return courseRepository.findById(a);
     }
     /*public Iterable<StudentCourse> getAllCourses(){

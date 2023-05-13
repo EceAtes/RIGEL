@@ -26,7 +26,7 @@ public class DepartmentController {
     @GetMapping//this function is a get request (fetches sth from the database)
     //works but since all Maps, etc. must be non-null
     public Optional<Department> getAllDepartments(){
-        Long a = new Long(3);
+        Long a = 3L;
         return departmentRepository.findById(a);
     }
     /*public Iterable<Department> getAllDepartments(){

@@ -39,14 +39,14 @@ public class Users {
     private Department department;
 
     @OneToMany
-    @JoinColumn(name = "users_id") 
-    private Set<Notification> notification;
+    @JoinColumn(name = "users_id")
+    private Set<Notification> notification = new HashSet<>();
 
 
     public Users() {
     }
 
-    public Users( String name, String email, String password,boolean notificationToMail, Role role, Department department) {
+    public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -54,7 +54,6 @@ public class Users {
         this.role = role;
         this.department = department;
         this.notification = new HashSet<>();
-
     }
 
     public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification) {
@@ -68,13 +67,13 @@ public class Users {
     }
 
     public enum Role {
-        SECRETARY,
+        NOT_REGISTERED,
         ADMIN,
         STUDENT,
         TA,
         INSTRUCTOR,
         ADMINISTRATION,
-        NOT_REGISTERED
+        SECRETARY
     }
 
     public boolean deleteUser(){
@@ -169,6 +168,7 @@ public class Users {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", notificationToMail=" + notificationToMail +
                 ", role=" + role +
                 ", department=" + department +

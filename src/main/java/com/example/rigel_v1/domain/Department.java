@@ -1,6 +1,8 @@
 package com.example.rigel_v1.domain;
 
+import com.example.rigel_v1.NullKeySerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -20,6 +22,7 @@ public class Department {
 
     @OneToMany
     @JoinColumn(name = "department_id")
+    @JsonSerialize(using = NullKeySerializer.class)
     private Map<String, Administration> administrators = new HashMap<>();//maybe add id for them too?
 
     @JsonProperty("name")
@@ -27,20 +30,26 @@ public class Department {
 
     @OneToMany
     @JoinColumn(name = "department_id")
+    @JsonSerialize(using = NullKeySerializer.class)
     private Map<String, Instructor> instructors = new HashMap<>();//maybe add id for them too?
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
+    @JsonSerialize(using = NullKeySerializer.class)
     private Map<Long, Student> students_299 = new HashMap<>();
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
+    @JsonSerialize(using = NullKeySerializer.class)
     private Map<Long, Student> students_399 = new HashMap<>();
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
     private List<Department> sections = new ArrayList<>();
-    //private Secretary secretary;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "secretary_id", referencedColumnName = "id")
+    private List<Secretary> secretaries = new ArrayList<>();
 
 
     public Department(int totalStuNo, int internedStuNo, String name, Map<Long, Student> students_299, Map<Long, Student> students_399, List<Department> sections) {
@@ -62,6 +71,10 @@ public class Department {
         this.name = name;
         this.totalStuNo = totalStuNo;
         this.internedStuNo = internedStuNo;
+        administrators = new HashMap<>();
+        instructors = new HashMap<>();
+        students_299 = new HashMap<>();
+        students_399 = new HashMap<>();
     }
 
     public Department() {
@@ -176,13 +189,9 @@ public class Department {
                 ", totalStuNo=" + totalStuNo +
                 ", internedStuNo=" + internedStuNo +
                 ", name='" + name + '\'' +
-                ", students_299=" + students_299 +
-                ", students_399=" + students_399 +
-                ", sections=" + sections +
                 '}';
     }
-
-    /*public void initializeCourse(Course course){
+/*public void initializeCourse(Course course){
     }
 
     public void endCourse(Course course){

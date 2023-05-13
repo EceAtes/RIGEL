@@ -13,10 +13,10 @@ import java.util.Set;
 public class Student extends Users {
     @OneToMany
     @JoinColumn(name = "student_id")
-    private Set<InternshipReport> oldReports;
+    private Set<InternshipReport> oldReports = new HashSet<>();
 
     @OneToMany
-    private Set<StudentCourse> courses;
+    private Set<StudentCourse> courses = new HashSet<>();
 
 
     public Student() {
@@ -63,5 +63,13 @@ public class Student extends Users {
                 ", courses=" + courses +
                 '}';
         return output;
+    }
+
+    public boolean takes(int i) {
+        for (StudentCourse course: courses) {
+            if(Integer.parseInt((course.getCourseName() + "").substring(2)) == i)
+                return true;
+        }
+        return false;
     }
 }

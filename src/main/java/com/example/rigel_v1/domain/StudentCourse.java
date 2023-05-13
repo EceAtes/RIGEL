@@ -29,7 +29,7 @@ public class StudentCourse {
     @JsonProperty("name")
     private CourseName courseName;
 
-    @JsonProperty("student")
+  //  @JsonProperty("student")
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student courseTaker;

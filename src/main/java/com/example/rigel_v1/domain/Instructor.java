@@ -3,6 +3,8 @@ package com.example.rigel_v1.domain;
 import java.io.File;
 import java.util.*;
 
+import com.example.rigel_v1.NullKeySerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
@@ -13,7 +15,7 @@ public class Instructor extends FeedbackUser{
 
     @OneToMany
     @JoinColumn(name = "instructor_id")
-    private List<Section> sections;
+    private List<Section> sections = new LinkedList<>();
 
     @OneToMany
     @JoinColumn(name = "instructor_id")
@@ -23,7 +25,7 @@ public class Instructor extends FeedbackUser{
     @JoinColumn(name = "instructor_id")
     private List<StudentCourse> toBeGraded = new LinkedList<>();
 
-    private File eSignature;
+    private File eSignature = new File("pom.xml");
 
     //private Statistics statistics;
 
@@ -33,7 +35,8 @@ public class Instructor extends FeedbackUser{
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, new HashMap<>());
-        department.addInstructor(this);
+        //department.addInstructor(this);
+        eSignature = new File("pom.xml");
     }
 
     public Instructor(Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature) { //, Statistics statistics) {

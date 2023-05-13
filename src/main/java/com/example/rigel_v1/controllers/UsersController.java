@@ -7,10 +7,12 @@ import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RequestMapping("/users")
@@ -31,33 +33,95 @@ public class UsersController {
         if (optional.isPresent()) {
             Department department = optional.get();
             if (department instanceof Department) {
-                if(request.getRole() == 2){
+                if(request.getRole() == 2){ //student
                     Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
+                    /*if(student.takes(299)){
+                        department.addStudent(student, 299);
+                    }
+                    if(student.takes(399)){
+                        department.addStudent(student, 399);
+                    }*/
                     this.userRepository.save(student);
+                    System.out.println(student);
                 }
-                else if(request.getRole() == 4){
+                else if(request.getRole() == 4){ //instructor
                     Instructor instructor = new Instructor(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(instructor);
+                    System.out.println(instructor);
+                }
+                else if(request.getRole() == 6){ //secretary
+                    Secretary secretary = new Secretary(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
+                    this.userRepository.save(secretary);
+                    //System.out.println(secretary);
                 } else{
                     Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Users.Role.NOT_REGISTERED, department);
                     this.userRepository.save(user);
+                    //System.out.println(user);
                 }
             }
         }
+    }
+
+    @PatchMapping("/department/{id}")
+    public ResponseEntity<Users> updateUserDepartment(@PathVariable Long id, @RequestBody Map<String, Object> patchRequestBody){
+        Optional<Users> optional = userRepository.findById(id);
+        if (optional == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Users user = optional.get();
+        Integer departmentIdInt = (Integer) patchRequestBody.get("department_id");
+        Long departmentId = departmentIdInt.longValue();
+        Optional<Department> optional0 = departmentRepository.findById(departmentId);
+        if (optional0 == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Department department = optional0.get();
+
+        user.setDepartment(department);
+        Users updatedUser = userRepository.save(user);
+
+        return ResponseEntity.ok(updatedUser);
+    }
 
 
+    //doesn't change department
+    @PatchMapping("/{id}")
+    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody UserRequest request) {
+        Optional<Users> optional = userRepository.findById(id);
+        if (optional == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Users user = optional.get();
 
+        if (request.getName() != null) {
+            user.setName(request.getName());
+        }
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if (request.getPassword() != null) {
+            user.setPassword(request.getPassword());
+        }
+        user.setNotificationToMail(request.isNotifToMail());//if JSON doesn't have any "notifToMail" part, this is set to false
+
+        // Save the updated user object
+        Users updatedUser = userRepository.save(user);
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Users> getUser(@PathVariable Long id){
+        return userRepository.findById(id);
     }
 
     @GetMapping//this function is a get request (fetches sth from the database)
     //works but since all Maps, etc. must be non-null
-    public Optional<Users> getAllUsers(){
-        Long a = 6L;
-        return userRepository.findById(a);
+    public Iterable<Users> getAllUsers(){
+        Iterable<Users> list = userRepository.findAll();
+        System.out.println(list);
+        return list;
     }
-    /*public Iterable<Users> getAllUsers(){
-        return userRepository.findAll();
-    }*/
 
     @RequestMapping("/users")
     public String getUsers(Model model){
