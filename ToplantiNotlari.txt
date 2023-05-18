@@ -74,6 +74,7 @@ Stakeholderlara sorulacak sorular
 * withdrawların raporlarında ayrı bir prosedür var mı? 
 * hangi formlara auto-generate özelliği koyalım?
 
+###################################################################################################################################################################
 
 Toplantı No: 5
 25.03.2023 
@@ -132,6 +133,7 @@ Sorular
 * Evaluator kim? Company notundan veya plagarismden kaldıysa kim imzalayacak
 * Deadline geçtiyse otomatik extension isteyelim mi? 
 
+###################################################################################################################################################################
 
 Toplantı no: 6
 29.03.2023 
@@ -184,12 +186,14 @@ Cevaplanmamış sorular
 Evaluator kim? kim imzalıyor bu grade formu
 Öğrenciden revision istenmişse bunun grade formunu generate edecek miyiz? Mesela 1 kez revision istenmiş öğrencinin dönem sonunda total 2 grade formu mu olacak?
 
-
+###################################################################################################################################################################
 Toplantı no: 7
 31.03.2023 
 Başlangıç: 18.05
 Bitiş: 23.59
 Analysis Report değişikliklerinin tespiti
+
+###################################################################################################################################################################
 
 Toplantı no: 8 
 31.03.2023 
@@ -197,11 +201,15 @@ Başlangıç: 18.05
 Bitiş: 23.59
 Analysis Report'un ilk iterationunun yüklenmesi
 
+###################################################################################################################################################################
+
 Toplantı no: 9 
 5.04.2023 
 Başlangıç: 20.10
 Bitiş: 21.20
 Analysis Report'un eksiklerimizin ve motivasyonumuzun değerlendirmesi ve öz eleştirisi
+
+###################################################################################################################################################################
 
 Toplantı no: 10 
 20.04.2023 
@@ -212,6 +220,7 @@ Class implementationlarına başlandı, classlar bölüşüldü.
 * Userlar ve Department, Ece
 * Reportlar ve Course, Begüm
 
+###################################################################################################################################################################
 
 Toplantı no: 11
 27.04.2023 
@@ -243,6 +252,7 @@ Tasarlanan sayfaların kodu githuba yüklendi.
 
 Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söylemeyi ve üstteki cevaplanmamış soruları sormayı unutmayalım.
 
+###################################################################################################################################################################
 
 Toplantı no: 12
 30.04.2023 
@@ -292,10 +302,10 @@ Automatch semester başlayınca direkt yapılacak, ayrı buton olmayacak. Öğre
 Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söyledik.
 Sunumda kendimizi övmek için böyle confilictleri nasıl çözdüğümüzü yakında listeleyeceğim.
 
-
+###################################################################################################################################################################
 
 Toplantı no: 13
-03.04.2023 
+03.05.2023 
 Başlangıç: 20:06
 Bitiş: 22.51
 
@@ -335,15 +345,15 @@ Begüm
 * Web Server Layer çizilecek
 * Controller ve relation testleri yapılacak.
 
-
 İzgi 
 * Son toplantıdan bu yana bir şey yapmamış. 
 * Design report için önceki toplantıda verilenler dışında bir şey vermedik. Özellikle Boundary Conditionsu çok iyi yapacağına inanıyoruz!
 * Aktörler use case diagramı system boundrysinin dışında olmalı, güncellenmeli.
 
+###################################################################################################################################################################
 
 Toplantı no: 14
-03.04.2023 
+03.05.2023 
 Başlangıç: 20.30
 Bitiş: 22.30
 * FE tüm sayfaları bitirmemiş.
@@ -352,8 +362,10 @@ Bitiş: 22.30
 * Begüm Instructorun öğrencilerini görüntğlediği yer tasarımını anlattı. FE yapacak. 
 * Ece json atabiliyor.
 
+###################################################################################################################################################################
+
 Toplantı no: 15
-10.04.2023 
+10.05.2023 
 Başlangıç: 21:10
 Bitiş: 22.28
 
@@ -361,3 +373,69 @@ Bitiş: 22.28
 Githublarını idelerine bağlamayanlar MUTLAKA bağlamalı.
 İzgi ve Aytekin entegreyi en geç cumartesi akşamına kadar bakacak.
 Begüm desya yükleme ile ilgilenecek.
+
+###################################################################################################################################################################
+
+FE özel toplantı
+16.05.2023
+* Githublar bağlandı
+* Artık tüm ekip json göndermeye uğraşıyor
+* Secretary main page -> izgi
+* Figmada henüz kodu olmayan sayfalar bölüşüldü: 
+    - statistics, enter company grades ve user assign list sayfaları ömerde,
+    - submit internship report ve reports page -> aytekin
+    - instructorun evaluate report pageleriyle sekreter main pagei -> izgi
+
+###################################################################################################################################################################
+
+Toplantı no: 16
+18.05.2023 
+Başlangıç: 21:11
+Bitiş: 22.13
+
+Genel
+- Design rapor fb'si konuşuldu. Fb yeterli bulunmadı, Eray hocaya Aytekin yazdı. Dönüş bekleniyor.
+- Analiz raporunu Aytekin son haline getirecek. Detaylar aşağıda.
+- Design raporda herkes kendi yaptığı yeri daha iyi bir hale getirecek. Detaylar aşağıda.
+- Non reg useri tüm raporlardan kaldıracağız.
+- Userları direkt filedan okuyup generate etmek için functionaility eklenecek.
+- Hala fe & be birleşemedi. Yarın geceye dek bir şekilde bunun bitmesi lazım. (be kodu fe bilgisayarlarında çalışır hale getirildi)
+- Aytekinin aksine Ömer ve İzgi birleştirmeye çok bakmamış, yarın 3-5'e kadar bakıp bitircekler, olmadı backend de bakmaya başlayacak.
+- Lazım olursa FE için yardımcı olabilir: https://bootstrapstudio.io/
+- Herkes raporları okuyup comment atmaya devam edebilir çünkü %60.
+- Herkes hafta sonu kütüphanede olup birlikte çalışacak, diğer ödevler ve desler hafta içi bitmiş olmalı.
+- İlk hedefimiz içleri boş da olsa (nonfunctional) birbirine bağlı sayfalar ve hangi userın hangi sayfaları görebildiği. 
+
+İzgi
+- Use case diagram düzeltilecek. Aktörler dışarı, non reg silinecek.
+- Boundry conditionlar user hakkında değil sistemin ayağa kalkması ve terminate etmesi ile ilgili olacak. Yazısında gerekli düzeltmeler yapılacak.
+- Boundry conditionu diagramında conditionlar spesifikleştirilecek.
+
+Ömer
+- Design rapor, Object Design Trade-offs iyileştirilecek. Belki biraz daha detaylandırılabilir veya farklı tradeoff önerileri olabilir. 
+- Final Object Design??? User Interface Management Layer??? belki layerlar açıklanabilir idk really
+- json okumayı ve logini birleştirmeyi bu gece!! halledecek. 
+
+Aytekin
+- Analiz raporunu son haline getirecek. Feedbackle karşılaştıracak.
+- Vakit bulursa mockupları iyileştirebilir. Paintten bile düzeltilme yapılması yeterli. (Daha webe yönelik design)
+- 2. iteration için yapılan düzenlemeler kısaca yazılacak
+- Desgin rapora intro (analizden alınabilir)
+- Analiz rapor diagramlarını  diagram 1, diagram 2 diye numaralandırmayı unutmayalım.
+
+Ece 
+- Ece pdf yapabiliyor. Pdf'i db'den okuyup yapabiliyor mu, tamamlanacak.
+- MongoDB bağlamaya çalışmış, tekrar deneyecek.
+- Entity relationları incelenip, düzeltilecek.
+- Design pattern düşünülecek. Design Patterni backend birlikte yapabilir.
+- Hardware / Software Mapping düzeltilecek.
+- Analiz raporuna class diagram linli
+
+Begüm
+- Begüm drivea pdf yükleyebiliyor. Db eşlemelerini yapacak. Internship reporta dair her şey onda. Tamamlanacak.
+- Sub system diagram fb'ye göre düzeltilecek. Açıklamalar yazılacak.
+- Server layer düzeltilecek, Drive serveri için diagram koyulacak.
+- Design Pattern'de Ece'ye yardım edecek.
+
+###################################################################################################################################################################
+
