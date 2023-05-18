@@ -393,6 +393,10 @@ Toplantı no: 16
 Başlangıç: 21:11
 Bitiş: 22.13
 
+Rapor ile ilgili işlerin deadline'ı: cumartesi akşam. en geç pazar öğlen. 
+Implementation işleri deadlinei: herhangi bir entegre cuma gecesi. 
+Geri kalanlar, cumartesi sabah kampta buluşulana dek ne kadar ilerlerse o kadar iyi.
+
 Genel
 - Design rapor fb'si konuşuldu. Fb yeterli bulunmadı, Eray hocaya Aytekin yazdı. Dönüş bekleniyor.
 - Analiz raporunu Aytekin son haline getirecek. Detaylar aşağıda.
@@ -410,6 +414,7 @@ Genel
 - Use case diagram düzeltilecek. Aktörler dışarı, non reg silinecek.
 - Boundry conditionlar user hakkında değil sistemin ayağa kalkması ve terminate etmesi ile ilgili olacak. Yazısında gerekli düzeltmeler yapılacak.
 - Boundry conditionu diagramında conditionlar spesifikleştirilecek.
+- Criteria report için herhangi bir db'den okuyup yazabiliyor mu bakacak. (bu da bir entegre aslında)
 
 Ömer
 - Design rapor, Object Design Trade-offs iyileştirilecek. Belki biraz daha detaylandırılabilir veya farklı tradeoff önerileri olabilir. 
