@@ -75,8 +75,8 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
-        CriteriaReport CS299_criteriaReport = new CriteriaReport(false, CourseName.CS299, cs299, ReportStatus.changable);
+        GradeForm C299_gradeForm = new GradeForm( cs299 );
+        CriteriaReport CS299_criteriaReport = new CriteriaReport( cs299 );
         EvaluationForm CS299_evaluationForm = new EvaluationForm(7, true, true, true, Recommendation.satisfactory,  "companyName", cs299);
 
         cs299.uploadGradeForm(C299_gradeForm);
@@ -87,8 +87,8 @@ public class BootStrapData implements CommandLineRunner {
         reportRepository.save(CS299_criteriaReport);
         evaluationFormRepository.save(CS299_evaluationForm);
        
-        GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
-        CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399, ReportStatus.changable);
+        GradeForm C399_gradeForm = new GradeForm(cs399 );
+        CriteriaReport CS399_criteriaReport = new CriteriaReport( cs399);
         EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
 
         cs399.uploadGradeForm(C399_gradeForm);
@@ -99,8 +99,8 @@ public class BootStrapData implements CommandLineRunner {
         reportRepository.save(CS399_criteriaReport);
         evaluationFormRepository.save(CS399_evaluationForm);
 
-        GradeForm IE299_gradeForm = new GradeForm(false, CourseName.IE299, ie299, ReportStatus.changable);
-        CriteriaReport IE299_criteriaReport = new CriteriaReport(false, CourseName.IE299, ie299, ReportStatus.changable);
+        GradeForm IE299_gradeForm = new GradeForm( ie299 );
+        CriteriaReport IE299_criteriaReport = new CriteriaReport( ie299 );
         EvaluationForm IE299_evaluationForm = new EvaluationForm(2, false, false, false, Recommendation.satisfactory,  "companyName", cs299);
 
         ie299.uploadGradeForm(IE299_gradeForm);
@@ -115,7 +115,7 @@ public class BootStrapData implements CommandLineRunner {
         B.enrollCourse(ie299);
         A.enrollCourse(cs299);
 
-        cs299.getGradeForm().setSatisfaction(true);
+        cs299.getGradeForm().setSatisfactory(true);
 
         reportRepository.save(C299_gradeForm);
 

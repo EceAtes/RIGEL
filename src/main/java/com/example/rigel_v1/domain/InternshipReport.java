@@ -4,37 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.rigel_v1.domain.enums.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class InternshipReport extends Report{
 
-    @ManyToOne
-    private StudentCourse course;
+    private String reportLink;
 
     @ManyToOne
     private Student ownerStudent;
 
-    private String description;
+    //private String description;
     private boolean TA_check;
 
     @OneToMany
-    @JoinColumn(name = "internshipreport_id")
     private List<Feedback> TA_Feedback;
 
     @OneToMany
-    @JoinColumn(name = "internshipreport_id")
     private List<Feedback> instructorFeedback;
 
-    public InternshipReport(){
-    }
-
-    public InternshipReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, Student ownerStudent, ReportStatus reportStatus, String description){ // Instructor evaluator,
-        super(isSatisfactory, courseName, reportStatus);
-        this.description = description;
-        this.course = course;
+    public InternshipReport( StudentCourse course, Student ownerStudent, String reportLink){ // String description
+        super(course);
+        // this.description = description;
         this.ownerStudent = ownerStudent;
+        this.reportLink = reportLink;
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
@@ -44,47 +42,7 @@ public class InternshipReport extends Report{
     void giveFeedback(int id, Feedback feedback){ 
     }
 
-    public List<Feedback> getTA_Feedback() {
-        return TA_Feedback;
-    }
-
-    public List<Feedback> getInstructorFeedback() {
-        return instructorFeedback;
-    }
-
     public void deleteFeedback(int id){
-    }
-
-    public StudentCourse getCourse() {
-        return course;
-    }
-
-    public void setCourse(StudentCourse course) {
-        this.course = course;
-    }
-
-    public Student getOwnerStudent() {
-        return ownerStudent;
-    }
-
-    public void setOwnerStudent(Student ownerStudent) {
-        this.ownerStudent = ownerStudent;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean getTA_check() {
-        return TA_check;
-    }
-
-    public void setTA_check(boolean tA_check) {
-        TA_check = tA_check;
     }
 
 }

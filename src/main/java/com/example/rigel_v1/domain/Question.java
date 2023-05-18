@@ -1,8 +1,12 @@
 package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class Question {
 
     @Id
@@ -12,53 +16,17 @@ public class Question {
     private String question;
     private String answer;
     private String evidence;
-    
+    private double score;   
+
     @ManyToOne
+    @JoinColumn(name = "criteria_report_id")
     private CriteriaReport criteriaReport;
-    
-    public Question(){
-    }
 
-    public Question(String question, String answer, String evidence){
+    public Question(String question){
         this.question = question;
-        this.answer = answer;
-        this.evidence = evidence;
+        this.answer = "";
+        this.evidence = "";
+        this.score = 0;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }  
-    
-    public String getQuestion() {
-        return question;
-    }
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-    public String getAnswer() {
-        return answer;
-    }
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-    public String getEvidence() {
-        return evidence;
-    }
-    public void setEvidence(String evidence) {
-        this.evidence = evidence;
-    }
-
-    public CriteriaReport getCriteriaReport() {
-        return criteriaReport;
-    }
-
-    public void setCriteriaReport(CriteriaReport criteriaReport) {
-        this.criteriaReport = criteriaReport;
-    }
-
 
 }
