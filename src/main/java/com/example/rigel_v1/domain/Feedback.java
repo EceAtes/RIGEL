@@ -2,6 +2,7 @@ package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
 
+//@Document("Administrations")
 @Entity
 public class Feedback {
 

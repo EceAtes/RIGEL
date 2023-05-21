@@ -13,6 +13,7 @@ enum Priority {
     LOW
 }
 
+//@Document("Administrations")
 @Entity
 public class Notification {
     @Id

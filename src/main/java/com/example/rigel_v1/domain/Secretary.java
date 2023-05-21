@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+//@Document("Administrations")
 @Entity
 public class Secretary extends Administration{
     @Id

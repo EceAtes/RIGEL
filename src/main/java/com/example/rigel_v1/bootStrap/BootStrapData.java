@@ -15,14 +15,16 @@ public class BootStrapData implements CommandLineRunner {
     private final InstructorRepository instructorRepository;
     private final ReportRepository reportRepository;
     private final EvaluationFormRepository evaluationFormRepository;
+    private final QuestionRepository questionRepository;
 
-    public BootStrapData(DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, ReportRepository reportRepository, EvaluationFormRepository evaluationFormRepository) {
+    public BootStrapData(QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, ReportRepository reportRepository, EvaluationFormRepository evaluationFormRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.reportRepository = reportRepository;
         this.evaluationFormRepository = evaluationFormRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -127,6 +129,14 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(cs399);
 
         System.out.println(cs299.getGradeForm().getReportStatus());
+
+        Question q1 = new Question("AAAAA?", "BBBB", -1);
+        questionRepository.save(q1);
+        Question q2 = new Question("CCCCC?", "DDDD", -1);
+        questionRepository.save(q2);
+
+
+
 
     }
 }

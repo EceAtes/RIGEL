@@ -6,6 +6,7 @@ import com.example.rigel_v1.domain.enums.*;
 
 import jakarta.persistence.*;
 
+//@Document("Administrations")
 @Entity
 public class EvaluationForm {
 

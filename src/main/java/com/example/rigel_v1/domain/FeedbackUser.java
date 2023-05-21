@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.*;
 
+//@Document("Administrations")
 @Entity
 public class FeedbackUser extends Users{
 

@@ -6,6 +6,7 @@ import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -130,6 +131,8 @@ public class UsersController {
     }
 
 }
+
+
 class UserRequest {
     private String name;
     private String email;

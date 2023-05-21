@@ -9,11 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 import com.fasterxml.jackson.databind.jsontype.impl.TypeNameIdResolver;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+//@Document("Administrations")
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Users {

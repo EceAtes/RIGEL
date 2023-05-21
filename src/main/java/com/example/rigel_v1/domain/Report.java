@@ -4,6 +4,7 @@ import com.example.rigel_v1.domain.enums.*;
 
 import jakarta.persistence.*;
 
+//@Document("Administrations")
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {

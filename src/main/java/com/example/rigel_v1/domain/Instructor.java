@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
+//@Document("Administrations")
 @Entity
 public class Instructor extends FeedbackUser{
 

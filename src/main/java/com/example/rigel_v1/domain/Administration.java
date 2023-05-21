@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
+//@Document("Administrations")
 @Entity
 public class Administration extends Users {
     @Id

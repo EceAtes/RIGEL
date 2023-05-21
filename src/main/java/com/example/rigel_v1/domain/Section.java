@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+//@Document("Administrations")
 @Entity
 public class Section {
 

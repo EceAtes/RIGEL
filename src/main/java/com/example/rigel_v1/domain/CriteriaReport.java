@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.example.rigel_v1.domain.enums.*;
 
-
+//@Document("Administrations")
 @Entity
 public class CriteriaReport extends Report{
     

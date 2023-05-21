@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 import java.util.*;
 
+//@Document("Administrations")
 @Entity
 public class Department {
     @Id
