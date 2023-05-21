@@ -3,9 +3,15 @@ package com.example.rigel_v1.domain;
 import com.example.rigel_v1.domain.enums.*;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
 
@@ -23,9 +29,6 @@ public class Report {
     
     //@OneToOne
     //private Instructor evaluator;
-
-    public Report(){
-    }
 
     public Report(boolean isSatisfactory, CourseName courseName,  ReportStatus reportStatus) { //Student student, Instructor evaluator,
         this.isSatisfactory = isSatisfactory;
@@ -49,55 +52,8 @@ public class Report {
     public boolean submitReport(){
         return true;
     }
- 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSatisfaction(boolean b) {
+        this.isSatisfactory = b;
     }
-
-    public void setSatisfaction(boolean isSatisfactory){
-        this.isSatisfactory = isSatisfactory;
-    }
-
-    public boolean getSatisfaction(){
-        return isSatisfactory;
-    }
-
-    
-    public CourseName getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(CourseName courseName) {
-        this.courseName = courseName;
-    }
-/*
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-    
-
-    public Instructor getEvaluator() {
-        return evaluator;
-    }
-
-    public void setEvaluator(Instructor evaluator) {
-        this.evaluator = evaluator;
-    }*/
-
-    public ReportStatus getReportStatus() {
-        return reportStatus;
-    }
-
-    public void setReportStatus(ReportStatus reportStatus) {
-        this.reportStatus = reportStatus;
-    }
-
 }

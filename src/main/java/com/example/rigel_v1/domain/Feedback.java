@@ -1,9 +1,15 @@
 package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Feedback {
 
     @Id
@@ -17,26 +23,6 @@ public class Feedback {
 
     public boolean deleteFeedback(){
         return true;
-    }
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getFeedback() {
-        return feedback;
-    }
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
-    
-    public FeedbackUser getGivenBy() {
-        return givenBy;
-    }
-    public void setGivenBy(FeedbackUser givenBy) {
-        this.givenBy = givenBy;
     }
     
 }

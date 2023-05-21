@@ -6,9 +6,15 @@ import java.util.List;
 import com.example.rigel_v1.domain.enums.*;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class InternshipReport extends Report{
 
     @ManyToOne
@@ -28,9 +34,6 @@ public class InternshipReport extends Report{
     @JoinColumn(name = "internshipreport_id")
     private List<Feedback> instructorFeedback;
 
-    public InternshipReport(){
-    }
-
     public InternshipReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, Student ownerStudent, ReportStatus reportStatus, String description){ // Instructor evaluator,
         super(isSatisfactory, courseName, reportStatus);
         this.description = description;
@@ -45,47 +48,6 @@ public class InternshipReport extends Report{
     void giveFeedback(int id, Feedback feedback){ 
     }
 
-    public List<Feedback> getTA_Feedback() {
-        return TA_Feedback;
-    }
-
-    public List<Feedback> getInstructorFeedback() {
-        return instructorFeedback;
-    }
-
     public void deleteFeedback(int id){
     }
-
-    public StudentCourse getCourse() {
-        return course;
-    }
-
-    public void setCourse(StudentCourse course) {
-        this.course = course;
-    }
-
-    public Student getOwnerStudent() {
-        return ownerStudent;
-    }
-
-    public void setOwnerStudent(Student ownerStudent) {
-        this.ownerStudent = ownerStudent;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean getTA_check() {
-        return TA_check;
-    }
-
-    public void setTA_check(boolean tA_check) {
-        TA_check = tA_check;
-    }
-
 }

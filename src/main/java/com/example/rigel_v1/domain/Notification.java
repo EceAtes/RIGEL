@@ -1,6 +1,9 @@
 package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.springframework.data.annotation.TypeAlias;
 
@@ -15,6 +18,9 @@ enum Priority {
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,66 +41,6 @@ public class Notification {
         this.receiverID = receiverID;
         this.message = message;
         this.priority = priority;
-        this.title = title;
-    }
-
-    public Notification() {
-
-    }
-
-    public Users getSender() {
-        return sender;
-    }
-
-    public void setSender(Users sender) {
-        this.sender = sender;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public int getReceiverID() {
-        return receiverID;
-    }
-
-    public void setReceiverID(int receiverID) {
-        this.receiverID = receiverID;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Priority getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Priority priority) {
-        this.priority = priority;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
     }
 

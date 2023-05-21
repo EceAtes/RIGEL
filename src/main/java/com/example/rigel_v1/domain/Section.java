@@ -1,12 +1,18 @@
 package com.example.rigel_v1.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Section {
 
     @Id
@@ -25,9 +31,6 @@ public class Section {
     @ManyToOne
     private Department department;
 
-    public Section() {
-    }
-
     public Section(Map<Integer, Student> students, Department department) {
         this.students = students;
         this.department = department;
@@ -36,22 +39,4 @@ public class Section {
         this.students = new HashMap<>();
         this.department = department;
     }
-
-    public Map<Integer, Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Map<Integer, Student> students) {
-        this.students = students;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-
 }

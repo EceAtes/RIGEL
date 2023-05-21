@@ -2,6 +2,9 @@ package com.example.rigel_v1.domain;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.File;
 import java.util.HashMap;
@@ -11,6 +14,8 @@ import java.util.Set;
 
 //@Document("Administrations")
 @Entity
+@Getter @Setter
+@NoArgsConstructor
 public class Administration extends Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,11 +26,6 @@ public class Administration extends Users {
 
     //private Statistics statistics;
     private File eSignature = null;
-
-
-    public Administration() {
-    }
-
 
 
     public Administration(Map<Integer, CriteriaReport> criteriaReports, File eSignature) { //, Statistics statistics
@@ -83,11 +83,5 @@ public class Administration extends Users {
             this.statistics = statistics;
         }
     */
-    public File geteSignature() {
-        return eSignature;
-    }
 
-    public void seteSignature(File eSignature) {
-        this.eSignature = eSignature;
-    }
 }

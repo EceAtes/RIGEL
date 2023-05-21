@@ -4,11 +4,17 @@ import com.example.rigel_v1.NullKeySerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.*;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,66 +84,6 @@ public class Department {
         students_399 = new HashMap<>();
     }
 
-    public Department() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getTotalStuNo() {
-        return totalStuNo;
-    }
-
-    public void setTotalStuNo(int totalStuNo) {
-        this.totalStuNo = totalStuNo;
-    }
-
-    public int getInternedStuNo() {
-        return internedStuNo;
-    }
-
-    public void setInternedStuNo(int internedStuNo) {
-        this.internedStuNo = internedStuNo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Map<Long, Student> getStudents_299() {
-        return students_299;
-    }
-
-    public void setStudents_299(Map<Long, Student> students_299) {
-        this.students_299 = students_299;
-    }
-
-    public Map<Long, Student> getStudents_399() {
-        return students_399;
-    }
-
-    public void setStudents_399(Map<Long, Student> students_399) {
-        this.students_399 = students_399;
-    }
-
-    public List<Department> getSections() {
-        return sections;
-    }
-
-    public void setSections(List<Department> sections) {
-        this.sections = sections;
-    }
-
     public void addStudent(Student student, int courseType){
         totalStuNo++;
         if(courseType == 299){
@@ -146,22 +92,6 @@ public class Department {
             this.students_399.put(student.getId(), student);
         }
         student.setDepartment(this);
-    }
-
-    public Map<String, Administration> getAdministrators() {
-        return administrators;
-    }
-
-    public void setAdministrators(Map<String, Administration> administrators) {
-        this.administrators = administrators;
-    }
-
-    public Map<String, Instructor> getInstructors() {
-        return instructors;
-    }
-
-    public void setInstructors(Map<String, Instructor> instructors) {
-        this.instructors = instructors;
     }
 
     public void addInstructor(Instructor instructor){

@@ -7,6 +7,9 @@ import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -26,6 +29,20 @@ public class UsersController {
     public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository) {
         this.userRepository = userRepository;
         this.departmentRepository = departmentRepository;
+    }
+
+    @RequestMapping("/login")
+    public LoginResponse findUser(@NonNull @RequestBody LoginRequest req){
+        for(int i = 0; i < userRepository.count(); i++){
+            Optional<Users> optional = userRepository.findById(Long.valueOf(i));
+            if (optional.isPresent() ) {
+                Users user = optional.get();
+                if(req.getPassword().equals(user.getPassword())  && req.getEmail().equals(user.getEmail())){
+                    return new LoginResponse( true, user.getRole());
+                }
+            }
+        }
+        return new LoginResponse( false, Users.Role.NOT_REGISTERED);
     }
 
     @PostMapping
@@ -132,7 +149,33 @@ public class UsersController {
 
 }
 
+@Getter
+@Setter
+@NoArgsConstructor
+class LoginRequest{
+    @JsonProperty("email")
+    private String email;
+    @JsonProperty("password")
+    private String password;
+}
 
+@Getter
+@Setter
+@NoArgsConstructor
+class LoginResponse{
+    @JsonProperty("isVerified")
+    private boolean isVerified;
+    @JsonProperty("role")
+    private Users.Role role;
+
+    public LoginResponse(boolean isVerified, Users.Role role){
+        this.isVerified = isVerified;
+        this.role = role;
+    }
+}
+
+@Getter @Setter
+@NoArgsConstructor
 class UserRequest {
     private String name;
     private String email;
@@ -144,51 +187,4 @@ class UserRequest {
     @JsonProperty("department_id")
     private Long department_id;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isNotifToMail() {
-        return notifToMail;
-    }
-
-    public void setNotifToMail(boolean notifToMail) {
-        this.notifToMail = notifToMail;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-
-    public Long getDepartment_id() {
-        return department_id;
-    }
-
-    public void setDepartment_id(Long department_id) {
-        this.department_id = department_id;
-    }
 }

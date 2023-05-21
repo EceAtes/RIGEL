@@ -7,9 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.rigel_v1.domain.enums.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class CriteriaReport extends Report{
     
     @OneToMany
@@ -26,9 +32,6 @@ public class CriteriaReport extends Report{
 
     private boolean isCompleted;
 
-    public CriteriaReport(){
-    }
-
     public CriteriaReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, ReportStatus reportStatus){ //Student student, Instructor evaluator,
         super(isSatisfactory, courseName, reportStatus);
         this.questions = new ArrayList<Question>();
@@ -42,28 +45,6 @@ public class CriteriaReport extends Report{
     public void editCriteriaForm(){
     }
 
-    public StudentCourse getCourse() {
-        return course;
-    }
 
-    public void setCourse(StudentCourse course) {
-        this.course = course;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public boolean isCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
-    }
 
 }

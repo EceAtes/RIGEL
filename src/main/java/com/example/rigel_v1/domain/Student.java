@@ -4,12 +4,18 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Student extends Users {
     @OneToMany
     @JoinColumn(name = "student_id")
@@ -17,10 +23,6 @@ public class Student extends Users {
 
     @OneToMany
     private Set<StudentCourse> courses = new HashSet<>();
-
-
-    public Student() {
-    }
 
     public Student(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.STUDENT, department);
@@ -33,24 +35,6 @@ public class Student extends Users {
         this.oldReports = oldReports;
         this.courses = courses;
     }
-
-
-    public Set<InternshipReport> getOldReports() {
-        return oldReports;
-    }
-
-    public void setOldReports(Set<InternshipReport> oldReports) {
-        this.oldReports = oldReports;
-    }
-
-    public Set<StudentCourse> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<StudentCourse> courses) {
-        this.courses = courses;
-    }
-
     public void enrollCourse(StudentCourse course){
         courses.add(course);
         //course.setCourseTaker(this);

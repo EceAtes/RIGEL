@@ -8,9 +8,15 @@ import java.util.List;
 import com.example.rigel_v1.domain.enums.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class StudentCourse {
 
     @Id
@@ -49,9 +55,6 @@ public class StudentCourse {
 
     @OneToOne
     private EvaluationForm evaluationForm;
-
-    public StudentCourse(){
-    }
 
     public StudentCourse(Student courseTaker, CourseName courseName){   
         this.courseTaker = courseTaker;
@@ -108,94 +111,10 @@ public class StudentCourse {
         return evaluationForm;
     }
 
-    public List<InternshipReport> getInternshipReports(){
-        return internshipReports;
-    }
-
-    public InternshipReport getFinalInternshipReport(){
-        return internshipReports.get(0);        // last iteration
-    }
-    
-    public GradeForm getGradeForm(){
-        return gradeForm;
-    }
-
-    public CriteriaReport getCriteriaReport(){
-        return criteriaReport;
-    }
-
-    public EvaluationForm getEvaluationForm(){
-        return evaluationForm;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public CourseName getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(CourseName courseName) {
-        this.courseName = courseName;
-    }
-
-    public Instructor getInstructor() {
-        return instructor;
-    }
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
-    public Score getScore() {
-        return score;
-    }
-    public void setScore(Score score) {
-        this.score = score;
-    }    
-
-    public Status getStatus() {
-        return status;
-    }
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Student getCourseTaker() {
-        return courseTaker;
-    }
-
     public void setCourseTaker(Student courseTaker) {
         this.courseTaker = courseTaker;
         //instructor.addStudent(courseTaker);
         //instructor.addCourse(this);
-    }
-
-    public void setInternshipReports(List<InternshipReport> internshipReports) {
-        this.internshipReports = internshipReports;
-    }
-
-    public void setGradeForm(GradeForm gradeForm) {
-        this.gradeForm = gradeForm;
-    }
-
-    public void setCriteriaReport(CriteriaReport criteriaReport) {
-        this.criteriaReport = criteriaReport;
-    }
-
-    public void setEvaluationForm(EvaluationForm evaluationForm) {
-        this.evaluationForm = evaluationForm;
     }
 
     @Override

@@ -9,9 +9,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
+@Getter
+@Setter
 public class Instructor extends FeedbackUser{
 
     @OneToMany
@@ -68,30 +73,6 @@ public class Instructor extends FeedbackUser{
         this.sections = sections;
     }
 
-    public List<StudentCourse> getGraded() {
-        return graded;
-    }
-
-    public void setGraded(List<StudentCourse> graded) {
-        this.graded = graded;
-    }
-
-    public List<StudentCourse> getToBeGraded() {
-        return toBeGraded;
-    }
-
-    public void setToBeGraded(List<StudentCourse> toBeGraded) {
-        this.toBeGraded = toBeGraded;
-    }
-
-    public File geteSignature() {
-        return eSignature;
-    }
-
-    public void seteSignature(File eSignature) {
-        this.eSignature = eSignature;
-    }
-
     public void addCourse(StudentCourse course){
         this.toBeGraded.add(course);
     }
@@ -99,12 +80,4 @@ public class Instructor extends FeedbackUser{
     public void addStudent(Student student){
         //this.toBeGraded.add(sections); ????????????
     }
-
-    /*
-    public Statistics getStatistics() {
-        return statistics;
-    }
-    public void setStatistics(Statistics statistics) {
-        this.statistics = statistics;
-    }*/
 }
