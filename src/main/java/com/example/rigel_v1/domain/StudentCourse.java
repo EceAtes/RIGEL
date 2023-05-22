@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.example.rigel_v1.domain.enums.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -127,14 +128,5 @@ public class StudentCourse {
         return courseName.equals(course.courseName) && instructor.equals(course.instructor);
     }
 
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", courseName='" + courseName + '\'' +
-                ", instructor='" + instructor + '\'' +
-                ", status=" + status +
-                ", score=" + score +
-                '}';
-    }
+
 }

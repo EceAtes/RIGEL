@@ -13,16 +13,17 @@ public class BootStrapData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
-    private final ReportRepository reportRepository;
+    //private final ReportRepository reportRepository;
     private final EvaluationFormRepository evaluationFormRepository;
     private final QuestionRepository questionRepository;
+    private final CriteriaReportRepository criteriaReportRepository;
 
-    public BootStrapData(QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, ReportRepository reportRepository, EvaluationFormRepository evaluationFormRepository) {
+    public BootStrapData(QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, EvaluationFormRepository evaluationFormRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
-        this.reportRepository = reportRepository;
+        this.criteriaReportRepository = criteriaReportRepository;
         this.evaluationFormRepository = evaluationFormRepository;
         this.questionRepository = questionRepository;
     }
@@ -77,49 +78,49 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
+        //GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
         CriteriaReport CS299_criteriaReport = new CriteriaReport(false, CourseName.CS299, cs299, ReportStatus.changable);
-        EvaluationForm CS299_evaluationForm = new EvaluationForm(7, true, true, true, Recommendation.satisfactory,  "companyName", cs299);
+        //EvaluationForm CS299_evaluationForm = new EvaluationForm(7, true, true, true, Recommendation.satisfactory,  "companyName", cs299);
 
-        cs299.uploadGradeForm(C299_gradeForm);
+        //cs299.uploadGradeForm(C299_gradeForm);
         cs299.uploadCriteriaReport(CS299_criteriaReport);
-        cs299.uploadEvaluationForm(CS299_evaluationForm);
+        //cs299.uploadEvaluationForm(CS299_evaluationForm);
 
-        reportRepository.save(C299_gradeForm);
-        reportRepository.save(CS299_criteriaReport);
-        evaluationFormRepository.save(CS299_evaluationForm);
+        //reportRepository.save(C299_gradeForm);
+        criteriaReportRepository.save(CS299_criteriaReport);
+        //evaluationFormRepository.save(CS299_evaluationForm);
        
-        GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
+        //GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
         CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399, ReportStatus.changable);
-        EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
+       // EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
 
-        cs399.uploadGradeForm(C399_gradeForm);
+        //cs399.uploadGradeForm(C399_gradeForm);
         cs399.uploadCriteriaReport(CS399_criteriaReport);
-        cs399.uploadEvaluationForm(CS399_evaluationForm);
+        //cs399.uploadEvaluationForm(CS399_evaluationForm);
 
-        reportRepository.save(C399_gradeForm);
-        reportRepository.save(CS399_criteriaReport);
-        evaluationFormRepository.save(CS399_evaluationForm);
+        //reportRepository.save(C399_gradeForm);
+        criteriaReportRepository.save(CS399_criteriaReport);
+        //evaluationFormRepository.save(CS399_evaluationForm);
 
-        GradeForm IE299_gradeForm = new GradeForm(false, CourseName.IE299, ie299, ReportStatus.changable);
+        //GradeForm IE299_gradeForm = new GradeForm(false, CourseName.IE299, ie299, ReportStatus.changable);
         CriteriaReport IE299_criteriaReport = new CriteriaReport(false, CourseName.IE299, ie299, ReportStatus.changable);
-        EvaluationForm IE299_evaluationForm = new EvaluationForm(2, false, false, false, Recommendation.satisfactory,  "companyName", cs299);
+       // EvaluationForm IE299_evaluationForm = new EvaluationForm(2, false, false, false, Recommendation.satisfactory,  "companyName", cs299);
 
-        ie299.uploadGradeForm(IE299_gradeForm);
+        //ie299.uploadGradeForm(IE299_gradeForm);
         ie299.uploadCriteriaReport(IE299_criteriaReport);
-        ie299.uploadEvaluationForm(IE299_evaluationForm); 
+        //ie299.uploadEvaluationForm(IE299_evaluationForm);
 
-        reportRepository.save(IE299_gradeForm);
-        reportRepository.save(IE299_criteriaReport);
-        evaluationFormRepository.save(IE299_evaluationForm);
+        //reportRepository.save(IE299_gradeForm);
+        criteriaReportRepository.save(IE299_criteriaReport);
+        //evaluationFormRepository.save(IE299_evaluationForm);
 
         A.enrollCourse(cs399);
         B.enrollCourse(ie299);
         A.enrollCourse(cs299);
 
-        cs299.getGradeForm().setSatisfaction(true);
+        //cs299.getGradeForm().setSatisfaction(true);
 
-        reportRepository.save(C299_gradeForm);
+        //reportRepository.save(C299_gradeForm);
 
         userRepository.save(A);
         userRepository.save(B);
@@ -128,13 +129,30 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        System.out.println(cs299.getGradeForm().getReportStatus());
+        //System.out.println(cs299.getGradeForm().getReportStatus());
 
-        Question q1 = new Question("AAAAA?", "BBBB", -1);
+        Question q1 = new Question("AAAAA?", "HHHH", -1);
+        Question q2 = new Question("BBBBB?", "IIII", -1);
+        Question q3 = new Question("CCCCC?", "JJJJJ", -1);
+        Question q4 = new Question("DDDDD?", "KKKKK", -1);
+        Question q5 = new Question("EEEEE?", "LLLLL", -1);
+        Question q6 = new Question("FFFFFF?", "MMMM", -1);
+        Question q7 = new Question("GGGGGG?", "NNNN", -1);
         questionRepository.save(q1);
-        Question q2 = new Question("CCCCC?", "DDDD", -1);
         questionRepository.save(q2);
-
+        questionRepository.save(q3);
+        questionRepository.save(q4);
+        questionRepository.save(q5);
+        questionRepository.save(q6);
+        questionRepository.save(q7);
+        IE299_criteriaReport.addQuestion(q1);
+        IE299_criteriaReport.addQuestion(q2);
+        IE299_criteriaReport.addQuestion(q3);
+        IE299_criteriaReport.addQuestion(q4);
+        IE299_criteriaReport.addQuestion(q5);
+        IE299_criteriaReport.addQuestion(q6);
+        IE299_criteriaReport.addQuestion(q7);
+        criteriaReportRepository.save(IE299_criteriaReport);
 
 
 

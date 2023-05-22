@@ -1,7 +1,9 @@
 package com.example.rigel_v1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ public class CriteriaReport extends Report{
     private Map<String, Administration> administrators;
 
     @OneToOne
+    @JsonBackReference
     private StudentCourse course;
 
     private boolean isCompleted;
@@ -39,7 +42,12 @@ public class CriteriaReport extends Report{
         this.isCompleted = false;
     }
 
+    /*public void addQuestions(ArrayList<Question> questions){
+        questions.addAll(questions);
+    }*/
+
     public void addQuestion(Question question){
+        questions.add(question);
     }
 
     public void editCriteriaForm(){

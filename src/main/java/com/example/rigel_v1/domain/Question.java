@@ -1,5 +1,6 @@
 package com.example.rigel_v1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +21,9 @@ public class Question {
     private String question;
     private String answer;
     private int score;
-
-    //@ManyToOne
-    //private CriteriaReport criteriaReport;
+    @ManyToOne
+    @JsonBackReference
+    private CriteriaReport criteriaReport;
 
     public Question(String question, String answer, int score) {
         this.question = question;
