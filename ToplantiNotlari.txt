@@ -444,3 +444,39 @@ Begüm
 
 ###################################################################################################################################################################
 
+Toplantı no: 17 
+20.05.2023
+Tüm gün
+
+İzgi zoomdan, geri kalan herkes ise kütüphanede yüz yüze buluştu.
+Aytekin Analysis Reportu baştan sona okuyup gerekli düzenlemeleri ve iyileştirmeleri yaptı. 
+Ece hardware - software mappingi iyileştirdi.
+Ece class diagram ve entity diagramı design patternlere uygun olacak şekilde tekrardan çizdi.
+Ece design patternleri açıkladı.
+Begüm subsystem decomposition diagramını çizip layerları açıkladı. 
+FE - BE entegresini İzgi criteria report için başardı!
+Ömer file uploadu için frontend bileşenlerini hazırladı.
+Ömer tradeoff'ları gözden geçirip düzenledi.
+Ömer use case diagramı rapordaki usecaseleri karşılaştırarak tekrar çizecek.
+Aytekin state diagramını düzeltti.
+
+###################################################################################################################################################################
+
+Toplantı no: 18
+21.05.2023
+Tüm Gün
+
+Aytekin, İzgi, Ece ve Begüm kütüphanede buluştu.
+Begüm mockupları tekrardan çizdi.
+Use caseler buna uygun olarak değişmek zorunda kaldı.
+İzgi boundary conditionsu yazıp bitirdi.
+İzgi ve Aytekin entegre üzerine çalıştılar.
+Ece treadeoffları tekrar yazdı ve iyileştirdi.
+Ömer çizdiği use case diagramını yolladı. 
+Begüm use case diagramı tekrar çizdi.
+Rapor tutarlı bir hale getirilip yüklendi, ymek yemek unutuldu.
+
+
+###################################################################################################################################################################
+
+
