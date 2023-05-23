@@ -479,4 +479,24 @@ Rapor tutarlı bir hale getirilip yüklendi, ymek yemek unutuldu.
 
 ###################################################################################################################################################################
 
+Toplantı no: 19
+22.01.2023 #PAZARTESI
+Tüm Gün
+
+Öğleden önce İzgi, Ömer ve Ece; öğleden sonra is İzgi, Ece, Begüm ve Aytekin kütüphanede buluştu.
+Mockupların ve eski mockupların karması olacak şekilde frontend konuşuldu.
+Ömer sekreterin tüm sayfalarını konuşulduğu gibi salı akşamına bitirecek. 
+İzgi instructorun feedback sayfasını hazırlamış.
+İzgi studentin tüm sayfalarını yapacak. (Ana sayfadaki courseları bitirdi bile!)
+Aytekin login ve instructoru yapacak ama logine çok da uğraşmayacak özellikle instructor sayfaları. Salı akşamına, veya çarşamba öğlen.
+TA, Dept Chair ve Admin aktörlerini ikinci önceliğşmiz yaptık.
+İzgi web sitesi linkini / Drive linkini previewleyecek şekilde sayfalara gömmeyi başardı.
+Ece tamamladığı question requestlerini bugün genişleterek criteria reportu da tamamladı.
+Ece bidirectional dependencylerin yarattığı sorunları tespit etti.
+Aytekinin bilgisayarında library hataları vardı workspace kurularak çözüldü.
+Begüm folder oluşturabiliyor. Folderların view / edit linklerini generate edip bir usera eklemeyi başardı.
+Yarın akşama dek tüm folder hiyerarşisini bitirmiş olmalı.
+
+
+
 
