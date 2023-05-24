@@ -1,6 +1,7 @@
 package com.example.rigel_v1.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lombok.*;
@@ -12,12 +13,11 @@ import jakarta.persistence.*;
 public class InternshipReport extends Report{
 
     private String reportLink;
+    private String description;
+    private boolean TA_check;
 
     @ManyToOne
     private Student ownerStudent;
-
-    //private String description;
-    private boolean TA_check;
 
     @OneToMany
     private List<Feedback> TA_Feedback;
@@ -25,21 +25,18 @@ public class InternshipReport extends Report{
     @OneToMany
     private List<Feedback> instructorFeedback;
 
-    public InternshipReport( StudentCourse course, Student ownerStudent, String reportLink){ // String description
+    public InternshipReport( StudentCourse course, Student ownerStudent, String reportLink, String description){
         super(course);
-        // this.description = description;
         this.ownerStudent = ownerStudent;
         this.reportLink = reportLink;
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
+        description = "";
     }
 
-
-    void giveFeedback(int id, Feedback feedback){ 
-    }
-
-    public void deleteFeedback(int id){
+    public void giveFeedback(Feedback feedback){ 
+        TA_Feedback.add(feedback);
     }
 
 }

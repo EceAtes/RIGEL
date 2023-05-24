@@ -20,19 +20,10 @@ public class CriteriaReport extends Report{
 
     private boolean isCompleted;
 
+
     public CriteriaReport( StudentCourse course ){
         super(course);
         this.questions = new ArrayList<Question>();
         this.isCompleted = false;
     }
-
-    public void generateQuestions(){
-        Question quest1 = new Question("q1");
-        Question quest2 = new Question("q1");
-        Question quest3 = new Question("q1");
-        questions.add(quest1);
-        questions.add(quest2);
-        questions.add(quest3);
-    }
-
 }

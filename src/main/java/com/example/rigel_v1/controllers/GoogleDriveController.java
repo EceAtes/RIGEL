@@ -1,6 +1,8 @@
 package com.example.rigel_v1.controllers;
 
 import com.example.rigel_v1.service.GoogleDriveService;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import lombok.*;
+
 
 @RestController
 public class GoogleDriveController {
@@ -37,8 +41,8 @@ public class GoogleDriveController {
         }
 
         try {
-            String fileId = googleDriveService.uploadFile(file, folderId, userId);
-            return ResponseEntity.ok("File uploaded successfully. File ID: " + fileId);
+            String fileKey = googleDriveService.uploadFile(file, folderId, userId);
+            return ResponseEntity.ok("File uploaded successfully. File Key: " + fileKey);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to upload file: " + e.getMessage());
@@ -46,15 +50,43 @@ public class GoogleDriveController {
     }
 
     @PostMapping("/create-semester")
-    public ResponseEntity<String> createPublicFolder(@RequestParam("folderName") String folderName,
-            @RequestParam("userId") Long userId) {
+    public FolderCreationResponse createSemester(@RequestParam("folderName") String folderName, @RequestParam("userId") Long userId) {
         try {
-            googleDriveService.createSemesterFolders(folderName, userId);
-            return ResponseEntity.ok("Folder created successfully.");
+            String parentFolderKey = googleDriveService.createSemesterFolders(folderName, userId);
+            //olan userların folderları oluşturulacak
+            // tarihler setlenecek
+            System.out.println("Folder created successfully.");
+            return new FolderCreationResponse(true, parentFolderKey);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to create folder: " + e.getMessage());
+            return new FolderCreationResponse(false, "none");
         }
     }
 
+    @PostMapping("/student-folder")
+    public FolderCreationResponse createStudentFolder(@RequestParam("folderKey") String folderName, @RequestParam("userId") Long userId) {
+        try {
+            String folderKey = googleDriveService.createStudentCourseFolder(folderName, userId);
+            System.out.println("Student folder created successfully.");
+            return new FolderCreationResponse(true, folderKey);
+        } catch (IOException e) {
+            return new FolderCreationResponse(false, "none");
+        }
+    }
 }
+
+@Getter
+@Setter
+@NoArgsConstructor
+class FolderCreationResponse{
+    @JsonProperty("isCreated")
+    private boolean isCreated;
+
+    @JsonProperty("folderKey")
+    private String folderKey;
+
+    public FolderCreationResponse(boolean isCreated, String folderKey){
+        this.isCreated = isCreated;
+        this.folderKey = folderKey;
+    }
+}
+

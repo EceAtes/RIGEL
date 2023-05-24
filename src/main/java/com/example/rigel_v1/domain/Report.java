@@ -16,16 +16,10 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private boolean isSatisfactory;
     private ReportStatus reportStatus;
 
-    @OneToOne
-    private StudentCourse studentCourse;        
-
     public Report( StudentCourse studentCourse ) {
-        this.isSatisfactory = false;
-        this.studentCourse = studentCourse;
-        this.reportStatus = reportStatus.changable;
+        this.reportStatus = ReportStatus.saved;
     }
 
     public void toPDF(){        

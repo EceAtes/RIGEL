@@ -12,15 +12,15 @@ import lombok.*;
 @Setter @Getter @NoArgsConstructor
 public class Admin extends Users {
 
-    private String semesterFolderLink;
+    private String semesterFolderID;
     private String folderDomain = "https://drive.google.com/drive/folders/";
 
-    private List<String> reportFolderIDs; //EDITABLES | [0]: Internship Reports, [1]: Criteria Reports, [2]: Grade Forms
-                                          //VIEV ONLY | [3]: Internship Reports, [4]: Criteria Reports, [5]: Grade Forms
+    private List<String> reportFolderIDs; //VIEV ONLY | [0]: Internship Reports, [1]: Criteria Reports, [2]: Grade Forms
+    //UNNECESSARY I GUESS, EDITABLES | [0]: Internship Reports, [1]: Criteria Reports, [2]: Grade Forms                                         
 
     public Admin(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.ADMIN, department);
-        semesterFolderLink = "";
+        semesterFolderID = "";
         reportFolderIDs = new ArrayList<>();
     }
 
@@ -28,7 +28,7 @@ public class Admin extends Users {
         
     }
 
-    public void saveReportFolderLink(String reportFolderLink){
-        reportFolderIDs.add(reportFolderLink);
+    public void saveReportFolderID(String reportFolderID){
+        reportFolderIDs.add(reportFolderID);
     }
 }
