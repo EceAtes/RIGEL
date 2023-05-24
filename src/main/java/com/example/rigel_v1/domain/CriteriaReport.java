@@ -24,11 +24,6 @@ public class CriteriaReport extends Report{
     @JoinColumn(name = "criteria_report_id")
     private List<Question> questions;
 
-    @ManyToMany
-    @JoinTable(name = "criteria_administration", joinColumns = @JoinColumn(name = "criteria_report_id"),
-            inverseJoinColumns = @JoinColumn(name = "administration_id"))
-    private Map<String, Administration> administrators;
-
     @OneToOne
     @JsonBackReference
     private StudentCourse course;

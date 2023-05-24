@@ -3,8 +3,11 @@ import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.domain.enums.*;
 import com.example.rigel_v1.repositories.*;
 
+import com.example.rigel_v1.service.UsersService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -17,8 +20,9 @@ public class BootStrapData implements CommandLineRunner {
     private final EvaluationFormRepository evaluationFormRepository;
     private final QuestionRepository questionRepository;
     private final CriteriaReportRepository criteriaReportRepository;
+    private final UsersService usersService;
 
-    public BootStrapData(QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, EvaluationFormRepository evaluationFormRepository) {
+    public BootStrapData(UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, EvaluationFormRepository evaluationFormRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
@@ -26,6 +30,7 @@ public class BootStrapData implements CommandLineRunner {
         this.criteriaReportRepository = criteriaReportRepository;
         this.evaluationFormRepository = evaluationFormRepository;
         this.questionRepository = questionRepository;
+        this.usersService = usersService;
     }
 
     @Override
@@ -39,19 +44,19 @@ public class BootStrapData implements CommandLineRunner {
         CS.addStudent(A, 299);
 
         userRepository.save(A);
-        departmentRepository.save(CS);
 
         Student B = new Student("B", "b@gmail.com", "1235", false, null,123457);
-        IE.addStudent(B, 399);
+        CS.addStudent(B, 299);
 
         userRepository.save(B);
-        departmentRepository.save(IE);
+        Optional<Users> optional = userRepository.findById(Long.valueOf(1));
+        System.out.println(optional.isPresent());
+
 
         Student C = new Student("C", "c@gmail.com", "1236", true, null,123458);
-        IE.addStudent(C, 399);
+        CS.addStudent(C, 399);
 
         userRepository.save(C);
-        departmentRepository.save(IE);
 
         System.out.println("Started");
 
@@ -69,14 +74,33 @@ public class BootStrapData implements CommandLineRunner {
 
         System.out.println("No of users: " + userRepository.count());
 
-        StudentCourse cs299 = new StudentCourse(A, CourseName.CS299, instructor1);
+        StudentCourse cs299 = new StudentCourse(A, CourseName.CS299);
         StudentCourse ie299 = new StudentCourse(B, CourseName.IE299);
-        ie299.setInstructor(instructor2);
-        StudentCourse cs399 = new StudentCourse(C, CourseName.CS399, instructor1);
+        StudentCourse cs399 = new StudentCourse(C, CourseName.CS399);
 
         courseRepository.save(cs299);
         courseRepository.save(ie299);
         courseRepository.save(cs399);
+
+        Secretary secretary = new Secretary("Begüm Hanim", "aaaaaa@gmail.com", "aaaaaaaa", false, CS);
+        userRepository.save(secretary);
+        secretary.automatch(usersService);
+        System.out.println("AAAAAAAAAAAaA");
+        Optional<Users> optional1 = userRepository.findById(Long.valueOf(4));
+        Optional<Users> optional2 = userRepository.findById(Long.valueOf(5));
+        if(optional1.isPresent()){
+            instructor1 = (Instructor) optional1.get();
+            instructor2 = (Instructor) optional2.get();
+        }
+        System.out.println(instructor1.getCourses().get(0).getCourseTaker().getName());
+
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, CS, 22001578, new CourseName[]{CourseName.CS299});
+
+
+        //System.out.println("AAAAAAAAAAAAAAAAAa");
+
+/*
+        System.out.println(A.getCourses());
 
         //GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
         CriteriaReport CS299_criteriaReport = new CriteriaReport(false, CourseName.CS299, cs299, ReportStatus.changable);
@@ -154,7 +178,7 @@ public class BootStrapData implements CommandLineRunner {
         IE299_criteriaReport.addQuestion(q7);
         criteriaReportRepository.save(IE299_criteriaReport);
 
-
+*/
 
     }
 }

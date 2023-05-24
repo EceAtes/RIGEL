@@ -27,11 +27,6 @@ public class FeedbackUser extends Users{
         this.students = students;
     }
 
-    public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Long, Student> students) {
-        super(name, email, password, notificationToMail, role, department, notification);
-        this.students = students;
-    }
-
     public void addStudent(Student student){
         this.students.put(student.getId(), student);
     }

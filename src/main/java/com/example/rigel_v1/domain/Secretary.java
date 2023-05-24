@@ -1,9 +1,14 @@
 package com.example.rigel_v1.domain;
 
+import com.example.rigel_v1.controllers.UsersController;
+import com.example.rigel_v1.domain.enums.CourseName;
+import com.example.rigel_v1.service.UsersService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.HashMap;
@@ -11,11 +16,13 @@ import java.util.Map;
 import java.util.Set;
 
 //@Document("Administrations")
+@Component
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Secretary extends Administration{
+public class Secretary extends Users{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -34,25 +41,39 @@ public class Secretary extends Administration{
         this.gradeForms = new HashMap<>();
     }
 
-    public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
+    /*public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
         super(criteriaReports, eSignature);//, statistics
         this.EvaluationForm = EvaluationForm;
         this.gradeForms = gradeForms;
-    }
+    }*/
 
-    public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
+    /*ublic Secretary(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
         super(name, email, password, notificationToMail, Role.SECRETARY, department, criteriaReports, eSignature);//, statistics
         this.gradeForms = gradeForms;
-    }
+    }*/
 
-    public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
+    /*public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
         super(name, email, password, notificationToMail, Role.SECRETARY, department, notification, criteriaReports, eSignature);//, statistics
         this.EvaluationForm = EvaluationForm;
         this.gradeForms = gradeForms;
+    }*/
+
+    public void addUser(UsersService usersService, String name, String email, String password, boolean notifToMail, Role role, Department department, int studentId, CourseName[] courseTypes){
+        Users newUser = usersService.createUser(name, email, password, notifToMail, role, department, studentId);
+        if(role == Role.STUDENT){   ///equals()??
+            for(int i = 0; i < courseTypes.length; i++){
+                StudentCourse studentCourse = new StudentCourse((Student) newUser, courseTypes[i]);
+                ((Student) newUser).getCourses().add(studentCourse);
+            }
+        }
     }
 
-    public boolean addUser(String name, String email, String password, boolean notifToMail, int role, Long department_id){
-
-        return false;
+    public void automatch(UsersService usersService){
+        HashMap<Long, Student> allStudents = new HashMap<>();
+        allStudents.putAll(this.getDepartment().getStudents_299());
+        allStudents.putAll(this.getDepartment().getStudents_399());
+        usersService.automatch(this.getDepartment());
+        boolean isAllMatched = true;
     }
+
 }

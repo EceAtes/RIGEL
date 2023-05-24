@@ -39,6 +39,7 @@ public class StudentCourse {
   //  @JsonProperty("student")
     @ManyToOne
     @JoinColumn(name = "student_id")
+    @JsonBackReference
     private Student courseTaker;
 
     @ManyToOne
@@ -59,7 +60,8 @@ public class StudentCourse {
 
     public StudentCourse(Student courseTaker, CourseName courseName){   
         this.courseTaker = courseTaker;
-        this.courseName = courseName;  
+        this.courseName = courseName;
+        this.instructor = null;
         internshipReports = new LinkedList<>();   
         //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
         //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);

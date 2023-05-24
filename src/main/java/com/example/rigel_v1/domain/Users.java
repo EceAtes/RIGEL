@@ -35,15 +35,10 @@ public class Users {
 
     @JsonProperty("notifToMail")
     private boolean notificationToMail;
-    private Role role;
+    private Role role = Role.NOT_REGISTERED;
 
     @ManyToOne
     private Department department;
-
-    @OneToMany
-    @JoinColumn(name = "users_id")
-    private Set<Notification> notification = new HashSet<>();
-
 
     public Users() {
     }
@@ -55,17 +50,6 @@ public class Users {
         this.notificationToMail = notificationToMail;
         this.role = role;
         this.department = department;
-        this.notification = new HashSet<>();
-    }
-
-    public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.notificationToMail = notificationToMail;
-        this.role = role;
-        this.department = department;
-        this.notification = notification;
     }
 
     public enum Role {
@@ -79,7 +63,6 @@ public class Users {
     }
 
     public boolean deleteUser(){
-        this.notification = null;
         return true;
     }
 
@@ -140,14 +123,6 @@ public class Users {
     }
 
 
-    public Set<Notification> getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Set<Notification> notification) {
-        this.notification = notification;
-
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -174,7 +149,6 @@ public class Users {
                 ", notificationToMail=" + notificationToMail +
                 ", role=" + role +
                 ", department=" + department +
-                ", notification=" + notification +
                 '}';
     }
 }

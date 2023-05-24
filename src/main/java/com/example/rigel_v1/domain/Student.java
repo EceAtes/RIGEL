@@ -1,9 +1,6 @@
 package com.example.rigel_v1.domain;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,12 +14,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class Student extends Users {
+    //@OneToMany(fetch = FetchType.EAGER)
     @OneToMany
     @JoinColumn(name = "student_id")
     private Set<InternshipReport> oldReports = new HashSet<>();
 
     private int studentId = -1;
 
+    //@OneToMany(fetch = FetchType.EAGER)
     @OneToMany
     private Set<StudentCourse> courses = new HashSet<>();
 
@@ -33,8 +32,8 @@ public class Student extends Users {
         this.studentId = studentId;
     }
 
-    public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Set<InternshipReport> oldReports, Set<StudentCourse> courses, List<Section> sections) {
-        super(name, email, password, notificationToMail, Role.STUDENT, department, notification);
+    public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department,Set<InternshipReport> oldReports, Set<StudentCourse> courses, List<Section> sections) {
+        super(name, email, password, notificationToMail, Role.STUDENT, department );
         this.oldReports = oldReports;
         this.courses = courses;
     }

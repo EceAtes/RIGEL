@@ -27,18 +27,13 @@ public class Department {
     @JsonProperty("internedStuNo")
     private int internedStuNo;
 
-    @OneToMany
-    @JoinColumn(name = "department_id")
-    @JsonSerialize(using = NullKeySerializer.class)
-    private Map<String, Administration> administrators = new HashMap<>();//maybe add id for them too?
-
     @JsonProperty("name")
     private String name;
 
     @OneToMany
     @JoinColumn(name = "department_id")
     @JsonSerialize(using = NullKeySerializer.class)
-    private Map<String, Instructor> instructors = new HashMap<>();//maybe add id for them too?
+    private Map<Long, Instructor> instructors = new HashMap<>();//maybe add id for them too?
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
@@ -78,7 +73,6 @@ public class Department {
         this.name = name;
         this.totalStuNo = totalStuNo;
         this.internedStuNo = internedStuNo;
-        administrators = new HashMap<>();
         instructors = new HashMap<>();
         students_299 = new HashMap<>();
         students_399 = new HashMap<>();
@@ -95,7 +89,7 @@ public class Department {
     }
 
     public void addInstructor(Instructor instructor){
-        this.instructors.put(instructor.getName(), instructor);
+        this.instructors.put(instructor.getId(), instructor);
     }
 
     @Override

@@ -2,13 +2,11 @@ package com.example.rigel_v1.domain;
 
 import java.io.File;
 import java.util.*;
+import java.util.zip.CheckedOutputStream;
 
 import com.example.rigel_v1.NullKeySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,17 +17,9 @@ import lombok.Setter;
 @Setter
 public class Instructor extends FeedbackUser{
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "instructor_id")
-    private List<Section> sections = new LinkedList<>();
-
-    @OneToMany
-    @JoinColumn(name = "instructor_id")
-    private List<StudentCourse> graded = new LinkedList<>();
-
-    @OneToMany
-    @JoinColumn(name = "instructor_id")
-    private List<StudentCourse> toBeGraded = new LinkedList<>();
+    private List<StudentCourse> courses = new LinkedList<>();
 
     private File eSignature = new File("pom.xml");
 
@@ -45,39 +35,31 @@ public class Instructor extends FeedbackUser{
         eSignature = new File("pom.xml");
     }
 
-    public Instructor(Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature) { //, Statistics statistics) {
-        super(students);
-        this.graded = graded;
-        this.toBeGraded = toBeGraded;
+    public Instructor(List<StudentCourse> courses, File eSignature) { //, Statistics statistics) {
+        super();
+        this.courses = courses;
         this.eSignature = eSignature;
         //this.statistics = statistics;
-        this.sections = new ArrayList<>();
     }
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature) {//, Statistics statistics) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, students);
-        this.graded = graded;
-        this.toBeGraded = toBeGraded;
+        this.courses = new LinkedList<>();
         this.eSignature = eSignature;
         //this.statistics = statistics;
-        this.sections = new ArrayList<>();
         department.addInstructor(this);
     }
 
-    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature, List<Section> sections) { //Statistics statistics
-        super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, notification, students);
-        this.graded = graded;
-        this.toBeGraded = toBeGraded;
+    public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, List<StudentCourse> courses) { //Statistics statistics
+        super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, students);
         this.eSignature = eSignature;
         //this.statistics = statistics;
-        this.sections = sections;
+        this.courses = courses;
     }
 
     public void addCourse(StudentCourse course){
-        this.toBeGraded.add(course);
+        this.courses.add(course);
+        course.setInstructor(this);
     }
 
-    public void addStudent(Student student){
-        //this.toBeGraded.add(sections); ????????????
-    }
 }
