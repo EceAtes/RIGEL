@@ -128,5 +128,9 @@ public class BootStrapData implements CommandLineRunner {
 
         System.out.println(cs299.getGradeForm().getReportStatus());
 
+        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
+
+
     }
 }

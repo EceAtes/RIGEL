@@ -10,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-public class FileUploadController {
+public class GoogleDriveController {
 
     private final GoogleDriveService googleDriveService;
 
     @Autowired
-    public FileUploadController(GoogleDriveService googleDriveService) {
+    public GoogleDriveController(GoogleDriveService googleDriveService) {
         this.googleDriveService = googleDriveService;
     }
 
@@ -23,7 +23,7 @@ public class FileUploadController {
     public ResponseEntity<String> uploadFile(
             @RequestParam("folderId") String folderId,
             @RequestPart("file") MultipartFile file,
-            @RequestParam("userId") Long userId //shoud be changed
+            @RequestParam("userId") Long userId // shoud be changed
 
     ) {
         // Check if a file is uploaded
@@ -40,9 +40,21 @@ public class FileUploadController {
             String fileId = googleDriveService.uploadFile(file, folderId, userId);
             return ResponseEntity.ok("File uploaded successfully. File ID: " + fileId);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to upload file: " + e.getMessage());
         }
     }
 
-    
+    @PostMapping("/create-semester")
+    public ResponseEntity<String> createPublicFolder(@RequestParam("folderName") String folderName,
+            @RequestParam("userId") Long userId) {
+        try {
+            googleDriveService.createSemesterFolders(folderName, userId);
+            return ResponseEntity.ok("Folder created successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to create folder: " + e.getMessage());
+        }
+    }
+
 }

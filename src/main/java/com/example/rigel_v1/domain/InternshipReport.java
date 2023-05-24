@@ -3,10 +3,7 @@ package com.example.rigel_v1.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.rigel_v1.domain.enums.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 

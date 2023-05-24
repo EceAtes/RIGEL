@@ -2,10 +2,12 @@ package com.example.rigel_v1.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.*;
 
 @Entity
+@Setter @Getter @NoArgsConstructor
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,16 +20,12 @@ public class Department {
     @JsonProperty("internedStuNo")
     private int internedStuNo;
 
-    @OneToMany
-    @JoinColumn(name = "department_id")
-    private Map<String, Administration> administrators = new HashMap<>();//maybe add id for them too?
-
     @JsonProperty("name")
     private String name;
 
     @OneToMany
     @JoinColumn(name = "department_id")
-    private Map<String, Instructor> instructors = new HashMap<>();//maybe add id for them too?
+    private Map<Long, Instructor> instructors = new HashMap<>();//maybe add id for them too?
 
     @OneToMany
     @JoinColumn(name = "department_id") //id of the "one"
@@ -64,66 +62,6 @@ public class Department {
         this.internedStuNo = internedStuNo;
     }
 
-    public Department() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getTotalStuNo() {
-        return totalStuNo;
-    }
-
-    public void setTotalStuNo(int totalStuNo) {
-        this.totalStuNo = totalStuNo;
-    }
-
-    public int getInternedStuNo() {
-        return internedStuNo;
-    }
-
-    public void setInternedStuNo(int internedStuNo) {
-        this.internedStuNo = internedStuNo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Map<Long, Student> getStudents_299() {
-        return students_299;
-    }
-
-    public void setStudents_299(Map<Long, Student> students_299) {
-        this.students_299 = students_299;
-    }
-
-    public Map<Long, Student> getStudents_399() {
-        return students_399;
-    }
-
-    public void setStudents_399(Map<Long, Student> students_399) {
-        this.students_399 = students_399;
-    }
-
-    public List<Department> getSections() {
-        return sections;
-    }
-
-    public void setSections(List<Department> sections) {
-        this.sections = sections;
-    }
-
     public void addStudent(Student student, int courseType){
         totalStuNo++;
         if(courseType == 299){
@@ -134,24 +72,8 @@ public class Department {
         student.setDepartment(this);
     }
 
-    public Map<String, Administration> getAdministrators() {
-        return administrators;
-    }
-
-    public void setAdministrators(Map<String, Administration> administrators) {
-        this.administrators = administrators;
-    }
-
-    public Map<String, Instructor> getInstructors() {
-        return instructors;
-    }
-
-    public void setInstructors(Map<String, Instructor> instructors) {
-        this.instructors = instructors;
-    }
-
     public void addInstructor(Instructor instructor){
-        this.instructors.put(instructor.getName(), instructor);
+        this.instructors.put(instructor.getId(), instructor);
     }
 
     @Override

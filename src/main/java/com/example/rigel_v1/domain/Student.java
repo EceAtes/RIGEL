@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.rigel_v1.domain.enums.Role;
+
 @Entity
 @Setter @Getter @NoArgsConstructor
 public class Student extends Users {

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.*;
 
+import com.example.rigel_v1.domain.enums.Role;
+
 @Entity
 public class FeedbackUser extends Users{
 
@@ -20,11 +22,6 @@ public class FeedbackUser extends Users{
 
     public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Map<Long, Student> students) {
         super(name, email, password, notificationToMail, role, department);
-        this.students = students;
-    }
-
-    public FeedbackUser(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Map<Long, Student> students) {
-        super(name, email, password, notificationToMail, role, department, notification);
         this.students = students;
     }
 

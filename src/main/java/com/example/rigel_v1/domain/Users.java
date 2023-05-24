@@ -1,8 +1,11 @@
 package com.example.rigel_v1.domain;
 
 
+import com.example.rigel_v1.domain.enums.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
+
 import org.hibernate.annotations.Cascade;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Setter @Getter @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Users {
 
@@ -38,14 +42,6 @@ public class Users {
     @ManyToOne
     private Department department;
 
-    @OneToMany
-    @JoinColumn(name = "users_id") 
-    private Set<Notification> notification;
-
-
-    public Users() {
-    }
-
     public Users( String name, String email, String password,boolean notificationToMail, Role role, Department department) {
         this.name = name;
         this.email = email;
@@ -53,99 +49,6 @@ public class Users {
         this.notificationToMail = notificationToMail;
         this.role = role;
         this.department = department;
-        this.notification = new HashSet<>();
-
-    }
-
-    public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.notificationToMail = notificationToMail;
-        this.role = role;
-        this.department = department;
-        this.notification = notification;
-    }
-
-    public enum Role {
-        SECRETARY,
-        ADMIN,
-        STUDENT,
-        TA,
-        INSTRUCTOR,
-        ADMINISTRATION,
-        NOT_REGISTERED
-    }
-
-    public boolean deleteUser(){
-        this.notification = null;
-        return true;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isNotificationToMail() {
-        return notificationToMail;
-    }
-
-    public void setNotificationToMail(boolean notificationToMail) {
-        this.notificationToMail = notificationToMail;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-
-    public Set<Notification> getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Set<Notification> notification) {
-        this.notification = notification;
-
     }
 
     @Override
@@ -172,7 +75,6 @@ public class Users {
                 ", notificationToMail=" + notificationToMail +
                 ", role=" + role +
                 ", department=" + department +
-                ", notification=" + notification +
                 '}';
     }
 }

@@ -1,65 +1,33 @@
 package com.example.rigel_v1.domain;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import com.example.rigel_v1.domain.enums.Role;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-public class Secretary extends Administration{
+@Setter @Getter @NoArgsConstructor
+public class Secretary extends Users{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "secretary_id")
-    private Map<Integer, EvaluationForm> EvaluationForm;//are there multiple secretaries? ;-;
+    private String semesterFolderLink;
 
-    @OneToMany
-    @JoinColumn(name = "secretary_id")
-    private Map<Integer, GradeForm> gradeForms;
-
-    public Secretary() {
-    }
+    private ArrayList<String> reportsFolderLinks; // ====EDITABLES==== | [0]: Internship Reports, [1]: Criteria Reports, [2]: Grade Forms
+                                                  // ====VIEV ONLY==== | [3]: Internship Reports, [4]: Criteria Reports, [5]: Grade Forms
 
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.SECRETARY, department);
-        this.EvaluationForm = new HashMap<>();
-        this.gradeForms = new HashMap<>();
+        semesterFolderLink = "";
+        reportsFolderLinks = new ArrayList<>();
     }
 
-    public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
-        super(criteriaReports, eSignature);//, statistics
-        this.EvaluationForm = EvaluationForm;
-        this.gradeForms = gradeForms;
-    }
-
-    public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
-        super(name, email, password, notificationToMail, Role.SECRETARY, department, criteriaReports, eSignature);//, statistics
-        this.gradeForms = gradeForms;
-    }
-
-    public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
-        super(name, email, password, notificationToMail, Role.SECRETARY, department, notification, criteriaReports, eSignature);//, statistics
-        this.EvaluationForm = EvaluationForm;
-        this.gradeForms = gradeForms;
-    }
-
-    public Map<Integer, EvaluationForm> getEvaluationForm() {
-        return EvaluationForm;
-    }
-
-    public void setEvaluationForm(Map<Integer, EvaluationForm> EvaluationForm) {
-        this.EvaluationForm = EvaluationForm;
-    }
-
-    public Map<Integer, GradeForm> getGradeForms() {
-        return gradeForms;
-    }
-
-    public void setGradeForms(Map<Integer, GradeForm> gradeForms) {
-        this.gradeForms = gradeForms;
+    public void addFolderLinks(String subfolderLink){
+        reportsFolderLinks.add(subfolderLink);
     }
 }
