@@ -52,7 +52,7 @@ public class UsersController {
             Department department = optional.get();
             if (department instanceof Department) {
                 if(request.getRole() == 2){ //student
-                    Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
+                    Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department, request.getStudentId());
                     /*if(student.takes(299)){
                         department.addStudent(student, 299);
                     }
@@ -175,7 +175,6 @@ class LoginResponse{
 }
 
 @Getter @Setter
-@NoArgsConstructor
 class UserRequest {
     private String name;
     private String email;
@@ -183,7 +182,7 @@ class UserRequest {
     @JsonProperty("notifToMail")
     private boolean notifToMail;
     private int role;
-
+    private int studentId;
     @JsonProperty("department_id")
     private Long department_id;
 

@@ -19,8 +19,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    private boolean isSatisfactory;
+
     private CourseName courseName;
     private ReportStatus reportStatus;
 
@@ -30,8 +29,7 @@ public class Report {
     //@OneToOne
     //private Instructor evaluator;
 
-    public Report(boolean isSatisfactory, CourseName courseName,  ReportStatus reportStatus) { //Student student, Instructor evaluator,
-        this.isSatisfactory = isSatisfactory;
+    public Report(CourseName courseName,  ReportStatus reportStatus) { //Student student, Instructor evaluator,
         this.courseName = courseName;
         //this.student = student;
         //this.evaluator = evaluator;
@@ -53,7 +51,4 @@ public class Report {
         return true;
     }
 
-    public void setSatisfaction(boolean b) {
-        this.isSatisfactory = b;
-    }
 }

@@ -36,7 +36,7 @@ public class CriteriaReport extends Report{
     private boolean isCompleted;
 
     public CriteriaReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, ReportStatus reportStatus){ //Student student, Instructor evaluator,
-        super(isSatisfactory, courseName, reportStatus);
+        super(courseName, reportStatus);
         this.questions = new ArrayList<Question>();
         this.course = course;
         this.isCompleted = false;

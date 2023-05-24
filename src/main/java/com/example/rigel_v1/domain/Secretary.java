@@ -50,4 +50,9 @@ public class Secretary extends Administration{
         this.EvaluationForm = EvaluationForm;
         this.gradeForms = gradeForms;
     }
+
+    public boolean addUser(String name, String email, String password, boolean notifToMail, int role, Long department_id){
+
+        return false;
+    }
 }

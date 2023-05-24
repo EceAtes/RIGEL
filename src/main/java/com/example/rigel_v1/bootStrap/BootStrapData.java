@@ -35,19 +35,19 @@ public class BootStrapData implements CommandLineRunner {
         departmentRepository.save(CS);
         departmentRepository.save(IE);
 
-        Student A = new Student("A", "a@gmail.com", "1234", true, null);
+        Student A = new Student("A", "a@gmail.com", "1234", true, null, 123456);
         CS.addStudent(A, 299);
 
         userRepository.save(A);
         departmentRepository.save(CS);
 
-        Student B = new Student("B", "b@gmail.com", "1235", false, null);
+        Student B = new Student("B", "b@gmail.com", "1235", false, null,123457);
         IE.addStudent(B, 399);
 
         userRepository.save(B);
         departmentRepository.save(IE);
 
-        Student C = new Student("C", "c@gmail.com", "1236", true, null);
+        Student C = new Student("C", "c@gmail.com", "1236", true, null,123458);
         IE.addStudent(C, 399);
 
         userRepository.save(C);

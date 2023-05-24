@@ -28,7 +28,7 @@ public class GradeForm extends Report {
 
 
     public GradeForm(boolean isSatisfactory, CourseName courseName, StudentCourse course,  ReportStatus reportStatus){ // Student student, Instructor evaluator,Student student, Instructor evaluator,
-        super(isSatisfactory, courseName, reportStatus);
+        super(courseName, reportStatus);
         willBeRevised = true;
         this.course = course;
         //questions = new ArrayList<Question>();

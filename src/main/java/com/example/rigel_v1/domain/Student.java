@@ -21,13 +21,16 @@ public class Student extends Users {
     @JoinColumn(name = "student_id")
     private Set<InternshipReport> oldReports = new HashSet<>();
 
+    private int studentId = -1;
+
     @OneToMany
     private Set<StudentCourse> courses = new HashSet<>();
 
-    public Student(String name, String email, String password, boolean notificationToMail, Department department) {
+    public Student(String name, String email, String password, boolean notificationToMail, Department department, int studentId) {
         super(name, email, password, notificationToMail, Role.STUDENT, department);
         this.oldReports = new HashSet<>();
         this.courses = new HashSet<>();
+        this.studentId = studentId;
     }
 
     public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department, Set<Notification> notification, Set<InternshipReport> oldReports, Set<StudentCourse> courses, List<Section> sections) {
