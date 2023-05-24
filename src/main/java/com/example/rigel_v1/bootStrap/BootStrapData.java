@@ -95,6 +95,7 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println(instructor1.getCourses().get(0).getCourseTaker().getName());
 
         secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, CS, 22001578, new CourseName[]{CourseName.CS299});
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.INSTRUCTOR, CS, 0, null);
 
 
         //System.out.println("AAAAAAAAAAAAAAAAAa");
