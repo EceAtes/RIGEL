@@ -83,7 +83,7 @@ public class Secretary extends Users{
     }
 
     //hardcoded path
-    public void createStudentsFromFile(){
+    public void createStudentsFromFile(UsersService usersService){
         String basePath = System.getProperty("user.dir");
         String filePath = basePath + "\\users.txt";
 
@@ -93,35 +93,37 @@ public class Secretary extends Users{
                 Scanner scanner = new Scanner(line);
                 scanner.useDelimiter(",(?![^\\[]*\\])"); // Delimiter to split the line
 
-                String string1 = scanner.next();
-                String string2 = scanner.next();
-                String string3 = scanner.next();
-                int number = scanner.nextInt();
-                boolean boolValue = scanner.nextBoolean();
-                long longValue = scanner.nextLong();
+                int studentId = 0;
+                CourseName[] courseNames = new CourseName[2];
 
-                // Parsing the array from the last element in the square brackets
-                String arrayString = scanner.next();
-                String[] array = arrayString.replaceAll("\\[|\\]", "").split(",");
-
-                scanner.close();
-
-                // Print the extracted values
-                System.out.println("String 1: " + string1);
-                System.out.println("String 2: " + string2);
-                System.out.println("String 3: " + string3);
-                System.out.println("Number: " + number);
-                System.out.println("Boolean Value: " + boolValue);
-                System.out.println("Long Value: " + longValue);
-                System.out.println("Array:");
-                for (String item : array) {
-                    System.out.println(item);
+                String name = scanner.next().trim();
+                String email = scanner.next().trim();
+                String password = scanner.next().trim();
+                boolean notifToMail = Boolean.parseBoolean(scanner.next().trim());
+                Role role = Users.Role.valueOf(scanner.next().trim());
+                if(scanner.hasNext()){
+                    studentId = Integer.parseInt(scanner.next().trim());
+                }
+                if(scanner.hasNext()){
+                    String arrayString = scanner.next();
+                    String[] array = arrayString.replaceAll("\\[|\\]", "").split(",");
+                    for(int i = 0; i < array.length; i++){
+                        array[i] = array[i].trim();
+                        CourseName courseName = CourseName.valueOf(array[i]);
+                        courseNames[i] = courseName;
+                    }
                 }
 
+                scanner.close();
+                addUser(usersService, name, email, password, notifToMail, role, studentId, courseNames);
+
+                    // Print the extracted values
+
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
 

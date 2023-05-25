@@ -116,7 +116,7 @@ public class BootStrapData implements CommandLineRunner {
         secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, 22001578, new CourseName[]{CourseName.CS299});
         secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.INSTRUCTOR,  0, null);
 
-        secretary.createStudentsFromFile();
+        secretary.createStudentsFromFile(usersService);
 
         //System.out.println(cs299.getInstructor());
 
