@@ -51,7 +51,7 @@ public class UsersController {
         if (optional.isPresent()) {
             Department department = optional.get();
             if (department instanceof Department) {
-                if(request.getRole() == 2){ //student
+                if(request.getRole() == Users.Role.STUDENT){ //student
                     Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department, request.getStudentId());
                     /*if(student.takes(299)){
                         department.addStudent(student, 299);
@@ -62,12 +62,12 @@ public class UsersController {
                     this.userRepository.save(student);
                     System.out.println(student);
                 }
-                else if(request.getRole() == 4){ //instructor
+                else if(request.getRole() == Users.Role.INSTRUCTOR){ //instructor
                     Instructor instructor = new Instructor(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(instructor);
                     System.out.println(instructor);
                 }
-                else if(request.getRole() == 6){ //secretary
+                else if(request.getRole() == Users.Role.SECRETARY){ //secretary
                     Secretary secretary = new Secretary(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(secretary);
                     //System.out.println(secretary);
@@ -196,7 +196,8 @@ class UserRequest {
     private String password;
     @JsonProperty("notifToMail")
     private boolean notifToMail;
-    private int role;
+    @JsonProperty("role")
+    private Users.Role role;
     private int studentId;
     @JsonProperty("department_id")
     private Long department_id;
