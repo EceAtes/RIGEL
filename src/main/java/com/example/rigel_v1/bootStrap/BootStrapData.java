@@ -16,13 +16,13 @@ public class BootStrapData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
-    //private final ReportRepository reportRepository;
+    private final ReportRepository reportRepository;
     private final EvaluationFormRepository evaluationFormRepository;
     private final QuestionRepository questionRepository;
     private final CriteriaReportRepository criteriaReportRepository;
     private final UsersService usersService;
 
-    public BootStrapData(UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, EvaluationFormRepository evaluationFormRepository) {
+    public BootStrapData(EvaluationFormRepository evaluationFormRepository, UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, ReportRepository reportRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
@@ -31,6 +31,7 @@ public class BootStrapData implements CommandLineRunner {
         this.evaluationFormRepository = evaluationFormRepository;
         this.questionRepository = questionRepository;
         this.usersService = usersService;
+        this.reportRepository = reportRepository;
     }
 
     @Override
@@ -136,7 +137,7 @@ public class BootStrapData implements CommandLineRunner {
         //reportRepository.save(C299_gradeForm);
         criteriaReportRepository.save(CS299_criteriaReport);
         //evaluationFormRepository.save(CS299_evaluationForm);
-       
+
         //GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
         CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399, ReportStatus.changable);
        // EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
@@ -201,6 +202,8 @@ public class BootStrapData implements CommandLineRunner {
         IE299_criteriaReport.addQuestion(q7);
         criteriaReportRepository.save(IE299_criteriaReport);
 
+        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
 */
 
     }

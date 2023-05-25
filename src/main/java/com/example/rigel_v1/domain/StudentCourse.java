@@ -9,30 +9,17 @@ import com.example.rigel_v1.domain.enums.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Setter @Getter @NoArgsConstructor
 public class StudentCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;                
-
- //   @JsonProperty("date")
-    private Date deadline;
-
-  //  @JsonProperty("score")
-    private Score score;
-
-   // @JsonProperty("status")
-    private Status status;
-
+    private Long id;            
+    
     @JsonProperty("name")
     private CourseName courseName;
 
@@ -48,21 +35,37 @@ public class StudentCourse {
     @OneToMany
     @JoinColumn(name = "course_id")
     private List<InternshipReport> internshipReports;
-    
-    @OneToOne
-    private GradeForm gradeForm;
 
+    private String internshipReportFolderID;
+    
+    private int iterationCount; 
+    
     @OneToOne
     private CriteriaReport criteriaReport;
 
-    @OneToOne
-    private EvaluationForm evaluationForm;
+    @OneToMany
+    @JoinColumn(name = "course_id")
+    private List<GradeForm> gradeForms;
+ 
+    // @JsonProperty("score")
+    private Score score;
+
+    // @JsonProperty("status")
+    private Status status;
+
+    //private Date internshipReportDeadline;
+
 
     public StudentCourse(Student courseTaker, CourseName courseName){   
         this.courseTaker = courseTaker;
         this.courseName = courseName;
         this.instructor = null;
         internshipReports = new LinkedList<>();   
+        internshipReportFolderID = "none";
+        iterationCount = 0;
+        //criteriaReport = new CriteriaReport();
+        gradeForms = new LinkedList<>();  
+
         //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
         //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
         //evaluationForm = new EvaluationForm();
@@ -74,49 +77,58 @@ public class StudentCourse {
         this.courseName = courseName;  
         this.instructor = instructor;
         internshipReports = new LinkedList<>();   
-        //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
-        //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
-        //evaluationForm = new EvaluationForm();
+        internshipReportFolderID = "none";
+        iterationCount = 0;
+        criteriaReport = new CriteriaReport();
+        gradeForms = new LinkedList<>(); 
+
         //courseTaker.enrollCourse(this);
         //instructor.addCourse(this);  
-        //instructor.addStudent(courseTaker); // not filled yet
     }
 
-    public void uploadInternshipReport(File report){ 
+    public void uploadInternshipReport(InternshipReport rep){
+        internshipReports.add(rep);
         System.out.println("internship report of " + courseTaker.getName() + " && " + courseName + " uploaded");
     }
     
-    public void uploadGradeForm(GradeForm report){ 
-        gradeForm = report;
-    }
-
-    public void uploadCriteriaReport(CriteriaReport report){ 
-        criteriaReport = report;
-    }
-
-    public void uploadEvaluationForm(EvaluationForm report){ 
-        evaluationForm = report;
-    }
-
-    public InternshipReport confirmInternshipReport(){ 
+    public InternshipReport getLastInternshipReportSubmitted(){
         return internshipReports.get(0);        // last iteration
     }
     
-    public GradeForm confirmGradeForm(){
-        return gradeForm;
+    public boolean generateGradeForm(){ 
+        if(instructor.getESignature() != null){
+            if(gradeForms.get(0).isWillBeRevised() 
+               || (criteriaReport.getReportStatus() == ReportStatus.submitted)&&  gradeForms.get(0).getStudentScore() != -1 )
+                    System.out.println("You can create pdf file");
+                    // create pdf!!
+                    //
+                    //
+                    return true;
+        }
+        else{
+            System.out.println("Cannot create grade form -- e-signature missing");
+            return false;
+        }
     }
 
-    public CriteriaReport confirmCriteriaReport(){
-        return criteriaReport;
+    public boolean generateCriteriaReport(){ 
+        if(instructor.getESignature() != null){         // NOT NECESSEARY I GUESS?????
+            if(!gradeForms.get(0).isWillBeRevised() 
+               || (criteriaReport.getReportStatus() == ReportStatus.submitted) &&  gradeForms.get(0).getStudentScore() != -1 )
+                    System.out.println("You can create pdf file");
+                    // create pdf!!
+                    //
+                    //
+                    return true;
+        }
+        else{
+            System.out.println("Cannot create criteria report -- e-signature missing");
+            return false;
+        }
     }
-
-    public EvaluationForm confirmEvaluationForm(){
-        return evaluationForm;
-    }
-
+  
     public void setCourseTaker(Student courseTaker) {
         this.courseTaker = courseTaker;
-        //instructor.addStudent(courseTaker);
         //instructor.addCourse(this);
     }
 

@@ -1,0 +1,40 @@
+Cs 319 - RIGEL
+
+Daha çok filtre ekliyoruz. (Bölüm - Şehir - İsim - Sektör)
+Profil ekliyoruz.
+Geri bildirim ekleyelim. - Bize geliyo şimdilik.
+Information feature is needed to be added.
+Çok fazla site var.
+
+
+
+
+
+Corner Cases !!!!
+299 check
+End date must come later from start
+
+
+
+
+
+
+Questions??
+
+Bu sistem nerede çalışacak?
+Kota neymiş?
+Puanlama neymiş?
+Duyurularda neyi duyurabiliriz. Nedir?
+Sadece ingilizce olabilir.
+Official papers concerning legal things should be done in the system or not?
+
+Chadgpt
+How does the application handle emergency situations, such as changes in internship schedules or intern status?
+How does the application support communication and collaboration between interns, supervisors, and administrators?
+Can the application integrate with other HR or student management systems?
+
+
+Please see the faculty secretary with the following to receive your summer training documents:
+	Admission letter written by the company
+	Summer training application form (use the first button on the upper right corner to generate)
+

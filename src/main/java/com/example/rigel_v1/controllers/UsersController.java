@@ -3,6 +3,7 @@ package com.example.rigel_v1.controllers;
 
 import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.domain.enums.CourseName;
+import com.example.rigel_v1.domain.enums.Role;
 import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,7 +43,7 @@ public class UsersController {
                 }
             }
         }
-        return new LoginResponse( false, Users.Role.NOT_REGISTERED);
+        return new LoginResponse( false, Role.NOT_REGISTERED);
     }
 
     @PostMapping
@@ -72,7 +73,7 @@ public class UsersController {
                     this.userRepository.save(secretary);
                     //System.out.println(secretary);
                 } else{
-                    Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Users.Role.NOT_REGISTERED, department);
+                    Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Role.NOT_REGISTERED, department);
                     this.userRepository.save(user);
                     //System.out.println(user);
                 }
@@ -159,14 +160,13 @@ class LoginRequest{
     private String password;
 }
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 class LoginResponse{
     @JsonProperty("isVerified")
     private boolean isVerified;
     @JsonProperty("role")
-    private Users.Role role;
+    private Role role;
     private String name;
     private String email;
     private boolean notifToMail;
@@ -183,7 +183,7 @@ class LoginResponse{
         this.userId = userId;
     }
 
-    public LoginResponse(boolean isVerified, Users.Role role) {
+    public LoginResponse(boolean isVerified, Role role){
         this.isVerified = isVerified;
         this.role = role;
     }

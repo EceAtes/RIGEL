@@ -1,15 +1,11 @@
 package com.example.rigel_v1.controllers;
 
-import com.example.rigel_v1.domain.Instructor;
 import com.example.rigel_v1.domain.Student;
 import com.example.rigel_v1.domain.StudentCourse;
 import com.example.rigel_v1.domain.Users;
-import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.UserRepository;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 

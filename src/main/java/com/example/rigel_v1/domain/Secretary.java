@@ -32,15 +32,10 @@ public class Secretary extends Users{
 
     @OneToMany
     @JoinColumn(name = "secretary_id")
-    private Map<Integer, EvaluationForm> EvaluationForm;//are there multiple secretaries? ;-;
-
-    @OneToMany
-    @JoinColumn(name = "secretary_id")
     private Map<Integer, GradeForm> gradeForms;
 
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.SECRETARY, department);
-        this.EvaluationForm = new HashMap<>();
         this.gradeForms = new HashMap<>();
     }
 

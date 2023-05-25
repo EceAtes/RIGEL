@@ -1,9 +1,6 @@
 package com.example.rigel_v1.domain;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import com.example.rigel_v1.domain.enums.*;
+import lombok.*;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,29 +9,36 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 public class GradeForm extends Report {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;   
+    
+    //  PART A
+    private String companyName;
+    private int studentScore;
+    private boolean isRelated;
+    private boolean isSupervisorEngineer;
+
+    // PART B
     private boolean willBeRevised;
-    //private Date dueDate;           // ??????????
 
-    @OneToOne
-    private StudentCourse course;        
+    // PART C
+    private boolean isSatisfactory;
+    private boolean isSigned;
 
-    /*@OneToMany
-    @JoinColumn(name = "gradeform_id")
-    private ArrayList<Question> questions;*/
+    @OneToOne // many to one????????????????????
+    StudentCourse course;
 
-
-    public GradeForm(boolean isSatisfactory, CourseName courseName, StudentCourse course,  ReportStatus reportStatus){ // Student student, Instructor evaluator,Student student, Instructor evaluator,
-        super(courseName, reportStatus);
+    public GradeForm( StudentCourse course ){  
+        super(course);
+        studentScore = 0;
+        isRelated = false;
+        isSupervisorEngineer = false;
         willBeRevised = true;
-        this.course = course;
-        //questions = new ArrayList<Question>();
-    }
-
-    public void editGradeForm(){
+        isSatisfactory = false;
     }
 
 }

@@ -1,0 +1,502 @@
+Toplantı No: 4
+22.03.2023 
+Başlangıç: 20.46
+Bitiş: 23.21
+
+//========================================================================================================================================
+  Bu toplantıda alınan görevlerin deadlineı: 24.03.2023 Cuma Gecesi
+  Denetleme ve düzenlemeler 24.03.2023 Cumartesi günü yapılacak
+  24.03.2023 Cumartesi akşamında commentler ve öneriler için toplantı yapılacak. Raporun cumartesi günü yüklenmesi hedeflendi
+//========================================================================================================================================
+
+Herkes
+* Use case diagramda gördüğü eksikleri docsa commentleyecek.
+* Herkes raporlardan docsta kararlaştırıldığı gibi bahsedecek/kendi kısımlarını düzeltecek: Comapny Report, Grade Form, Internship Report, Criteria Report
+* Herkes atanmış use case texturelarını yazacak.
+* Paylaşılıp yapılan her kısım özellikle bir başka birisi tarafından denetlenecek, vakti olan diğer kısımlara da comment yapabilir:
+ Yapan          Kontrol eden
+ Aytekin          Ömer
+ Ömer             İzgi
+ İzgi             Begüm
+ Begüm            Ece
+ Ece              Aytekin
+
+Begüm 
+* State diagramlar tamamlandı, başka öneri/iyileştirme yorumu bekleniyor.
+* Activity diagramlarda fikir var diagram yok, diagram bekleniyor.
+* Activityler çizilip, tüm diagramlara biraz açıklama yazılacak.
+
+İzgi
+* Introduction yazıldı.
+* Embeded pdf üzerine çalışılması gerekiyor, fikir ve design beğenildi.
+* Mockuplarda 2 course alındığı durumlardaki tasarım için geliştirmeler yapılacak.
+* Filtreler, admin page mockuplara eklenecek.
+* Use case diagrama konuşulan eksikler çizilecek, eksikleri İzgi not aldı. (Criteria report, generate report etc.)
+* Contents düzeltilecek, use caselerin textural açıklamaları diğer takım üyeleriine bölüştürülecek.
+
+Ömer
+* Login yapıldı.
+* State ve Activity diagramlara göz atıldı, ciddi bir şehilde incelenip docs üzerinden cornercase veya eksik yanlış düzeltemeleri yapılacak.
+* Login yapmadan önce görünen kısmı (FAQ, mfstaj etc.) ve announcement kısmı yapılacak (Aytekinle birlikte kararlaştırdılar).
+* Loginden önceki kısım acaba logib page'e entegre edilebilir mi, denenecek.
+
+Ece
+* Overview, Non-functional req., auto-assignment yazıldı.
+* Class diagram büyük ölçüde tamamlandı, bazı küçük yeniden isimlendirmeler veya method yeri değişikliği yapılacak (Instructor.setGrade() veya Student.setGrade())
+* Bazı classların ve bazı methodlarının açıklaması yapılacak. Gerektiğinde Aytekin ile bölüşülebilir, koordinasyon ikisine ait.
+* Multiplicityler eklenecek.
+
+Aytekin
+* Current system yazıldı.
+* Logo önerileri yapıldı.
+* Main page (ve rapor pageleri? emin değilim) için çalışılacak. Şimdiki tasarımda az bilgi olduğu ve çok ikon olduğu bunun çok açıklayıcı olmadığı konuşuldu.
+* Takvimli design denenecek.
+
+Alınan genel kararlar
+* Toplantıyı yönetip işlerin takibine ve organizasyonunu ayarlayabilecek birinin olmasının gerektiğine beş oyla karar verildi.
+* Organizatör olmak için Begüm göüllü oldu ve dört oyla kabul edildi, Aytekin yardımcı organizatör olmaya gönüllü oldu ve dört oyla kabul edildi. İki pozisyon için de başka aday çıkmadı.
+* Company reportlarının semester başlamadan önce  gelmiş olduğunu assume ettik, ama yine de bazı cornercaselerde chek edilebilir (bknz. state diagram)
+* Featurelar için ayrı paragraflar yazmamaya karar verildi, use-caselerde zaten olduğu için hocanın repetition olmasın diye kaldırdığı konuşuldu.
+* Student profili gereksiz bulundu. Bu eforu report sayfasına vermeye karar verdik.
+* Daha önceden yapmış olduğu stajların raporuna sistemden erişebilmeyi gereksiz bulduk, kaldırdık.
+* Announcement kısmında takvim, contact info (Coordinator etc.) örnek belge olabileceği konuşuldu.
+* Announcementı kimin yapacağına karar verilemedi, şimdilik sekreter dedik. Ne announce edileceği meçhul.
+* Sekreterin instructorların hepsini ve sorumlu olduğu öğrencilerini görebileceği bir sayfa olmasının gerekli olduğuna karar verildi.
+Burada acil durumlar için (hocanın gitmesi) reassignment yapılabilecek. Tasarımı İzgi yapacak.
+* Logo seçildi, iyileştirmeleri Aytekin yapacak.
+* FE designlerının birbirinden farklı olduğu konuşuldu, FE ekibince ortak palet ve font(lar) seçilip devam edilecek.
+* Tasarlanan logo kullanılırsa çok fazla kullanılmayacak, her sayfaya koyup abartılmayacak.
+
+Stakeholderlara sorulacak sorular
+* her revision için grade form tekrar tekrar dolduruluyor mu? -- *evetmiş*
+* grade formlarla secratarynin ilişkisi sadece company reportla mı ilgili? part B ve C'de rolü var mı?
+* criteria, company grade veya unsatisfactory olan raporlar için criteria doldurulacak mı?
+* withdrawların raporlarında ayrı bir prosedür var mı? 
+* hangi formlara auto-generate özelliği koyalım?
+
+###################################################################################################################################################################
+
+Toplantı No: 5
+25.03.2023 
+Başlangıç: 20:10
+Bitiş: 21:16
+
+//========================================================================================================================================
+  Salı günü 14:30'da Begüm Hanım'a gidilecek (Ömer, İzgi, Begüm)
+  FE Pazartesi geceye dek mockupları bitirecek
+  Çarşamba 20:30'da yükleme için toplanılacak
+  Sınav takvimi açıklandıktan sonra login için midtermlerden önce deneme yapılacak
+//========================================================================================================================================
+
+Herkes
+* Use caseleri yazıp kontrol etmeye devam edecek
+* Use case açıklamalarını yazarken use casein ilgili olduğu (extend/include) caselerden de o başlıkta bahsedilecek
+* Bir önceki toplantıdaki rapor isimlerine ek olarak Comapny Report yerine Summer Training Evaluation Form denilecek.
+* Paylaşılıp yapılan her kısım özellikle bir başka birisi tarafından denetlenecek, vakti olan diğer kısımlara da comment yapabilir:
+ Yapan          Kontrol eden
+ Aytekin          Ömer
+ Ömer             İzgi
+ İzgi             Begüm
+ Begüm            Ece
+ Ece              Aytekin
+
+İzgi
+* Contents düzeltilecek
+* Atanmamış use case kalmayacak, doctaki use case önerileri değerlendirilecek
+* Mockuplar bitirilecek
+* Notification state diagram kontrol edilecek
+* Bunu wpde konuşmuştuk, toplantıda unuttuk:  Report Archiving Activity Diagram 
+
+Begüm
+* State diagramlara açıklamalar
+* Evaluate report use casei bitirilecek
+
+Aytekin
+* Mockuplar
+* Revision state diagram
+
+Ömer
+* Mockuplar
+* Atanmış use caseler
+
+Ece
+* Multiplicity
+* Diagram altına bişeyler açıklanabilir
+
+Genel kararlar
+* Öğrenci iki kurs alıyorsa instructorun öğrencileri listelediği yerde farklı dersleriyle iki kere görünecek. 
+* Öğrenci iki kurs alıyorsa sayfa dili değiştirir gibi tek butonla değiştirecek.
+* TA format check yaptığında verilen extension 3-5 gün gibi daha kısa olabilir. Instructor revision istediğindeyse 
+* Raporlara annotate şeklinde feedback verebilmek için Drive kullanılabilir. Öğrenci kendi drive linkini sisteme koyabilir ya da öğrencinin pdfi biz arkada sisteme ait drive hesabına atabiliriz. Bu konu düşünülecek.
+
+Sorular
+* Evaluator kim? Company notundan veya plagarismden kaldıysa kim imzalayacak
+* Deadline geçtiyse otomatik extension isteyelim mi? 
+
+###################################################################################################################################################################
+
+Toplantı no: 6
+29.03.2023 
+Başlangıç: 20.46
+Bitiş: 22.37
+
+//========================================================================================================================================
+  Bu toplantıda alınan görevlerin deadlineı: 30.03.2023 Perşembe Gecesi
+  Denetleme ve düzenlemeler 21.03.2023 Cuma günü yapılacak ve rapor yüklenecek
+//========================================================================================================================================
+
+Herkes
+Use caseleri yazıp denetlemeye devam edecek
+Not: *Use case açıklamalarını yazarken use casein ilgili olduğu (extend/include) caselerden de o başlıkta bahsedilecek
+
+Genel Kararlar / Begüm Hanım'la görüşmenin değerlendirilmesi
+* Grade form her seferinde doldurulmuyor demiş. Değişiklik yapmadık. Her seferinde form generate etmiyoruz zaten. Kendisi Part A için olan bilgileri bir ke girecek,
+hoca da criteria için olan part C'yi bir kere dolduracak. Revision istendiğinde yarım olan formu generate edip saklayabiliriz, sadece son hali gerekliyse hepsi bittikten sonra generate edip saklarız. 
+* Withdrawlanan öğrenciyi withdraw dönemi bittikten sonra sekreter işaretleyecek.
+* Alan her öğrenci için criteria form doldurulacak (unsatisfactory olanlar / rapor sunmayanlar dahil). Withdrawların criteriasını ignorlayacağız ve statisticse dahil etmeyeceğiz (sanırım). Rapor sunmayanların criteria N/A olacak.
+* Statisticsten kasıt ABET için olan statisticslermiş, dönem sonunda tüm öğrencilerin criteriadaki notların dağılımıını tabloya dökeceğiz.
+* İstedikleri bir başka output da öğrencilerin overall satisfactory veya unsatifactory olduğu liste.
+* Yılın sonunda her öğrencinin grade formunu auto-generate edeceğiz.
+* As a design choice, company report evaluationu prereq olacak.
+* As a design choice, TA evaluationu prereq olacak.
+* TA geçen dönem 1 taneymiş. Bu yüzden hocaya TA atamaya gerek yok, tüm öğrencileri TA'e atayacağız. Raportların first checklerini yapacak.
+* As a design choice, deadline geçtikten sonra extension istenemeyecek. Ama extension vermek için deadlineın geçip geçmediğine bakmayacağız.
+* Criteria reportu doldurmayı hocaların seçimine bırakıyoruz. Revision istemedikten sonra son haliyle de doldurabilir. İsterse partially de doldurur.
+* Öğrenci listesinde ve atamasında 299/399 ayrımı yapmayacağız.
+* Notification seçeneği olacak. Herkes sistemde kendi notificationlarını görebilecek.
+* Şu anlık sekreter announcement yapıyor. Announcement yapılınca herkes notification alacak.
+
+İzgi
+Konuşulan use caseler diagrama ve textural explanationsa başlık olarak eklenecek
+(withdraval, give extension, set initial deadline, save report/submit report) ..ve unuttuğum varsa.
+Bu caseler insanlara paylaştırılacak
+Contentste use caselerin numaralarının yanı sıra isimleri de olacak
+Mockuplar bitecek
+Notification state diagramla use case karşılaştırılacak. Gerekli düzenlemeler yapılacak
+
+Ömer / Aytekin
+Her use casin ilgili FE feature var mı diye mockuplar kontrol edilecek ve bitirilecek
+Profile notification seçeneğinin eklenmesi
+
+Ece / Begüm
+Diagramlarda yukarıdaki kararlara göre düzeltmeler
+Diagramlara birkaç cümle açıklama
+
+Cevaplanmamış sorular
+Evaluator kim? kim imzalıyor bu grade formu
+Öğrenciden revision istenmişse bunun grade formunu generate edecek miyiz? Mesela 1 kez revision istenmiş öğrencinin dönem sonunda total 2 grade formu mu olacak?
+
+###################################################################################################################################################################
+Toplantı no: 7
+31.03.2023 
+Başlangıç: 18.05
+Bitiş: 23.59
+Analysis Report değişikliklerinin tespiti
+
+###################################################################################################################################################################
+
+Toplantı no: 8 
+31.03.2023 
+Başlangıç: 18.05
+Bitiş: 23.59
+Analysis Report'un ilk iterationunun yüklenmesi
+
+###################################################################################################################################################################
+
+Toplantı no: 9 
+5.04.2023 
+Başlangıç: 20.10
+Bitiş: 21.20
+Analysis Report'un eksiklerimizin ve motivasyonumuzun değerlendirmesi ve öz eleştirisi
+
+###################################################################################################################################################################
+
+Toplantı no: 10 
+20.04.2023 
+Başlangıç: 11.15
+Bitiş: 12.30 (?)
+Analysis Report feedbackinin değerlendirilmesi
+Class implementationlarına başlandı, classlar bölüşüldü.
+* Userlar ve Department, Ece
+* Reportlar ve Course, Begüm
+
+###################################################################################################################################################################
+
+Toplantı no: 11
+27.04.2023 
+Başlangıç: 20.05
+Bitiş: 20.50
+
+* Design report çalışmalarına subsystem çizilerek başlanacak. Önümüzdeki cuma gününe kadar herkes ilgili userın tüm layerlarını çizecek.
+Cuma günü topluca değerlendirip sorumuz varsa Eray hocaya soracağız.
+Ömer : Admin 
+Ece : Student 
+Aytekin : Secretary
+Begüm : TA & Instructor
+İzgi : Chair & Non - reg user
+
+* Back-end: Class relationları en geç pazar gününe dek bitmeli. Rapor yükleme için Google Docs düşünüldü API pazar gününe dek incelenecek.
+Ayrıca Ece login'e de bakmaya çalışacak.
+* Sisteme student, secretary ekleme gibi user oluşturduğumuz bir functionalitynin backend ve frontend'ini birleştirmeyi deneyeceğiz. (Muhtemelen pazar)
+* Front-end daha sonra kendi toplantısına devam etti:
+  1- Admin ve sekreter kullanıcı ekleyebiliyor, bunların websitesini tasarlayacağız.  
+  2- Başlamışken bu userların birbirlerine çok benzeyen main pagelerini de yapmaya karar verdik
+  3- Ömer login yapacak, eceyle de konuşup featureı tamamlamasını bekliyoruz.
+Tasarlanan sayfaların kodu githuba yüklendi. 
+
+* Ömer mockupları güncelledi, Analysis raporuna da güncel mokupları ekleyecek.
+* Ömer yarım kalmış use case'i tamamlayabileceğini söyledi (Use Case#8).
+* Begüm kendi çizdiği diagramlardaki hataları giderdi.
+* Ece class diagramı sürekli güncelliyor.
+* İzgi system boundaryi çizip, logoyu kaldırıp ve diagrama iki kere yazılmış use case'i düzeltip rapora ekleyecek.
+
+Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söylemeyi ve üstteki cevaplanmamış soruları sormayı unutmayalım.
+
+###################################################################################################################################################################
+
+Toplantı no: 12
+30.04.2023 
+Başlangıç: 20.10
+Bitiş: 21.51
+
+Not: Ömer toplantıya katılamadı.
+
+* Önceki toplantıda subsystem için bölüşülen partitionlar konuşuldu. Birleştirmeyi Begüm en geç salı günkü derse dek yapacak.
+* Design raporu için görev bölümü yapıldı. Atanmış bu işler çarşamba günkü toplantıya dek bitmeli.
+      1.	Introduction — Aytekin
+        1.1 Purpose of the system
+        1.2 Design goals ( Usability & Functionality )
+
+      2.	High-level software architecture
+        2.1 Subsystem decomposition — Begüm
+        2.2 Hardware/software mapping — Ece
+        2.3 Persistent data management — Ece (entity)
+        2.4 Access control and security — İzgi   |  Tablo (Ömer)
+        2.5 Boundary conditions — İzgi
+
+      3.	Low-level design
+        4.1 Object design trade-offs —- Aytekin
+        4.2 Final object design  — Ömer
+        4.3 Packages
+        4.4 Class Interfaces
+
+      4.3 ve 4.4'ü anlamayıp slackten sorduk, başka gruplara da soracağız. 
+
+* Githuba veya Figmaya yüklemek için kodun harika olmasını beklemeye gerek olmadığı vurgulandı.
+* Login page functionalitysi bitmemiş gibi görünüyor (eklenmemiş). Ömer olmadığı için konuşamadık. 
+* Aytekin ve İzgi önceki toplantıda aldıkları syfaları tamamladılar. Sonraki toplantıya dek sayfalar arası geçişi halledecekler.
+Login page hazır olmadığı takdirde bu sayfalar arasında olduğu için işler aksayabilir.
+* Ece ve Begüm entitiy relationlarını bitirdi. Database'e kaydetmede sorun olmadığına inanıyorlar. Son bir kez daha kontrol edip controllerları tamamlayacaklar ve json dosyası atabilir hale getirecekler (Beklenen deadline: salı, En geç: çarşamba toplantıdan önce)
+* JSON dosyası hazır olduğunda frontendle user creation functionalitysi entegre edilecek. ( En kısa zamanda, en geç: pazar ) 
+* Automatch UI'ı tekrar konuşuldu, feedbacke göre daha web sitesine uygun bir tasarım ve functionality belirlendi.
+Automatch semester başlayınca direkt yapılacak, ayrı buton olmayacak. Öğrencilerin yanında change student butonu olaiblir. Hoca silindiğinde ise yine otomatik olarak öğrencileri dağıtacak.
+* Ece automatch functionalitysine bakacak.
+* Begüm criteria report classını düzenleyip ABET sorularını işlevsel hale getirecek functionalityi yazacak.
+* FE ekibi userların tüm sayfalarını oluşturabilir, functionaility beklemeye gerek yok. (Paylaşım için Aytekinle konuşunuz.)
+* Google Docs API'ı için Youtubeta springle birlikte tutorialları var. Onlar incelenecek, report upload functionalitysinin backendinin haftaya cumaya dek bitmesini umuyoruz.
+* Analiz raporundaki mockuplar güncellenmemiş (Ömer)
+* Takvime genel bir functionaility bitirme hedefleri konuldu. 
+* FE'de Sekreterin statisticsi yokmuş, eklemeyi unutmayacağız
+* UI geliştirildi. Butonlar yerine menü tercih edilecek. Mockuplara çok sıkı bağlı kalmak zorunda değiliz. Önemli olan profesyonel durması.
+
+Not: Eray hocaya Begüm hanıma sorup öğrendiğimiz ABET raporunun 1 kez doldurulması ve gizli olacağını söyledik.
+Sunumda kendimizi övmek için böyle confilictleri nasıl çözdüğümüzü yakında listeleyeceğim.
+
+###################################################################################################################################################################
+
+Toplantı no: 13
+03.05.2023 
+Başlangıç: 20:06
+Bitiş: 22.51
+
+Genel
+* Ece son derse gitmiş, raporun diagramlardaki açıklamalarına gerek olmadığını ama 4.3 ve 4.4'ün rapora dahil olması gerektiğini söyledi.
+* FE tüm pageleri çarşamba gününe dek bitirecek. 
+* Sekreterin company notu girişi sayfasını unutmuşuz, eklenecek.
+* Cuma günü rapor yüklemesi için tekrar buluşacağız.
+* Herkes API'a göz atacak.
+* Boş zamanlarda analysis report okunup değişiklikler güncellenecek.
+* Herkes analysis reportta kontrol ettiği kişileri kontrol etmeye devam edecek.
+
+Aytekin 
+* Login page front-end'ini Aytekin tamamladı.
+* Aytekin Design rapordaki bölümlerini yazmış, takım feedbackine göre düzenlemeler ve iyileştirmeler yapılacak.  
+* Design rapordaki Design Patterns başlığı yazılacak.
+
+Ece
+* Ece JSON file atmada sorun yaşadı, onunla uğraşıyor. Controllerı ve entitiy relationlarını henüz kontrol edememiş. 
+* Ece API'ı biraz daha incelemiş, front-end ekibine daha çok iş düşebilir gibi görünüyor. Takımdaki herkes tekrar API'ı inceleyecek. Yapamayacağımız gibiyse değiştirebiliriz ama yapmanın bize çok fazla artı katabileceğinin farkındayız. O yüzden ısrarcı davranıyoruz.
+* Design rapordaki Data Management Layer yapılacak.
+
+
+Ömer
+* Mockuplar eklendi.
+* Final Object Diagram çizildi. Özellikle Repolar için konuşuldu, iyileştirmeler ve eklemeler yapılacak. İyileştirilmiş hali perşembe günü çok geç olmadan yüklenmeli.
+* Design report 
+* Analysis report feedbackindeki use case ayrılacak.
+* User Interface Management Layer yapılacak. Gerektiğinde özellikle functionları yazarken yardım istemekten şüphe etmeyecek.
+
+
+Begüm 
+* Son toplantıdan bu yana bir şey yapmamış. 
+* Subsystem diagramı çizilecek. Diagram açıklanmadığından biraz detaylı olsun dendi. 
+* Instructorun öğrencilerini görüntğlediği yer için sketch atacak.
+* Extension için bir şeyler yazacak. Yarım use case düzeltilecek. 
+* Web Server Layer çizilecek
+* Controller ve relation testleri yapılacak.
+
+İzgi 
+* Son toplantıdan bu yana bir şey yapmamış. 
+* Design report için önceki toplantıda verilenler dışında bir şey vermedik. Özellikle Boundary Conditionsu çok iyi yapacağına inanıyoruz!
+* Aktörler use case diagramı system boundrysinin dışında olmalı, güncellenmeli.
+
+###################################################################################################################################################################
+
+Toplantı no: 14
+03.05.2023 
+Başlangıç: 20.30
+Bitiş: 22.30
+* FE tüm sayfaları bitirmemiş.
+* Instructor, Student ve Sekreter aktörlerini yapsak şimdilik yeter.
+* Geri kalan aktörlerle daha sonra ilgilenilecek. 
+* Begüm Instructorun öğrencilerini görüntğlediği yer tasarımını anlattı. FE yapacak. 
+* Ece json atabiliyor.
+
+###################################################################################################################################################################
+
+Toplantı no: 15
+10.05.2023 
+Başlangıç: 21:10
+Bitiş: 22.28
+
+İlk fe-be entegrasyon denemesi user ekleme üzerinde yapılmaya çalışıldı başarısızlıkla sonuçlandı.
+Githublarını idelerine bağlamayanlar MUTLAKA bağlamalı.
+İzgi ve Aytekin entegreyi en geç cumartesi akşamına kadar bakacak.
+Begüm desya yükleme ile ilgilenecek.
+
+###################################################################################################################################################################
+
+FE özel toplantı
+16.05.2023
+* Githublar bağlandı
+* Artık tüm ekip json göndermeye uğraşıyor
+* Secretary main page -> izgi
+* Figmada henüz kodu olmayan sayfalar bölüşüldü: 
+    - statistics, enter company grades ve user assign list sayfaları ömerde,
+    - submit internship report ve reports page -> aytekin
+    - instructorun evaluate report pageleriyle sekreter main pagei -> izgi
+
+###################################################################################################################################################################
+
+Toplantı no: 16
+18.05.2023 
+Başlangıç: 21:11
+Bitiş: 22.13
+
+Rapor ile ilgili işlerin deadline'ı: cumartesi akşam. en geç pazar öğlen. 
+Implementation işleri deadlinei: herhangi bir entegre cuma gecesi. 
+Geri kalanlar, cumartesi sabah kampta buluşulana dek ne kadar ilerlerse o kadar iyi.
+
+Genel
+- Design rapor fb'si konuşuldu. Fb yeterli bulunmadı, Eray hocaya Aytekin yazdı. Dönüş bekleniyor.
+- Analiz raporunu Aytekin son haline getirecek. Detaylar aşağıda.
+- Design raporda herkes kendi yaptığı yeri daha iyi bir hale getirecek. Detaylar aşağıda.
+- Non reg useri tüm raporlardan kaldıracağız.
+- Userları direkt filedan okuyup generate etmek için functionaility eklenecek.
+- Hala fe & be birleşemedi. Yarın geceye dek bir şekilde bunun bitmesi lazım. (be kodu fe bilgisayarlarında çalışır hale getirildi)
+- Aytekinin aksine Ömer ve İzgi birleştirmeye çok bakmamış, yarın 3-5'e kadar bakıp bitircekler, olmadı backend de bakmaya başlayacak.
+- Lazım olursa FE için yardımcı olabilir: https://bootstrapstudio.io/
+- Herkes raporları okuyup comment atmaya devam edebilir çünkü %60.
+- Herkes hafta sonu kütüphanede olup birlikte çalışacak, diğer ödevler ve desler hafta içi bitmiş olmalı.
+- İlk hedefimiz içleri boş da olsa (nonfunctional) birbirine bağlı sayfalar ve hangi userın hangi sayfaları görebildiği. 
+
+İzgi
+- Use case diagram düzeltilecek. Aktörler dışarı, non reg silinecek.
+- Boundry conditionlar user hakkında değil sistemin ayağa kalkması ve terminate etmesi ile ilgili olacak. Yazısında gerekli düzeltmeler yapılacak.
+- Boundry conditionu diagramında conditionlar spesifikleştirilecek.
+- Criteria report için herhangi bir db'den okuyup yazabiliyor mu bakacak. (bu da bir entegre aslında)
+
+Ömer
+- Design rapor, Object Design Trade-offs iyileştirilecek. Belki biraz daha detaylandırılabilir veya farklı tradeoff önerileri olabilir. 
+- Final Object Design??? User Interface Management Layer??? belki layerlar açıklanabilir idk really
+- json okumayı ve logini birleştirmeyi bu gece!! halledecek. 
+
+Aytekin
+- Analiz raporunu son haline getirecek. Feedbackle karşılaştıracak.
+- Vakit bulursa mockupları iyileştirebilir. Paintten bile düzeltilme yapılması yeterli. (Daha webe yönelik design)
+- 2. iteration için yapılan düzenlemeler kısaca yazılacak
+- Desgin rapora intro (analizden alınabilir)
+- Analiz rapor diagramlarını  diagram 1, diagram 2 diye numaralandırmayı unutmayalım.
+
+Ece 
+- Ece pdf yapabiliyor. Pdf'i db'den okuyup yapabiliyor mu, tamamlanacak.
+- MongoDB bağlamaya çalışmış, tekrar deneyecek.
+- Entity relationları incelenip, düzeltilecek.
+- Design pattern düşünülecek. Design Patterni backend birlikte yapabilir.
+- Hardware / Software Mapping düzeltilecek.
+- Analiz raporuna class diagram linli
+
+Begüm
+- Begüm drivea pdf yükleyebiliyor. Db eşlemelerini yapacak. Internship reporta dair her şey onda. Tamamlanacak.
+- Sub system diagram fb'ye göre düzeltilecek. Açıklamalar yazılacak.
+- Server layer düzeltilecek, Drive serveri için diagram koyulacak.
+- Design Pattern'de Ece'ye yardım edecek.
+
+###################################################################################################################################################################
+
+Toplantı no: 17 
+20.05.2023
+Tüm gün
+
+İzgi zoomdan, geri kalan herkes ise kütüphanede yüz yüze buluştu.
+Aytekin Analysis Reportu baştan sona okuyup gerekli düzenlemeleri ve iyileştirmeleri yaptı. 
+Ece hardware - software mappingi iyileştirdi.
+Ece class diagram ve entity diagramı design patternlere uygun olacak şekilde tekrardan çizdi.
+Ece design patternleri açıkladı.
+Begüm subsystem decomposition diagramını çizip layerları açıkladı. 
+FE - BE entegresini İzgi criteria report için başardı!
+Ömer file uploadu için frontend bileşenlerini hazırladı.
+Ömer tradeoff'ları gözden geçirip düzenledi.
+Ömer use case diagramı rapordaki usecaseleri karşılaştırarak tekrar çizecek.
+Aytekin state diagramını düzeltti.
+
+###################################################################################################################################################################
+
+Toplantı no: 18
+21.05.2023
+Tüm Gün
+
+Aytekin, İzgi, Ece ve Begüm kütüphanede buluştu.
+Begüm mockupları tekrardan çizdi.
+Use caseler buna uygun olarak değişmek zorunda kaldı.
+İzgi boundary conditionsu yazıp bitirdi.
+İzgi ve Aytekin entegre üzerine çalıştılar.
+Ece treadeoffları tekrar yazdı ve iyileştirdi.
+Ömer çizdiği use case diagramını yolladı. 
+Begüm use case diagramı tekrar çizdi.
+Rapor tutarlı bir hale getirilip yüklendi, ymek yemek unutuldu.
+
+
+###################################################################################################################################################################
+
+Toplantı no: 19
+22.01.2023 #PAZARTESI
+Tüm Gün
+
+Öğleden önce İzgi, Ömer ve Ece; öğleden sonra is İzgi, Ece, Begüm ve Aytekin kütüphanede buluştu.
+Mockupların ve eski mockupların karması olacak şekilde frontend konuşuldu.
+Ömer sekreterin tüm sayfalarını konuşulduğu gibi salı akşamına bitirecek. 
+İzgi instructorun feedback sayfasını hazırlamış.
+İzgi studentin tüm sayfalarını yapacak. (Ana sayfadaki courseları bitirdi bile!)
+Aytekin login ve instructoru yapacak ama logine çok da uğraşmayacak özellikle instructor sayfaları. Salı akşamına, veya çarşamba öğlen.
+TA, Dept Chair ve Admin aktörlerini ikinci önceliğşmiz yaptık.
+İzgi web sitesi linkini / Drive linkini previewleyecek şekilde sayfalara gömmeyi başardı.
+Ece tamamladığı question requestlerini bugün genişleterek criteria reportu da tamamladı.
+Ece bidirectional dependencylerin yarattığı sorunları tespit etti.
+Aytekinin bilgisayarında library hataları vardı workspace kurularak çözüldü.
+Begüm folder oluşturabiliyor. Folderların view / edit linklerini generate edip bir usera eklemeyi başardı.
+Yarın akşama dek tüm folder hiyerarşisini bitirmiş olmalı.
+
+
+
+

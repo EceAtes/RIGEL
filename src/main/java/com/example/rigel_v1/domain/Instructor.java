@@ -2,10 +2,8 @@ package com.example.rigel_v1.domain;
 
 import java.io.File;
 import java.util.*;
-import java.util.zip.CheckedOutputStream;
 
-import com.example.rigel_v1.NullKeySerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.example.rigel_v1.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Instructor extends FeedbackUser{
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -24,10 +23,6 @@ public class Instructor extends FeedbackUser{
     private File eSignature = new File("pom.xml");
 
     //private Statistics statistics;
-
-
-    public Instructor() {
-    }
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, new HashMap<>());

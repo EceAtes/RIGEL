@@ -1,9 +1,10 @@
 package com.example.rigel_v1.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.example.rigel_v1.domain.enums.*;
+import lombok.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -13,44 +14,35 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 public class InternshipReport extends Report{
 
-    @ManyToOne
-    //@JsonBackReference
-    private StudentCourse course;
+    private String reportLink;
+    private String description;
+    private boolean TA_check;
 
     @ManyToOne
     @JsonBackReference
     private Student ownerStudent;
 
-    private String description;
-    private boolean TA_check;
-
     @OneToMany
-    @JoinColumn(name = "internshipreport_id")
     private List<Feedback> TA_Feedback;
 
     @OneToMany
-    @JoinColumn(name = "internshipreport_id")
     private List<Feedback> instructorFeedback;
 
-    public InternshipReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, Student ownerStudent, String description){ // Instructor evaluator,
-        super(courseName, ReportStatus.changable);
-        this.description = description;
-        this.course = course;
+    public InternshipReport( StudentCourse course, Student ownerStudent, String reportLink, String description){
+        super(course);
         this.ownerStudent = ownerStudent;
+        this.reportLink = reportLink;
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
+        description = "";
     }
 
-
-    void giveFeedback(int id, Feedback feedback){ 
+    public void giveFeedback(Feedback feedback){ 
+        TA_Feedback.add(feedback);
     }
 
-    public void deleteFeedback(int id){
-    }
 }
