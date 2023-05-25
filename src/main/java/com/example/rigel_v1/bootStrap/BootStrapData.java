@@ -92,11 +92,33 @@ public class BootStrapData implements CommandLineRunner {
             instructor1 = (Instructor) optional1.get();
             instructor2 = (Instructor) optional2.get();
         }
-        System.out.println(instructor1.getCourses().get(0).getCourseTaker().getName());
+        Optional<StudentCourse> optional3 = courseRepository.findById(Long.valueOf(1));
+        Optional<StudentCourse> optional4 = courseRepository.findById(Long.valueOf(2));
+        if(optional3.isPresent()){
+            cs299 = (StudentCourse) optional3.get();
+            ie299 = (StudentCourse) optional4.get();
+        }
+        System.out.println(cs299.getInstructor());
 
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, CS, 22001578, new CourseName[]{CourseName.CS299});
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.INSTRUCTOR, CS, 0, null);
+        secretary.rematchStudent(usersService, instructor2.getId(), cs299.getId());
 
+        Optional<StudentCourse> optional5 = courseRepository.findById(Long.valueOf(1));
+        Optional<Users> optional6 = userRepository.findById(Long.valueOf(4));
+        Optional<Users> optional7 = userRepository.findById(Long.valueOf(5));
+        if(optional3.isPresent()){
+            cs299 = (StudentCourse) optional5.get();
+            instructor1 = (Instructor) optional6.get();
+            instructor2 = (Instructor) optional7.get();
+
+        }
+
+        System.out.println(cs299.getInstructor());
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, 22001578, new CourseName[]{CourseName.CS299});
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.INSTRUCTOR,  0, null);
+
+        secretary.createStudentsFromFile();
+
+        //System.out.println(cs299.getInstructor());
 
         //System.out.println("AAAAAAAAAAAAAAAAAa");
 

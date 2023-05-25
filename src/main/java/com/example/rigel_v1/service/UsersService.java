@@ -71,6 +71,22 @@ public class UsersService {
         return new Users();
     }
 
+    public void rematchStudent(Long instructorId, Long courseId) {
+        Optional<StudentCourse> optional1 = courseRepository.findById(courseId);
+        Optional<Users> optional2 = userRepository.findById(instructorId);
+
+        if(optional1.isPresent() && optional2.isPresent()){
+            StudentCourse course  = (StudentCourse) optional1.get();
+            Instructor oldInstructor = (Instructor) course.getInstructor();
+            Instructor instructor = (Instructor) optional2.get();
+            oldInstructor.removeCourse(course);
+            instructor.addCourse(course);
+            course.setInstructor(instructor);
+            courseRepository.save(course);
+
+        }
+    }
+
     /*
    private final UserRepository userRepository;
 

@@ -8,12 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //@Document("Administrations")
 @Component
@@ -58,8 +61,8 @@ public class Secretary extends Users{
         this.gradeForms = gradeForms;
     }*/
 
-    public void addUser(UsersService usersService, String name, String email, String password, boolean notifToMail, Role role, Department department, int studentId, CourseName[] courseTypes){
-        Users newUser = usersService.createUser(name, email, password, notifToMail, role, department, studentId);
+    public void addUser(UsersService usersService, String name, String email, String password, boolean notifToMail, Role role, int studentId, CourseName[] courseTypes){
+        Users newUser = usersService.createUser(name, email, password, notifToMail, role, this.getDepartment(), studentId);
         if(role == Role.STUDENT){   ///equals()??
             for(int i = 0; i < courseTypes.length; i++){
                 StudentCourse studentCourse = new StudentCourse((Student) newUser, courseTypes[i]);
@@ -73,7 +76,54 @@ public class Secretary extends Users{
         allStudents.putAll(this.getDepartment().getStudents_299());
         allStudents.putAll(this.getDepartment().getStudents_399());
         usersService.automatch(this.getDepartment());
-        boolean isAllMatched = true;
     }
 
+    public void rematchStudent(UsersService usersService, Long instructorId, Long courseId){
+        usersService.rematchStudent(instructorId, courseId);
+    }
+
+    //hardcoded path
+    public void createStudentsFromFile(){
+        String basePath = System.getProperty("user.dir");
+        String filePath = basePath + "\\users.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Scanner scanner = new Scanner(line);
+                scanner.useDelimiter(",(?![^\\[]*\\])"); // Delimiter to split the line
+
+                String string1 = scanner.next();
+                String string2 = scanner.next();
+                String string3 = scanner.next();
+                int number = scanner.nextInt();
+                boolean boolValue = scanner.nextBoolean();
+                long longValue = scanner.nextLong();
+
+                // Parsing the array from the last element in the square brackets
+                String arrayString = scanner.next();
+                String[] array = arrayString.replaceAll("\\[|\\]", "").split(",");
+
+                scanner.close();
+
+                // Print the extracted values
+                System.out.println("String 1: " + string1);
+                System.out.println("String 2: " + string2);
+                System.out.println("String 3: " + string3);
+                System.out.println("Number: " + number);
+                System.out.println("Boolean Value: " + boolValue);
+                System.out.println("Long Value: " + longValue);
+                System.out.println("Array:");
+                for (String item : array) {
+                    System.out.println(item);
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+
+
