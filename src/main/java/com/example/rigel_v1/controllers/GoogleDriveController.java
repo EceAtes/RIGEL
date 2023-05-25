@@ -63,9 +63,9 @@ public class GoogleDriveController {
     }
 
     @PostMapping("/student-folder")
-    public FolderCreationResponse createStudentFolder(@RequestParam("folderKey") String folderName, @RequestParam("userId") Long userId) {
+    public FolderCreationResponse createStudentFolder(@RequestParam("parentFolderKey") String parentFolderKey, @RequestParam("userId") Long userId) {
         try {
-            String folderKey = googleDriveService.createStudentCourseFolder(folderName, userId);
+            String folderKey = googleDriveService.createStudentCourseFolder(parentFolderKey, userId);
             System.out.println("Student folder created successfully.");
             return new FolderCreationResponse(true, folderKey);
         } catch (IOException e) {

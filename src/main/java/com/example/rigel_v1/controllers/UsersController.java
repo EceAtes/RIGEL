@@ -43,7 +43,7 @@ public class UsersController {
                 }
             }
         }
-        return new LoginResponse( false, Users.Role.NOT_REGISTERED);
+        return new LoginResponse( false, Role.NOT_REGISTERED);
     }
 
     @PostMapping
@@ -160,16 +160,15 @@ class LoginRequest{
     private String password;
 }
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 class LoginResponse{
     @JsonProperty("isVerified")
     private boolean isVerified;
     @JsonProperty("role")
-    private Users.Role role;
+    private Role role;
 
-    public LoginResponse(boolean isVerified, Users.Role role){
+    public LoginResponse(boolean isVerified, Role role){
         this.isVerified = isVerified;
         this.role = role;
     }

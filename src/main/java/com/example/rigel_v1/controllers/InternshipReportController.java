@@ -37,8 +37,8 @@ public class InternshipReportController {
         if (optional.isPresent() && optional1.isPresent()) {
             Users student = optional.get();
             StudentCourse course = optional1.get();
-            if(student instanceof Student){
-                InternshipReport report = new InternshipReport(false, req.getCourseName(), course, (Student) student, req.getText());
+            if(student instanceof Student){ 
+                InternshipReport report = new InternshipReport(course, (Student) student, " ", req.getText()); // REPORT LINK_?????????????????????????
                 this.internshipReportRepository.save(report);
             }
         }

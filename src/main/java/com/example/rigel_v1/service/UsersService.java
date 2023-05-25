@@ -1,6 +1,7 @@
 package com.example.rigel_v1.service;
 
 import com.example.rigel_v1.domain.*;
+import com.example.rigel_v1.domain.enums.Role;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class UsersService {
         List<Instructor> instructors = new ArrayList<>();
         for(int i = 0; i < userRepository.count(); i++){
             Optional<Users> optional = userRepository.findById(Long.valueOf(i+1));
-            if(optional.isPresent() && optional.get().getRole() == Users.Role.INSTRUCTOR && optional.get().getDepartment().equals(department)){
+            if(optional.isPresent() && optional.get().getRole() == Role.INSTRUCTOR && optional.get().getDepartment().equals(department)){
                 instructors.add((Instructor) optional.get());
             }
         }
@@ -52,18 +53,18 @@ public class UsersService {
         }
     }
 
-    public Users createUser(String name, String email, String password, boolean notifToMail, Users.Role role, Department department, int studentId){
-        if (role == Users.Role.STUDENT){ //equals()??
+    public Users createUser(String name, String email, String password, boolean notifToMail, Role role, Department department, int studentId){
+        if (role == Role.STUDENT){ //equals()??
             Student student = new Student(name,email,password, notifToMail, department, studentId);
             userRepository.save(student);
             return student;
         }
-        else if (role == Users.Role.INSTRUCTOR) {
+        else if (role == Role.INSTRUCTOR) {
             Instructor instructor = new Instructor(name, email, password, notifToMail, department);
             userRepository.save(instructor);
             return instructor;
         }
-        else if (role == Users.Role.SECRETARY) {
+        else if (role == Role.SECRETARY) {
             Secretary secretary = new Secretary(name,email,password, notifToMail, department);
             userRepository.save(secretary);
             return secretary;

@@ -6,19 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import org.hibernate.annotations.Cascade;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
-import com.fasterxml.jackson.databind.jsontype.impl.TypeNameIdResolver;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-//@Document("Administrations")
 @Entity
 @Setter @Getter @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -44,6 +31,7 @@ public class Users {
     @ManyToOne
     private Department department;
 
+
     public Users(String name, String email, String password, boolean notificationToMail, Role role, Department department) {
         this.name = name;
         this.email = email;
@@ -53,9 +41,6 @@ public class Users {
         this.department = department;
     }
 
-    public boolean deleteUser(){
-        return true;
-    }
 
     @Override
     public boolean equals(Object o) {
