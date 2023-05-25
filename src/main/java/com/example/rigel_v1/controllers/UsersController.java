@@ -38,7 +38,7 @@ public class UsersController {
             if (optional.isPresent() ) {
                 Users user = optional.get();
                 if(req.getPassword().equals(user.getPassword())  && req.getEmail().equals(user.getEmail())){
-                    return new LoginResponse( true, user.getRole());
+                    return new LoginResponse( true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId() );
                 }
             }
         }
@@ -167,8 +167,23 @@ class LoginResponse{
     private boolean isVerified;
     @JsonProperty("role")
     private Users.Role role;
+    private String name;
+    private String email;
+    private boolean notifToMail;
+    @JsonProperty("department_id")
+    private Long department_id;
+    private Long userId;
 
-    public LoginResponse(boolean isVerified, Users.Role role){
+    public LoginResponse(boolean isVerified, Users.Role role, String name, String email,boolean notifToMail, Long department_id, Long userId) {
+        this.isVerified = isVerified;
+        this.role = role;
+        this.name = name;
+        this.notifToMail = notifToMail;
+        this.department_id = department_id;
+        this.userId = userId;
+    }
+
+    public LoginResponse(boolean isVerified, Users.Role role) {
         this.isVerified = isVerified;
         this.role = role;
     }
