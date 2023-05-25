@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.zip.CheckedOutputStream;
 
 import com.example.rigel_v1.NullKeySerializer;
+import com.example.rigel_v1.domain.enums.Role;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,10 +25,6 @@ public class Instructor extends FeedbackUser{
     private File eSignature = new File("pom.xml");
 
     //private Statistics statistics;
-
-
-    public Instructor() {
-    }
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, new HashMap<>());

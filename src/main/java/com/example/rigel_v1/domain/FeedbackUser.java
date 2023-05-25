@@ -7,7 +7,8 @@ import lombok.Setter;
 
 import java.util.*;
 
-//@Document("Administrations")
+import com.example.rigel_v1.domain.enums.Role;
+
 @Entity
 @Getter
 @Setter

@@ -1,6 +1,9 @@
 package com.example.rigel_v1.domain;
 
 import com.example.rigel_v1.domain.enums.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,36 +12,24 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
-
  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private CourseName courseName;
+    
     private ReportStatus reportStatus;
 
-    //@OneToOne
-    //private Student student;        
-    
-    //@OneToOne
-    //private Instructor evaluator;
-
-    public Report(CourseName courseName,  ReportStatus reportStatus) { //Student student, Instructor evaluator,
-        this.courseName = courseName;
-        //this.student = student;
-        //this.evaluator = evaluator;
-        this.reportStatus = reportStatus;
+    public Report( StudentCourse studentCourse ) {
+        this.reportStatus = ReportStatus.saved;
     }
 
     public void toPDF(){        
     }
 
+    /*
     public boolean deleteReport(){
         return true;
     }
@@ -49,6 +40,5 @@ public class Report {
 
     public boolean submitReport(){
         return true;
-    }
-
+    }*/
 }

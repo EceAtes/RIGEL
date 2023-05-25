@@ -4,17 +4,13 @@ import com.example.rigel_v1.NullKeySerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.*;
 
 //@Document("Administrations")
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Setter @Getter @NoArgsConstructor
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +28,6 @@ public class Department {
 
     @OneToMany
     @JoinColumn(name = "department_id")
-    @JsonSerialize(using = NullKeySerializer.class)
     private Map<Long, Instructor> instructors = new HashMap<>();//maybe add id for them too?
 
     @OneToMany
@@ -73,9 +68,6 @@ public class Department {
         this.name = name;
         this.totalStuNo = totalStuNo;
         this.internedStuNo = internedStuNo;
-        instructors = new HashMap<>();
-        students_299 = new HashMap<>();
-        students_399 = new HashMap<>();
     }
 
     public void addStudent(Student student, int courseType){

@@ -16,21 +16,20 @@ public class BootStrapData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
-    //private final ReportRepository reportRepository;
-    private final EvaluationFormRepository evaluationFormRepository;
+    private final ReportRepository reportRepository;
     private final QuestionRepository questionRepository;
     private final CriteriaReportRepository criteriaReportRepository;
     private final UsersService usersService;
 
-    public BootStrapData(UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, EvaluationFormRepository evaluationFormRepository) {
+    public BootStrapData(UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, ReportRepository reportRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.criteriaReportRepository = criteriaReportRepository;
-        this.evaluationFormRepository = evaluationFormRepository;
         this.questionRepository = questionRepository;
         this.usersService = usersService;
+        this.reportRepository = reportRepository;
     }
 
     @Override
@@ -94,8 +93,8 @@ public class BootStrapData implements CommandLineRunner {
         }
         System.out.println(instructor1.getCourses().get(0).getCourseTaker().getName());
 
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, CS, 22001578, new CourseName[]{CourseName.CS299});
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.INSTRUCTOR, CS, 0, null);
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.STUDENT, CS, 22001578, new CourseName[]{CourseName.CS299});
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.INSTRUCTOR, CS, 0, null);
 
 
         //System.out.println("AAAAAAAAAAAAAAAAAa");
@@ -154,32 +153,11 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        //System.out.println(cs299.getGradeForm().getReportStatus());
+        System.out.println(cs299.getGradeForm().getReportStatus());*/
 
-        Question q1 = new Question("AAAAA?", "HHHH", -1);
-        Question q2 = new Question("BBBBB?", "IIII", -1);
-        Question q3 = new Question("CCCCC?", "JJJJJ", -1);
-        Question q4 = new Question("DDDDD?", "KKKKK", -1);
-        Question q5 = new Question("EEEEE?", "LLLLL", -1);
-        Question q6 = new Question("FFFFFF?", "MMMM", -1);
-        Question q7 = new Question("GGGGGG?", "NNNN", -1);
-        questionRepository.save(q1);
-        questionRepository.save(q2);
-        questionRepository.save(q3);
-        questionRepository.save(q4);
-        questionRepository.save(q5);
-        questionRepository.save(q6);
-        questionRepository.save(q7);
-        IE299_criteriaReport.addQuestion(q1);
-        IE299_criteriaReport.addQuestion(q2);
-        IE299_criteriaReport.addQuestion(q3);
-        IE299_criteriaReport.addQuestion(q4);
-        IE299_criteriaReport.addQuestion(q5);
-        IE299_criteriaReport.addQuestion(q6);
-        IE299_criteriaReport.addQuestion(q7);
-        criteriaReportRepository.save(IE299_criteriaReport);
+        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
 
-*/
 
     }
 }

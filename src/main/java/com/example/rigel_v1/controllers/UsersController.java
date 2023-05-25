@@ -3,6 +3,7 @@ package com.example.rigel_v1.controllers;
 
 import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.domain.enums.CourseName;
+import com.example.rigel_v1.domain.enums.Role;
 import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -72,7 +73,7 @@ public class UsersController {
                     this.userRepository.save(secretary);
                     //System.out.println(secretary);
                 } else{
-                    Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Users.Role.NOT_REGISTERED, department);
+                    Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Role.NOT_REGISTERED, department);
                     this.userRepository.save(user);
                     //System.out.println(user);
                 }

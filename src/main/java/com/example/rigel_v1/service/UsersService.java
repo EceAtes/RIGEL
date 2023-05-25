@@ -78,7 +78,8 @@ public class UsersService {
         this.userRepository = userRepository;
     }
 
-    public int addUser(Users user){
-        return this.userRepository.insertPerson(user);
+    public Users findByUsername(String username){
+
     }*/
+
 }

@@ -2,6 +2,7 @@ package com.example.rigel_v1.domain;
 
 import com.example.rigel_v1.controllers.UsersController;
 import com.example.rigel_v1.domain.enums.CourseName;
+import com.example.rigel_v1.domain.enums.Role;
 import com.example.rigel_v1.service.UsersService;
 import jakarta.persistence.*;
 import lombok.Getter;

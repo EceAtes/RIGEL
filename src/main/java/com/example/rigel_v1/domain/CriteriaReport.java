@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.*;
 
 import com.example.rigel_v1.domain.enums.*;
 import lombok.Getter;
@@ -15,39 +17,18 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 public class CriteriaReport extends Report{
     
     @OneToMany
-    @JoinColumn(name = "criteria_report_id")
     private List<Question> questions;
-
-    @OneToOne
-    @JsonBackReference
-    private StudentCourse course;
 
     private boolean isCompleted;
 
-    public CriteriaReport(boolean isSatisfactory, CourseName courseName, StudentCourse course, ReportStatus reportStatus){ //Student student, Instructor evaluator,
-        super(courseName, reportStatus);
+
+    public CriteriaReport( StudentCourse course ){
+        super(course);
         this.questions = new ArrayList<Question>();
-        this.course = course;
         this.isCompleted = false;
     }
-
-    /*public void addQuestions(ArrayList<Question> questions){
-        questions.addAll(questions);
-    }*/
-
-    public void addQuestion(Question question){
-        questions.add(question);
-    }
-
-    public void editCriteriaForm(){
-    }
-
-
-
 }
