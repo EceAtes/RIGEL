@@ -2,6 +2,7 @@ package com.example.rigel_v1.domain;
 
 import com.example.rigel_v1.controllers.UsersController;
 import com.example.rigel_v1.domain.enums.CourseName;
+import com.example.rigel_v1.domain.enums.Role;
 import com.example.rigel_v1.service.UsersService;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -95,7 +96,7 @@ public class Secretary extends Users{
                 String email = scanner.next().trim();
                 String password = scanner.next().trim();
                 boolean notifToMail = Boolean.parseBoolean(scanner.next().trim());
-                Role role = Users.Role.valueOf(scanner.next().trim());
+                Role role = Role.valueOf(scanner.next().trim());
                 if(scanner.hasNext()){
                     studentId = Integer.parseInt(scanner.next().trim());
                 }

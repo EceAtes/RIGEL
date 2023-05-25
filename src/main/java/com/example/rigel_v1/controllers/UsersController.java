@@ -52,7 +52,7 @@ public class UsersController {
         if (optional.isPresent()) {
             Department department = optional.get();
             if (department instanceof Department) {
-                if(request.getRole() == Users.Role.STUDENT){ //student
+                if(request.getRole() == Role.STUDENT){ //student
                     Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department, request.getStudentId());
                     /*if(student.takes(299)){
                         department.addStudent(student, 299);
@@ -63,12 +63,12 @@ public class UsersController {
                     this.userRepository.save(student);
                     System.out.println(student);
                 }
-                else if(request.getRole() == Users.Role.INSTRUCTOR){ //instructor
+                else if(request.getRole() == Role.INSTRUCTOR){ //instructor
                     Instructor instructor = new Instructor(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(instructor);
                     System.out.println(instructor);
                 }
-                else if(request.getRole() == Users.Role.SECRETARY){ //secretary
+                else if(request.getRole() == Role.SECRETARY){ //secretary
                     Secretary secretary = new Secretary(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(secretary);
                     //System.out.println(secretary);
@@ -174,7 +174,7 @@ class LoginResponse{
     private Long department_id;
     private Long userId;
 
-    public LoginResponse(boolean isVerified, Users.Role role, String name, String email,boolean notifToMail, Long department_id, Long userId) {
+    public LoginResponse(boolean isVerified, Role role, String name, String email,boolean notifToMail, Long department_id, Long userId) {
         this.isVerified = isVerified;
         this.role = role;
         this.name = name;
@@ -197,7 +197,7 @@ class UserRequest {
     @JsonProperty("notifToMail")
     private boolean notifToMail;
     @JsonProperty("role")
-    private Users.Role role;
+    private Role role;
     private int studentId;
     @JsonProperty("department_id")
     private Long department_id;

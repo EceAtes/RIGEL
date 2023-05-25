@@ -17,18 +17,16 @@ public class BootStrapData implements CommandLineRunner {
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
     private final ReportRepository reportRepository;
-    private final EvaluationFormRepository evaluationFormRepository;
     private final QuestionRepository questionRepository;
     private final CriteriaReportRepository criteriaReportRepository;
     private final UsersService usersService;
 
-    public BootStrapData(EvaluationFormRepository evaluationFormRepository, UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, ReportRepository reportRepository) {
+    public BootStrapData( UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, ReportRepository reportRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.criteriaReportRepository = criteriaReportRepository;
-        this.evaluationFormRepository = evaluationFormRepository;
         this.questionRepository = questionRepository;
         this.usersService = usersService;
         this.reportRepository = reportRepository;
@@ -114,8 +112,8 @@ public class BootStrapData implements CommandLineRunner {
         }
 
         System.out.println(cs299.getInstructor());
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.STUDENT, 22001578, new CourseName[]{CourseName.CS299});
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Users.Role.INSTRUCTOR,  0, null);
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.STUDENT, 22001578, new CourseName[]{CourseName.CS299});
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.INSTRUCTOR,  0, null);
 
         secretary.createStudentsFromFile(usersService);
 
