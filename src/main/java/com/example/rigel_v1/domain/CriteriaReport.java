@@ -25,6 +25,7 @@ public class CriteriaReport extends Report{
 
     private boolean isCompleted;
 
+    private String generatedReportLink;
 
     public CriteriaReport( StudentCourse course ){
         super(course);

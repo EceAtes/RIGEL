@@ -36,8 +36,15 @@ public class BootStrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Department CS = new Department("CS");
         Department IE = new Department("IE");
+        Department EE = new Department("EE");
+        Department ME = new Department("ME");
         departmentRepository.save(CS);
         departmentRepository.save(IE);
+        departmentRepository.save(EE);
+        departmentRepository.save(ME);
+
+ /*       Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
 
         Student A = new Student("A", "a@gmail.com", "1234", true, null, 123456);
         CS.addStudent(A, 299);
@@ -154,10 +161,6 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(cs399);
 
         System.out.println(cs299.getGradeForm().getReportStatus());*/
-
-        Admin admin = new Admin("admin", "mail", "pass", false, CS);
-        userRepository.save(admin);
-
 
     }
 }

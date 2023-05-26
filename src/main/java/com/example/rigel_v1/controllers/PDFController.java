@@ -1,11 +1,11 @@
 package com.example.rigel_v1.controllers;
 
-import com.example.rigel_v1.service.PDFService;
+import com.example.rigel_v1.service.*;
 import com.lowagie.text.DocumentException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -15,11 +15,23 @@ import java.util.Date;
 @Controller
 public class PDFController {
     private final PDFService pdfService;
+    private final GoogleDriveService googleDriveService;
 
-    public PDFController(PDFService pdfService) {
+    public PDFController(PDFService pdfService, GoogleDriveService googleDriveService) {
         this.pdfService = pdfService;
+        this.googleDriveService = googleDriveService;
     }
 
+    @PostMapping("/criteria-report")
+    public void submitCriteriaReport(@RequestParam("folderKey") String folderKey, @RequestParam("userId") Long userId) throws IOException, DocumentException {
+            //studentcourse varsa
+            //submitleyip confirmledise
+            System.out.println(googleDriveService.uploadGeneratedFile(pdfService.export(), folderKey));
+            System.out.println("SUCCESS");
+
+    }
+
+    /*
     //downloads the generated pdf file
     @GetMapping("/generate/pdf")
     public void generatePDF(HttpServletResponse response) throws IOException, DocumentException {
@@ -34,7 +46,7 @@ public class PDFController {
              OutputStream outputStream = response.getOutputStream()) {
             IOUtils.copy(inputStream, outputStream);
         }
-    }
+    }*/
 
     /*@GetMapping("/pdf/generate")
     public void generatePDF(HttpServletResponse response) throws IOException {

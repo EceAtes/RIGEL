@@ -52,7 +52,7 @@ public class UsersController {
         if (optional.isPresent()) {
             Department department = optional.get();
             if (department instanceof Department) {
-                if(request.getRole() == 2){ //student
+                if(request.getRole() == Role.STUDENT){ //student
                     Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department, request.getStudentId());
                     /*if(student.takes(299)){
                         department.addStudent(student, 299);
@@ -63,20 +63,26 @@ public class UsersController {
                     this.userRepository.save(student);
                     System.out.println(student);
                 }
-                else if(request.getRole() == 4){ //instructor
+                else if(request.getRole() == Role.INSTRUCTOR){ //instructor
                     Instructor instructor = new Instructor(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(instructor);
                     System.out.println(instructor);
                 }
-                else if(request.getRole() == 6){ //secretary
+                else if(request.getRole() == Role.SECRETARY){ //secretary
                     Secretary secretary = new Secretary(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(secretary);
                     //System.out.println(secretary);
-                } else{
+                } 
+                else if(request.getRole() == Role.ADMIN){ //admin
+                    Admin admin = new Admin(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), null);
+                    this.userRepository.save(admin);
+                    //System.out.println(secretary);
+                }else{
                     Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Role.NOT_REGISTERED, department);
                     this.userRepository.save(user);
                     //System.out.println(user);
                 }
+                this.departmentRepository.save(department);
             }
         }
     }
@@ -181,7 +187,8 @@ class UserRequest {
     private String password;
     @JsonProperty("notifToMail")
     private boolean notifToMail;
-    private int role;
+    @JsonProperty("role")
+    private Role role;
     private int studentId;
     @JsonProperty("department_id")
     private Long department_id;

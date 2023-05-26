@@ -44,10 +44,8 @@ public class Department {
     @JoinColumn(name = "department_id") //id of the "one"
     private List<Department> sections = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "secretary_id", referencedColumnName = "id")
-    private List<Secretary> secretaries = new ArrayList<>();
-
+    @OneToOne
+    private Secretary departmentSecretary;
 
     public Department(int totalStuNo, int internedStuNo, String name, Map<Long, Student> students_299, Map<Long, Student> students_399, List<Department> sections) {
         this.totalStuNo = totalStuNo;
@@ -56,18 +54,21 @@ public class Department {
         this.students_299 = students_299;
         this.students_399 = students_399;
         this.sections = sections;
+        departmentSecretary = null;
     }
 
     public Department(String name) {
         this.name = name;
         this.totalStuNo = 0;
         this.internedStuNo = 0;
+        departmentSecretary = null;
     }
 
     public Department(int totalStuNo, int internedStuNo,String name) {
         this.name = name;
         this.totalStuNo = totalStuNo;
         this.internedStuNo = internedStuNo;
+        departmentSecretary = null;
     }
 
     public void addStudent(Student student, int courseType){
@@ -108,10 +109,4 @@ public class Department {
                 ", name='" + name + '\'' +
                 '}';
     }
-/*public void initializeCourse(Course course){
-    }
-
-    public void endCourse(Course course){
-    }
-     */
 }

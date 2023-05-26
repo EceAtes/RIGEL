@@ -3,8 +3,13 @@ package com.example.rigel_v1.controllers;
 import com.example.rigel_v1.domain.Student;
 import com.example.rigel_v1.domain.StudentCourse;
 import com.example.rigel_v1.domain.Users;
+import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.UserRepository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.*;
+
 import org.springframework.lang.NonNull;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +30,8 @@ public class CourseController {
     @PostMapping
     public void addCourse(@NonNull @RequestBody CourseRequest request){
         System.out.println(request.getName());
-        System.out.println(request.getStudentId());
-        Optional<Users> optionalUser  =  userRepository.findById(Long.valueOf(request.getStudentId()));
+        System.out.println(request.getStudent_id());
+        Optional<Users> optionalUser  =  userRepository.findById(Long.valueOf(request.getStudent_id()));
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
             if (user instanceof Student) {
@@ -62,3 +67,9 @@ public class CourseController {
     }
 }
 
+@Setter @Getter @NoArgsConstructor
+class CourseRequest {
+    private CourseName name;
+    @JsonProperty("student_id")
+    private Long student_id;
+}

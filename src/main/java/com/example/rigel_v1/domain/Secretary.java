@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,10 +33,14 @@ public class Secretary extends Users{
     @JoinColumn(name = "secretary_id")
     private Map<Integer, GradeForm> gradeForms;
 
+    private Date addDropDeadline;
+    //private Date semesterEnd;?????
+
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.SECRETARY, department);
         this.gradeForms = new HashMap<>();
     }
+
 
     /*public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
         super(criteriaReports, eSignature);//, statistics
@@ -70,6 +75,18 @@ public class Secretary extends Users{
         allStudents.putAll(this.getDepartment().getStudents_399());
         usersService.automatch(this.getDepartment());
         boolean isAllMatched = true;
+    }
+
+    public void createStudentFolders(){
+    //    if(semester)
+
+    }
+
+    public boolean addDropPeriodPassed(Date today){
+        if(today.compareTo(addDropDeadline) == -1){ //???
+            return true;
+        }
+        return false;
     }
 
 }
