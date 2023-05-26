@@ -1,0 +1,29 @@
+.headers {
+    width:100vw;
+    background-color: #105ba5;
+    padding: 11px 62px 0 48px;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+  }
+  .bilkentLogo {
+    width: 12vh;
+    height: 12vh;
+    margin-right: 0.5vh;
+    margin-top: 0.25vh;
+  }
+  .bilkentInternshipManagementSystem {
+    height: 72.96%;
+    width: 63.61%;
+    color: #FFFFFF;
+    font-size: 10vh;
+    display: flex;
+    position: relative;
+    align-self: center;
+    margin:auto;
+    /*margin-top: 53px;
+    margin-right: 67px;*/
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+    
