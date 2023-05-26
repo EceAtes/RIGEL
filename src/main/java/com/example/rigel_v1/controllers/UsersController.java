@@ -37,6 +37,19 @@ public class UsersController {
         this.courseRepository = courseRepository;
     }
 
+    @RequestMapping("/add_course")
+    public void addCourseToInstructor(@NonNull @RequestBody addCourseRequest req){
+        Optional<Users> optional = userRepository.findById(Long.valueOf(req.getInstructorID()));
+        Optional<StudentCourse> optional1 = courseRepository.findById(Long.valueOf(req.getCourseID()));
+        if (optional.isPresent() && optional1.isPresent()){
+            Instructor instructor = (Instructor) optional.get();
+            StudentCourse course = (StudentCourse) optional1.get();
+            System.out.println(instructor.getCourses());
+            instructor.addCourse(course);
+            System.out.println(instructor.getCourses());
+        }
+    }
+
     @RequestMapping("/login")
     public LoginResponse findUser(@NonNull @RequestBody LoginRequest req){
         for(int i = 1; i < userRepository.count()+1; i++){
@@ -45,7 +58,7 @@ public class UsersController {
                 Users user = optional.get();
                 if(req.getPassword().equals(user.getPassword())  && req.getEmail().equals(user.getEmail())){
                     if(user.getRole() == Role.INSTRUCTOR){
-                        return new InstructorLoginResponce(true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), ((Instructor)user).getCourses());
+                        return new InstructorLoginResponse(true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), ((Instructor)user).getCourses());
                     }else{
                         return new LoginResponse( true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId() );
                     }
@@ -231,17 +244,28 @@ class LoginResponse{
 
 @Getter @Setter
 @NoArgsConstructor
-class InstructorLoginResponce extends LoginResponse{
+class InstructorLoginResponse extends LoginResponse{
     @JsonProperty("courses")
     private List<StudentCourse> courses;
 
-    public InstructorLoginResponce(boolean isVerified, Role role, String name, String email,boolean notifToMail, Long department_id, Long userId, List<StudentCourse> courses){
+    public InstructorLoginResponse(boolean isVerified, Role role, String name, String email,boolean notifToMail, Long department_id, Long userId, List<StudentCourse> courses){
         super(isVerified, role, name, email, notifToMail, department_id, userId);
         this.courses = courses;
     }
 }
 
+
 @Getter @Setter
+@NoArgsConstructor
+class addCourseRequest {
+    @JsonProperty("instructorID")
+    private Long instructorID;
+    @JsonProperty("courseID")
+    private Long courseID;
+}
+
+@Getter @Setter
+@NoArgsConstructor
 class UserRequest {
     private String name;
     private String email;
