@@ -47,6 +47,7 @@ public class UsersController {
             System.out.println(instructor.getCourses());
             instructor.addCourse(course);
             System.out.println(instructor.getCourses());
+            userRepository.save(instructor);//hmmm
         }
     }
 
