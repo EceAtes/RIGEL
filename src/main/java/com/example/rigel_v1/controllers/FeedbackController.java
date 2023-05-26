@@ -28,6 +28,11 @@ public class FeedbackController {
         this.internshipReportRepository = internshipReportRepository;
     }
 
+    @GetMapping("/{id}")
+    public Optional<Feedback> getUser(@PathVariable Long id){
+        return feedbackRepository.findById(id);
+    }
+
     @PostMapping
     public void addFeedback(@NonNull @RequestBody FeedbackCreationRequest req){
         Optional<Users> optional1 = userRepository.findById(Long.valueOf(req.getFeedback_giver_id()));

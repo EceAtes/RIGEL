@@ -143,7 +143,7 @@ public class UsersController {
     }
 
 
-    //doesn't change department
+    //this doesn't change the department
     @PatchMapping("/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody UserRequest request) {
         Optional<Users> optional = userRepository.findById(id);
