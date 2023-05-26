@@ -36,9 +36,10 @@ public class StudentCourse {
     @JoinColumn(name = "course_id")
     private List<InternshipReport> internshipReports;
 
+
     private String internshipReportFolderID;
     
-    private int iterationCount; 
+    private int iterationCount = 0;
     
     @OneToOne
     private CriteriaReport criteriaReport;
@@ -50,7 +51,7 @@ public class StudentCourse {
     // @JsonProperty("score")
     private Score score;
 
-    // @JsonProperty("status")
+    @JsonProperty("status")
     private Status status;
 
     //private Date internshipReportDeadline;

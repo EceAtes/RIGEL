@@ -18,6 +18,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,12 +38,16 @@ public class UsersController {
 
     @RequestMapping("/login")
     public LoginResponse findUser(@NonNull @RequestBody LoginRequest req){
-        for(int i = 0; i < userRepository.count(); i++){
+        for(int i = 1; i < userRepository.count()+1; i++){
             Optional<Users> optional = userRepository.findById(Long.valueOf(i));
             if (optional.isPresent() ) {
                 Users user = optional.get();
                 if(req.getPassword().equals(user.getPassword())  && req.getEmail().equals(user.getEmail())){
-                    return new LoginResponse( true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId() );
+                    if(user.getRole() == Role.INSTRUCTOR){
+                        return new InstructorLoginResponce(true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), ((Instructor)user).getCourses());
+                    }else{
+                        return new LoginResponse( true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId() );
+                    }
                 }
             }
         }
@@ -220,6 +225,18 @@ class LoginResponse{
     public LoginResponse(boolean isVerified, Role role){
         this.isVerified = isVerified;
         this.role = role;
+    }
+}
+
+@Getter @Setter
+@NoArgsConstructor
+class InstructorLoginResponce extends LoginResponse{
+    @JsonProperty("courses")
+    private List<StudentCourse> courses;
+
+    public InstructorLoginResponce(boolean isVerified, Role role, String name, String email,boolean notifToMail, Long department_id, Long userId, List<StudentCourse> courses){
+        super(isVerified, role, name, email, notifToMail, department_id, userId);
+        this.courses = courses;
     }
 }
 
