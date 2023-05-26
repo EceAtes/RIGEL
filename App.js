@@ -1,12 +1,22 @@
 import { Typography, Box, Table, FormControl, InputLabel, Select, MenuItem, Input} from "@mui/material";
 import { Paper, TableContainer, TableCell, TableHead, TableRow, TableBody, TablePagination} from "@mui/material";
 import React from "react";
-import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { green } from "@mui/material/colors";
+
+import axios from 'axios';
+
+const API_BASE_URL="http://localhost:8080"
+export const fetchUserData = async (userId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch user data');
+  }
+};
 
 const style = {
   position: 'absolute',
@@ -28,28 +38,33 @@ const style = {
     { id: 'password', label: 'Password', minWidth: 100 },
    
   ];
-  
-  function createData(name, roles, email, password) {
-    return { name, roles, email, password };
+
+
+
+  function createData(name,email,roles,password) {
+    return { name, email, roles, password };
   }
   
   const rows = [
-    createData('Eray Tüzün', 'Instructor', "eraytuzun@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Aytekin Ismail', 'Student', "aytekin@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Ece Ateş', 'Student', "e.ates@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
-    createData('Yahya Elnouby', 'TA', "yahyaelnouby@bilkent.edu.tr", "5SdkgJ2h"),
+    "Loading user data please wait"
   ];
 
 const CustomTable = () => {
+  const [isRendered, setIsRendered] = React.useState(true);
+  React.useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        setIsRendered(true);
+          const data = await fetchUserData(6);
+          console.log(data);
+          rows[0] = createData(data.name,data.email,data.role,"gsgas");
+      } catch (error) {
+    }
+  };
+  fetchData();
+  },[]);
+
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -67,7 +82,7 @@ const CustomTable = () => {
     surnameInput: '',
     emailInput: '',
   });
-  const [finalObject, setFinalObject] = React.useState({});
+ 
 
   const handleInputChange = (event, attributeName) => {
     setInputValues(prevValues => ({
@@ -92,18 +107,31 @@ const CustomTable = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const [finalObject, setFinalObject] = React.useState({});
+  const [fetched, setFetched] = React.useState(false);  
+  
+
+  const HandleSubmit = (event) => {    
     event.preventDefault();
+    console.log(inputValues.emailInput)
+    console.log(inputValues.nameInput)
+
+    const myObject = {
+      name: inputValues.nameInput,
+      email: inputValues.emailInput,
+      password: inputValues.surnameInput,
+      notifToMail: true,
+      role: 2,
+      department_id: 1,
+    };
+    axios.post("http://localhost:8080/users", myObject)
+        .then(res => console.log("posting data", res))
+        .catch(err => console.log(err))
+    console.log(inputValues.emailInput)
+    console.log(inputValues.nameInput)
 
     // Create your object using the form data
-    const myObject = {
-      nameInput: inputValues.nameInput,
-      surnameInput: inputValues.surnameInput,
-      emailInput: inputValues.emailInput,
-      roleSelect: selectedValues.roleSelect,
-      departmentSelect: selectedValues.departmentSelect,
-      courseSelect: selectedValues.courseSelect,
-    };
+    
 
     // Do something with the object, such as sending it to an API or updating state
     console.log(myObject);
@@ -114,7 +142,7 @@ const CustomTable = () => {
     });
 };
 
-    return(<Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    return(<Paper sx={{ width: '100%', overflow: 'hidden', height: '100%' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -135,7 +163,7 @@ const CustomTable = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
-                return (
+                return (isRendered)?(
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -148,7 +176,7 @@ const CustomTable = () => {
                       );
                     })}
                   </TableRow>
-                );
+                ):null;
               })}
           </TableBody>
         </Table>
@@ -163,6 +191,7 @@ const CustomTable = () => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <Button onClick={handleOpen}>Create new User</Button>
+      
       <Modal
         open={open}
         onClose={handleClose}
@@ -171,7 +200,7 @@ const CustomTable = () => {
       >
       <Box sx={style}>
       <div>
-        <FormControl component= "form" onSubmit = {handleSubmit} sx={{ m: 1, minWidth: 100, marginLeft:'1vw' }} size="small">
+        <FormControl component= "form" onSubmit = {HandleSubmit} sx={{ m: 1, minWidth: 100, marginLeft:'1vw' }} size="small">
           <InputLabel id="demo-select-small-label"  sx={{color: 'black'}}>Role</InputLabel>
           <Select
               value={selectedValues.roleSelect} 
@@ -184,9 +213,9 @@ const CustomTable = () => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"Student"}>Student</MenuItem>
-              <MenuItem value={"Instructor"}>Instructor</MenuItem>
-              <MenuItem value={"Secretary"}>Secretary</MenuItem>
+              <MenuItem value={"2"}>Student</MenuItem>
+              <MenuItem value={"4"}>Instructor</MenuItem>
+              <MenuItem value={"6"}>Secretary</MenuItem>
           </Select>
         </FormControl>
   
@@ -270,7 +299,7 @@ const CustomTable = () => {
         onClick={handleClose}
       >Exit</Button>
       <Button 
-        onClick={handleSubmit}
+        onClick={HandleSubmit}
       >Finish</Button>
     </Box>
   </Modal>
@@ -319,14 +348,14 @@ const CustomInput = styled('div')(({ theme }) => ({
 
 const App = () => {
 
-  return(
+  return(  
     <div>
       <Box sx={ {height:'8vh', backgroundColor:'#105ba5',  alignItems:'center', paddingX: "40px", paddingY: '10px'} }>
         <Typography  align= "center" variant="h6" sx={{color: 'white'}} >USER LIST</Typography>
       </Box>
       <CustomTable/>
     </div>
-  );
+  )
 }
 
 export default App;

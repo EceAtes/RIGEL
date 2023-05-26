@@ -1,29 +1,64 @@
 import React from 'react';
 import './instructorMainPage.css';
 import logo from './bilkent.png';
+import { useNavigate } from 'react-router-dom';
+import GoogleDrive from './googledrive';
 
 const InstructorMainPage = () => {
+
+  const navigate = useNavigate();
+  const [status, setStatus] = React.useState('reportUploaded');
+
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+  };
+
+ 
+  const statusClasses = {
+    waitingFirstSubmission: 'waitingFirstSubmission',
+    reportUploaded: 'reportUploaded',
+    revisionAsked: 'revisionAsked',
+    waitingForCriteria: 'waitingForCriteria',
+    satisfactory: 'satisfactory',
+    unsatisfactory: 'unsatisfactory'
+  }
+  const departmentId = localStorage.getItem('departmentId');
+  const email = localStorage.getItem('email');
+  const isVerified = localStorage.getItem('isVerified');
+  const name = localStorage.getItem('name');
+  const notifToMail = localStorage.getItem('notifToMail');
+  const role = localStorage.getItem('role');
+  const userId = localStorage.getItem('userId');
+
+  console.log(name);
+  const statusClass = statusClasses[status];
+
+  const OpenFrame = () => {
+    console.log("openframe geldi"); 
+    navigate('/googledrive');
+  }
   return (
-    <div className="all-items">  
-      <div className="header">
-        <div className="image-div">
-          <img src={logo} alt="Bilkent University logo" className="image-instructor" />
-          <h2 className="header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
+    <div className="instructorMainPage-all-items">  
+      <div className="instructorMainPage-header">
+        <div className="instructorMainPage-image-div">
+          <img src={logo} alt="Bilkent University logo" className="instructorMainPage-image" />
+          <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
         </div>
-        <img className="announcement_icon" />
-        <img className="nofitication_icon" />
-        <img className="logout_icon" />
+        <img className="instructorMainPage-announcement_icon" />
+        <img className="instructorMainPage-nofitication_icon" />
+        <img className="instructorMainPage-logout_icon" />
       </div>
-      <h3 className="header_welcome_message">Welcome H. Altay Güvenir!</h3>
-      <div className="body_class">
-        <div className="Profile_Information">
-          <p className="user_name">H.Altay Güvenir!</p>
-          <p className="email">turing@ug.bilkent.edu.tr</p>
-          <div className="switch_div">
-            <p className="notify">Notify me with mail</p>
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
+      <h3 className="instructorMainPage-header_welcome_message">Hello, {name}</h3>
+
+      <div className="instructorMainPage-body_class">
+        <div className="instructorMainPage-Profile_Information">
+          <p className="instructorMainPage-user_name">Name: {name}</p>
+          <p className="instructorMainPage-email">Email: {email}</p>
+          <div className="instructorMainPage-switch_div">
+            <p className="instructorMainPage-notify">Notify me with mail</p>
+            <label className="instructorMainPage-switch">
+              <input type="instructorMainPage-checkbox" />
+              <span className="instructorMainPage-slider round"></span>
             </label>
           </div>
           <form action="/action_page.php">
@@ -31,78 +66,76 @@ const InstructorMainPage = () => {
             <input type="submit" />
           </form>
           <hr />
-          <p className="announcements">ANNOUNCEMENTS</p>
+          <p className="instructorMainPage-announcements">ANNOUNCEMENTS</p>
           <hr />
-          <p className="semester_statistics">SEMESTER STATISTICS</p>
+          <p className="instructorMainPage-semester_statistics">SEMESTER STATISTICS</p>
           <hr />
         </div>
 
-        <div className="student_profile_body">
-        <div className="student_profile">
-            <div className="display_inline">
-              <h4 className="student_name">Name: Ece Ateş</h4>
-              <button className="all_reports">ALL REPORTS</button>
-            </div>
-            <h4 className="student_course">Course: CS299</h4>
-            <h4 className="student_check">Initial Check: Passed</h4>
-            <h4 className="student_status">Status: Revision Asked</h4>
-            <button className="evaluate">EVALUATE</button>
-            <button className="criteria_mode">CRITERIA MODE</button>
-            <button className="sign_grade_form">SIGN GRADE FORM</button>
-          </div>
-          <div className="student_profile">
-            <div className="display_inline">
-              <h4 className="student_name">Name: Ece Ateş</h4>
-              <button className="all_reports">ALL REPORTS</button>
-            </div>
-            <h4 className="student_course">Course: CS299</h4>
-            <h4 className="student_check">Initial Check: Passed</h4>
-            <h4 className="student_status">Status: Revision Asked</h4>
-            <button className="evaluate">EVALUATE</button>
-            <button className="criteria_mode">CRITERIA MODE</button>
-            <button className="sign_grade_form">SIGN GRADE FORM</button>
-          </div>
-          <div className="student_profile">
-            <div className="display_inline">
-              <h4 className="student_name">Name: Ece Ateş</h4>
-              <button className="all_reports">ALL REPORTS</button>
-            </div>
-            <h4 className="student_course">Course: CS299</h4>
-            <h4 className="student_check">Initial Check: Passed</h4>
-            <h4 className="student_status">Status: Revision Asked</h4>
-            <button className="evaluate">EVALUATE</button>
-            <button className="criteria_mode">CRITERIA MODE</button>
-            <button className="sign_grade_form">SIGN GRADE FORM</button>
-          </div>
-          <div className="student_profile">
-            <div className="display_inline">
-              <h4 className="student_name">Name: Ece Ateş</h4>
-              <button className="all_reports">ALL REPORTS</button>
-            </div>
-            <h4 className="student_course">Course: CS299</h4>
-            <h4 className="student_check">Initial Check: Passed</h4>
-            <h4 className="student_status">Status: Revision Asked</h4>
-            <button className="evaluate">EVALUATE</button>
-            <button className="criteria_mode">CRITERIA MODE</button>
-            <button className="sign_grade_form">SIGN GRADE FORM</button>
-          </div>
-          {<div className="student_profile">
-            <div className="display_inline">
-              <h4 className="student_name">Name: Ece Ateş</h4>
-              <button className="all_reports">ALL REPORTS</button>
-            </div>
-            <h4 className="student_course">Course: CS299</h4>
-            <h4 className="student_check">Initial Check: Passed</h4>
-            <h4 className="student_status">Status: Revision Asked</h4>
-            <button className="evaluate">EVALUATE</button>
-            <button className="criteria_mode">CRITERIA MODE</button>
-            <button className="sign_grade_form">SIGN GRADE FORM</button>
-          </div>
-          }
+        <div className="instructorMainPage-student_profile_body">
+          <CustomDiv status = 'waitingFirstSubmission'></CustomDiv> 
+          <CustomDiv openFrame={OpenFrame} status = 'satisfactory'></CustomDiv>
+          <CustomDiv openFrame={OpenFrame} status = 'unsatisfactory'></CustomDiv>
+          <CustomDiv  openFrame={OpenFrame} status = 'reportUploaded'></CustomDiv>
+          <CustomDiv openFrame={OpenFrame} status = 'revisionAsked'></CustomDiv>
         </div>
       </div>
     </div>
   );
+}
+
+
+
+
+function CustomDiv({ status , openFrame}) {
+   
+  return(
+    <div className={`instructorMainPage-my-div ${status}`}>
+      {
+        status === 'waitingFirstSubmission'
+      }
+      {
+        status === 'reportUploaded' && (
+          <>
+            <button className = "instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
+            <button className="instructorMainPage-evaluate">EVALUATE</button>
+          </>
+        )
+      }
+      {
+        status === 'revisionAsked' && (
+          <>
+            <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
+            <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
+          </>
+        )
+      }
+      {
+        status === 'waitingForCriteria' && (
+          <>
+            <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
+            <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
+          </>
+        )
+      }
+      {
+        (status === 'unsatisfactory' || status === 'satisfactory') && (
+          <>
+            <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
+            <button className="instructorMainPage-sign_grade_form"> Criteria Form </button>
+            <button className="instructorMainPage-sign_grade_form"> Grade Form </button>
+          </>
+        )
+      }
+      <div className="instructorMainPage-display_inline">
+        <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+      </div>
+      <h4 className="instructorMainPage-student_course">Course: CS299</h4>
+      <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+      <h4 className="instructorMainPage-student_status">Status: Revision Asked</h4>
+    </div>
+
+  ); 
 }
 
 export default InstructorMainPage;

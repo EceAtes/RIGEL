@@ -1,13 +1,17 @@
+import Createuserpage from './createuserpage.js';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import InstructorMainPage from './instructorMainPage.js';
 import reportWebVitals from './reportWebVitals';
+import PageMerge from './pageMerge.js';
+import StudentMainPage from './StudentMainPage.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <PageMerge/>
   </React.StrictMode>
 );
 
