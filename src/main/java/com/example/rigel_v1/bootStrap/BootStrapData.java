@@ -117,6 +117,9 @@ public class BootStrapData implements CommandLineRunner {
 
         secretary.createStudentsFromFile(usersService);
 
+        Admin admin = new Admin("AAAAAAAA", "BBBBBBB","CCCCCCCCc", false, null);
+        this.userRepository.save(admin);
+
         //System.out.println(cs299.getInstructor());
 
         //System.out.println("AAAAAAAAAAAAAAAAAa");

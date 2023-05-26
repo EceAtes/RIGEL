@@ -64,7 +64,8 @@ public class StudentCourse {
         internshipReportFolderID = "none";
         iterationCount = 0;
         //criteriaReport = new CriteriaReport();
-        gradeForms = new LinkedList<>();  
+        gradeForms = new LinkedList<>();
+        this.status = Status.waitingSummerTrainingEvaluationFromCompany;
 
         //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
         //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
@@ -80,7 +81,8 @@ public class StudentCourse {
         internshipReportFolderID = "none";
         iterationCount = 0;
         criteriaReport = new CriteriaReport();
-        gradeForms = new LinkedList<>(); 
+        gradeForms = new LinkedList<>();
+        this.status = Status.waitingSummerTrainingEvaluationFromCompany;
 
         //courseTaker.enrollCourse(this);
         //instructor.addCourse(this);  
@@ -142,5 +144,12 @@ public class StudentCourse {
         return courseName.equals(course.courseName) && instructor.equals(course.instructor);
     }
 
-
+    @Override
+    public String toString() {
+        return "StudentCourse{" +
+                "id=" + id +
+                ", courseName=" + courseName +
+                ", status=" + status +
+                '}';
+    }
 }

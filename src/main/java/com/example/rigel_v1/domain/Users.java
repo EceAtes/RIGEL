@@ -29,6 +29,7 @@ public class Users {
     private Role role = Role.NOT_REGISTERED;
 
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
 

@@ -45,7 +45,6 @@ public class UsersService {
             counter = counter % instructors.size();
             if(optional.isPresent() && optional.get().getCourseTaker().getDepartment().equals(department)){
                 instructors.get(counter).addCourse(optional.get());
-                instructors.get(counter).setName("OwO UwU");
                 userRepository.save(instructors.get(counter));
                 courseRepository.save(optional.get());
                 counter++;
