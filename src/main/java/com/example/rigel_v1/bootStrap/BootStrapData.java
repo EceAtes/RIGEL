@@ -43,7 +43,11 @@ public class BootStrapData implements CommandLineRunner {
         departmentRepository.save(EE);
         departmentRepository.save(ME);
 
- /*       Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        
+        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
+
+ /*     Admin admin = new Admin("admin", "mail", "pass", false, CS);
         userRepository.save(admin);
 
         Student A = new Student("A", "a@gmail.com", "1234", true, null, 123456);
@@ -209,9 +213,6 @@ public class BootStrapData implements CommandLineRunner {
         IE299_criteriaReport.addQuestion(q6);
         IE299_criteriaReport.addQuestion(q7);
         criteriaReportRepository.save(IE299_criteriaReport);
-
-        Admin admin = new Admin("admin", "mail", "pass", false, CS);
-        userRepository.save(admin);
 */
 
     }

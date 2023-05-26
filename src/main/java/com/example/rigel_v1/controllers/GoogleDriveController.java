@@ -67,67 +67,77 @@ public class GoogleDriveController {
     }
 
     @PostMapping("/create-semester")
-    public FolderCreationResponse createSemester(@RequestParam("folderName") String folderName, @RequestParam("userId") Long userId){
-                                                // @RequestParam("firstDay") Date firstDay,  @RequestParam("lastDay") Date lastDay) {
-        try {
-            Optional<Users> userOptional = userRepository.findById(userId);
-            if (userOptional.isPresent()) {
-                Users user = userOptional.get();
-                if (user instanceof Admin) {
-                    //if(allDepartmentsHasSecretary()){
-                        if(!((Admin)user).isSemesterStarted()){
-                            // set semester dates
-                            //((Admin)user).setSemesterFirstDay(firstDay);
-                            //((Admin)user).setSemesterLastDay(lastDay);                            
-                            // create folders
-                            String parentFolderKey = googleDriveService.createSemesterFolders(folderName, userId);
-                            ((Admin)user).setSemesterStarted(true); // olmadı
-                            System.out.println("Folder created successfully.");
-                            return new FolderCreationResponse(parentFolderKey, false, true, false, false); 
+    public FolderCreationResponse createSemester(@RequestParam("folderName") String folderName, @RequestParam("userId") Long userId,
+                                                 @RequestParam("firstDay") String firstDay, @RequestParam("lastDay") String lastDay,
+                                                 @RequestParam("addDropDeadline") String addDropDeadline, @RequestParam("withdrawDeadline") String withdrawDeadline) throws IOException {
+        Optional<Users> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            if (user instanceof Admin) {
+                if(allDepartmentsHasSecretary()){
+                    if(!((Admin)user).isSemesterStarted()){
+                        // set semester dates
+                        ((Admin)user).setSemesterFirstDay(firstDay);
+                        ((Admin)user).setSemesterLastDay(lastDay);
+                        ((Admin)user).setAddDropDeadline(addDropDeadline);
+                        ((Admin)user).setWithdrawDeadline(withdrawDeadline);
+                        ((Admin)user).setSemesterStarted(true);
+                        // create folders
+                        String parentFolderKey = googleDriveService.createSemesterFolders(folderName, userId); 
+                        
+                        //set department folder keys of secretaries
+                        Iterable<Department> departments = departmentRepository.findAll();
+                        for (Department department : departments) {
+                            ((Admin)user).informSecretary(department.getSecretary());
                         }
-                        else{ // semester shouldn't be created before
-                            return new FolderCreationResponse(((Admin)user).getSemesterFolderID(), false, false, false, true); 
-                        }
-                    //}
-                    //else{
-                    //    return new FolderCreationResponse("", false, false, true, false); 
-                        // all departments must have at least one secretary registered to the system
-                   // }
+                        userRepository.save(user);
+                                               
+                        System.out.println("Folder created successfully.");
+                        return new FolderCreationResponse(parentFolderKey, false, true, false, false); 
+                    }
+                    else{ // semester shouldn't be created before
+                        return new FolderCreationResponse(((Admin)user).getSemesterFolderKey(), false, false, false, true); 
+                    }
                 }
-                else{
-                    return new FolderCreationResponse("1", true, false, false, false); // unauthorized access
+                else{// all departments must have at least one secretary registered to the system
+                    return new FolderCreationResponse("", false, false, true, false); 
                 }
             }
-            else{
-                return new FolderCreationResponse("2", true, false, false, false); // unauthorized access
-            }            
-        } catch (IOException e) {
-            return new FolderCreationResponse("3", true, false, false, false); // internal error
+            else{// unauthorized access
+                return new FolderCreationResponse("1", true, false, false, false);
+            }
         }
+        else{// unauthorized access
+            return new FolderCreationResponse("2", true, false, false, false); 
+        }            
     }
 
-    @PostMapping("/start-courses") //-------------------
-    public StudentFolderCreationResponse createStudentFolder(@RequestParam("parentFolderKey") String parentFolderKey, @RequestParam("userId") Long userId){
-                                                            //@RequestParam("today") Date today ) {
+    @PostMapping("/start-courses")
+    public StudentFolderCreationResponse createStudentFolder(@RequestParam("internshipFolderKey") String internshipFolderKey, @RequestParam("userId") Long userId) {
         try {
-            Optional<Users> userOptional = userRepository.findById(userId); //////set semester STARTED
+            Optional<Users> userOptional = userRepository.findById(userId); 
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
                 if (user instanceof Secretary) {
-                    if( true ) {// ((Secretary) user).addDropPeriodPassed(today)){
-                        if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
-                            if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
-                                ((Secretary) user).automatch(usersService);
-                                String folderKey = googleDriveService.createStudentCourseFolder(parentFolderKey, userId);
-                                System.out.println("Student folder created successfully.");
-                                return new StudentFolderCreationResponse(folderKey, false, true, true, true, true);                             
+                    if(((Secretary)user).getDepartment().isSemesterStarted()){
+                        if(((Secretary)user).addDropPeriodPassed()){
+                            if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
+                                if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
+                                    ((Secretary) user).automatch(usersService);
+                                    String folderKey = googleDriveService.createStudentCourseFolders(internshipFolderKey);
+                                    System.out.println("Student folders created successfully.");
+                                    return new StudentFolderCreationResponse(folderKey, false, true, true, true, true);                             
+                                }
+                                else{
+                                    return new StudentFolderCreationResponse("", false, false, true, true, false);                             
+                                }
                             }
                             else{
-                                return new StudentFolderCreationResponse("", false, false, true, true, false);                             
+                                return new StudentFolderCreationResponse("", false, false, true, false, true);                             
                             }
                         }
                         else{
-                            return new StudentFolderCreationResponse("", false, false, true, false, true);                             
+                            return new StudentFolderCreationResponse("", false, false, false, true, true);                             
                         }
                     }
                     else{
@@ -149,20 +159,23 @@ public class GoogleDriveController {
     public boolean allDepartmentsHasSecretary(){
         Iterable<Department> departments = departmentRepository.findAll();
         for (Department department : departments) {
-            if (department.getDepartmentSecretary() == null) {
+            if (department.getSecretary() == null) {
                 return false;
             }
         }
         return true;
-    } 
+    }
     
     public boolean atLeastOneInstructorExist(String department){
+        System.out.println("girdim");
         Iterable<Instructor> instructors = instructorRepository.findAll();
         for (Instructor instructor : instructors) {
+            System.out.println("for");
             if (instructor.getDepartment().getName().equals(department)) {
                 return true;
             }
         }
+        System.out.println("cikiyorum");
         return false;
     }
 
@@ -228,7 +241,6 @@ class StudentFolderCreationResponse{
 
     @JsonProperty("atLeastOneStudentExist")
     private boolean atLeastOneStudentExist;
-
 
     public StudentFolderCreationResponse(String folderKey, boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist ){
         this.accessDenied = accessDenied;

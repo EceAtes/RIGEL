@@ -32,8 +32,6 @@ public class CourseController {
         System.out.println(request.getName());
         System.out.println(request.getStudent_id());
         Optional<Users> optionalUser  =  userRepository.findById(Long.valueOf(request.getStudent_id()));
-        System.out.println(request.getStudent_id());
-        Optional<Users> optionalUser  =  userRepository.findById(Long.valueOf(request.getStudent_id()));
         if (optionalUser.isPresent()) {
             Users user = optionalUser.get();
             if (user instanceof Student) {

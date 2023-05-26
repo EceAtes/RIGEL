@@ -37,7 +37,7 @@ public class StudentCourse {
     private List<InternshipReport> internshipReports;
 
 
-    private String internshipReportFolderID;
+    private String internshipReportFolderKey;
     
     private int iterationCount = 0;
     
@@ -62,7 +62,7 @@ public class StudentCourse {
         this.courseName = courseName;
         this.instructor = null;
         internshipReports = new LinkedList<>();   
-        internshipReportFolderID = "none";
+        internshipReportFolderKey = "none";
         iterationCount = 0;
         //criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
@@ -79,7 +79,7 @@ public class StudentCourse {
         this.courseName = courseName;  
         this.instructor = instructor;
         internshipReports = new LinkedList<>();   
-        internshipReportFolderID = "none";
+        internshipReportFolderKey = "none";
         iterationCount = 0;
         criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();

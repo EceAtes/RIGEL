@@ -135,7 +135,7 @@ public class GoogleDriveService {
                 System.out.println("Semester Folder ID: " + createdSemesterFolder.getId());
                 String semesterFolderLink = "https://drive.google.com/drive/folders/" + createdSemesterFolder.getId();
                 System.out.println("Semester (View): " + semesterFolderLink);
-                admin.setSemesterFolderID(createdSemesterFolder.getId());
+                admin.setSemesterFolderKey(createdSemesterFolder.getId());
             
                 // Set permissions to allow anyone with the link to view
                 Permission permission = new Permission();
@@ -183,7 +183,6 @@ public class GoogleDriveService {
                         //admin.distributeSemesterFolderKeys(secretaryRepository);            
                     }
                 }
-            
                 userRepository.save(admin);
                 return createdSemesterFolder.getId();
             }
@@ -191,34 +190,33 @@ public class GoogleDriveService {
 
         /**
          */
-        public String createStudentCourseFolder(String parentFolderKey, Long userId) throws IOException {
-                StudentCourse course = (StudentCourse) courseRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException( "StudentCourse not found, cannot create student folder."));
-
-                File studentCourseFolder = new File();
-                studentCourseFolder.setParents(Collections.singletonList(parentFolderKey));
-                String folderName = course.getCourseTaker().getDepartment() + "-" + course.getCourseName() + " - " + course.getCourseTaker().getName(); //STUDENT ID + COURSE???
-                studentCourseFolder.setName(folderName);
-                studentCourseFolder.setMimeType("application/vnd.google-apps.folder");
-
-                
-                File createdStudentCourseFolder = googleDrive.files().create(studentCourseFolder).setFields("id").execute();
-
-                // set permissions to allow anyone with the link to view
-                Permission permission = new Permission();
-                permission.setType("anyone");
-                permission.setRole("reader");
-                googleDrive.permissions().create(createdStudentCourseFolder.getId(), permission)
-                                .setFields("id")
-                                .execute();
-
-                System.out.println("Student Course Key: " + createdStudentCourseFolder.getId());
-                String studentFolderLink = "https://drive.google.com/drive/folders/" + createdStudentCourseFolder.getId();
-                System.out.println("Student Folder ( View ): " + studentFolderLink);
-                course.setInternshipReportFolderID(createdStudentCourseFolder.getId());
-
-                courseRepository.save(course);
-                return createdStudentCourseFolder.getId();
+        public String createStudentCourseFolders(String parentFolderKey) throws IOException {
+                Iterable<StudentCourse> studentCourses = courseRepository.findAll();
+                for (StudentCourse studentCourse : studentCourses) {
+                        File studentCourseFolder = new File();
+                        studentCourseFolder.setParents(Collections.singletonList(parentFolderKey));
+                        String folderName = studentCourse.getCourseTaker().getDepartment().getName() + "-" + studentCourse.getCourseName() + "-" + studentCourse.getCourseTaker().getId();
+                        studentCourseFolder.setName(folderName);
+                        studentCourseFolder.setMimeType("application/vnd.google-apps.folder");      
+                        
+                        File createdStudentCourseFolder = googleDrive.files().create(studentCourseFolder).setFields("id").execute();
+        
+                        // set permissions to allow anyone with the link to view
+                        Permission permission = new Permission();
+                        permission.setType("anyone");
+                        permission.setRole("reader");
+                        googleDrive.permissions().create(createdStudentCourseFolder.getId(), permission)
+                                        .setFields("id")
+                                        .execute();
+        
+                        System.out.println("Student Course Key: " + createdStudentCourseFolder.getId());
+                        String studentFolderLink = "https://drive.google.com/drive/folders/" + createdStudentCourseFolder.getId();
+                        System.out.println("Student Folder ( View ): " + studentFolderLink);
+                        studentCourse.setInternshipReportFolderKey(createdStudentCourseFolder.getId());
+        
+                        courseRepository.save(studentCourse);
+                }
+                return "done";
         }
 
 }

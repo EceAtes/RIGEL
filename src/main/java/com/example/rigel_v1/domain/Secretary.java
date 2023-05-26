@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,14 +36,17 @@ public class Secretary extends Users{
     @JoinColumn(name = "secretary_id")
     private Map<Integer, GradeForm> gradeForms;
 
-    private Date addDropDeadline;
-    //private Date semesterEnd;?????
-
+    private String addDropDeadline;            //yyyy-mm-dd
+    private String withdrawDeadline;           //yyyy-mm-dd
+    private String departmentFolderKey;    
+    
+    private List<String> reportFolderKeys;    //[0] internship reports, [1] criteria reports, [2] grade forms
+ 
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.SECRETARY, department);
         this.gradeForms = new HashMap<>();
+        reportFolderKeys = new LinkedList<String>();
     }
-
 
     /*public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
         super(criteriaReports, eSignature);//, statistics
@@ -125,6 +129,21 @@ public class Secretary extends Users{
                 e.printStackTrace();
             }
     }
+
+    public void addFolderKeys(String folderKey){
+        reportFolderKeys.add(folderKey);
+    }
+
+    public boolean addDropPeriodPassed() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate inputDate = LocalDate.parse(addDropDeadline);
+    
+        int comparison = inputDate.compareTo(currentDate);
+    
+        // true, if the add-drop period has passed
+        return comparison <= 0;
+    }
+    
 }
 
 

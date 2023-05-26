@@ -72,7 +72,6 @@ public class UsersController {
                     if(request.getCourses().length == 1){
                         CourseName dep299 = CourseName.valueOf(department.getName() + "299");
                         if(request.getCourses()[0] == dep299){
-
                             department.addStudent(student, 299);
                             this.departmentRepository.save(department);
                         } else {
