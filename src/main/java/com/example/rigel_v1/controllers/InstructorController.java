@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RequestMapping("/instructors")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class InstructorController {
     private final InstructorRepository instructorRepository;
 

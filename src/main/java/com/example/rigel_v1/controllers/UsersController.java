@@ -24,6 +24,7 @@ import java.util.Optional;
 
 @RequestMapping("/users")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class UsersController {
 
     private final UserRepository userRepository;

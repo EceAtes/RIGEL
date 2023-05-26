@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RequestMapping("/feedbacks")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class FeedbackController {
         private final FeedbackRepository feedbackRepository;
         private final UserRepository userRepository;

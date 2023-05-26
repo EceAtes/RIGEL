@@ -14,6 +14,7 @@ import lombok.*;
 
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class GoogleDriveController {
 
     private final GoogleDriveService googleDriveService;

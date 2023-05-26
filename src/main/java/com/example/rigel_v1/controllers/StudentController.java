@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RequestMapping("/students")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class StudentController {
     private final StudentRepository studentRepository;
 
