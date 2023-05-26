@@ -4,6 +4,7 @@ package com.example.rigel_v1.controllers;
 import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.domain.enums.Role;
+import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,6 +18,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,20 +28,26 @@ public class UsersController {
 
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
+    private final CourseRepository courseRepository;
 
-    public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository) {
+    public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository) {
         this.userRepository = userRepository;
         this.departmentRepository = departmentRepository;
+        this.courseRepository = courseRepository;
     }
 
     @RequestMapping("/login")
     public LoginResponse findUser(@NonNull @RequestBody LoginRequest req){
-        for(int i = 0; i < userRepository.count(); i++){
+        for(int i = 1; i < userRepository.count()+1; i++){
             Optional<Users> optional = userRepository.findById(Long.valueOf(i));
             if (optional.isPresent() ) {
                 Users user = optional.get();
                 if(req.getPassword().equals(user.getPassword())  && req.getEmail().equals(user.getEmail())){
-                    return new LoginResponse( true, user.getRole());
+                    if(user.getRole() == Role.INSTRUCTOR){
+                        return new InstructorLoginResponce(true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), ((Instructor)user).getCourses());
+                    }else{
+                        return new LoginResponse( true, user.getRole(), user.getName(),user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId() );
+                    }
                 }
             }
         }
@@ -54,30 +62,56 @@ public class UsersController {
             if (department instanceof Department) {
                 if(request.getRole() == Role.STUDENT){ //student
                     Student student = new Student(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department, request.getStudentId());
-                    /*if(student.takes(299)){
-                        department.addStudent(student, 299);
+                    this.userRepository.save(student);
+                    for(int i = 0; i < request.getCourses().length; i++){
+                        StudentCourse studentCourse = new StudentCourse(student, request.getCourses()[i]);
+                        student.getCourses().add(studentCourse);
+                        courseRepository.save(studentCourse);
                     }
-                    if(student.takes(399)){
+                    this.userRepository.save(student);
+                    if(request.getCourses().length == 1){
+                        CourseName dep299 = CourseName.valueOf(department.getName() + "299");
+                        if(request.getCourses()[0] == dep299){
+
+                            department.addStudent(student, 299);
+                            this.departmentRepository.save(department);
+                        } else {
+                            department.addStudent(student, 399);
+                            this.departmentRepository.save(department);
+                        }
+                    } else if(request.getCourses().length == 2) {
+                        department.addStudent(student, 299);
                         department.addStudent(student, 399);
-                    }*/
+                        this.departmentRepository.save(department);
+                    }
                     this.userRepository.save(student);
                     System.out.println(student);
+                    System.out.println("DEPARTMENT CHECK");
+                    System.out.println(department.getStudents_399());
+
                 }
                 else if(request.getRole() == Role.INSTRUCTOR){ //instructor
                     Instructor instructor = new Instructor(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(instructor);
                     System.out.println(instructor);
+                    department.addInstructor(instructor);
                 }
                 else if(request.getRole() == Role.SECRETARY){ //secretary
                     Secretary secretary = new Secretary(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), department);
                     this.userRepository.save(secretary);
+                    System.out.println(secretary);
+                    department.setSecretary(secretary);
+                    System.out.println(department.getSecretary());
+                    this.departmentRepository.save(department);
                     //System.out.println(secretary);
-                } 
-                else if(request.getRole() == Role.ADMIN){ //admin
-                    Admin admin = new Admin(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), null);
+                }
+                else if(request.getRole() == Role.ADMIN){//admin_ gotta send an existing departments_id
+                    Admin admin = new Admin(request.getName(), request.getEmail(), request.getPassword(), request.isNotifToMail(), null);
                     this.userRepository.save(admin);
-                    //System.out.println(secretary);
-                }else{
+                    System.out.println(admin);
+
+                }
+                else{
                     Users user = new Users(request.getName(),request.getEmail(), request.getPassword(), request.isNotifToMail(), Role.NOT_REGISTERED, department);
                     this.userRepository.save(user);
                     //System.out.println(user);
@@ -173,10 +207,37 @@ class LoginResponse{
     private boolean isVerified;
     @JsonProperty("role")
     private Role role;
+    private String name;
+    private String email;
+    private boolean notifToMail;
+    @JsonProperty("department_id")
+    private Long department_id;
+    private Long userId;
+
+    public LoginResponse(boolean isVerified, Role role, String name, String email,boolean notifToMail, Long department_id, Long userId) {
+        this.isVerified = isVerified;
+        this.role = role;
+        this.name = name;
+        this.notifToMail = notifToMail;
+        this.department_id = department_id;
+        this.userId = userId;
+    }
 
     public LoginResponse(boolean isVerified, Role role){
         this.isVerified = isVerified;
         this.role = role;
+    }
+}
+
+@Getter @Setter
+@NoArgsConstructor
+class InstructorLoginResponce extends LoginResponse{
+    @JsonProperty("courses")
+    private List<StudentCourse> courses;
+
+    public InstructorLoginResponce(boolean isVerified, Role role, String name, String email,boolean notifToMail, Long department_id, Long userId, List<StudentCourse> courses){
+        super(isVerified, role, name, email, notifToMail, department_id, userId);
+        this.courses = courses;
     }
 }
 
@@ -189,8 +250,9 @@ class UserRequest {
     private boolean notifToMail;
     @JsonProperty("role")
     private Role role;
-    private int studentId;
+    private int studentId; //for students
     @JsonProperty("department_id")
     private Long department_id;
+    private CourseName[] courses; //for students
 
 }

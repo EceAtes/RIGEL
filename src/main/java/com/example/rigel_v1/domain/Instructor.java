@@ -57,4 +57,8 @@ public class Instructor extends FeedbackUser{
         course.setInstructor(this);
     }
 
+    public void removeCourse(StudentCourse course){
+        this.courses.remove(course);
+    }
+
 }

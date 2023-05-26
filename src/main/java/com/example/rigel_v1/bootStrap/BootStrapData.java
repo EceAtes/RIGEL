@@ -21,7 +21,7 @@ public class BootStrapData implements CommandLineRunner {
     private final CriteriaReportRepository criteriaReportRepository;
     private final UsersService usersService;
 
-    public BootStrapData(UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, ReportRepository reportRepository) {
+    public BootStrapData( UsersService usersService, QuestionRepository questionRepository, DepartmentRepository departmentRepository, UserRepository userRepository, CourseRepository courseRepository, InstructorRepository instructorRepository, CriteriaReportRepository criteriaReportRepository, ReportRepository reportRepository) {
         this.departmentRepository = departmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
@@ -98,11 +98,36 @@ public class BootStrapData implements CommandLineRunner {
             instructor1 = (Instructor) optional1.get();
             instructor2 = (Instructor) optional2.get();
         }
-        System.out.println(instructor1.getCourses().get(0).getCourseTaker().getName());
+        Optional<StudentCourse> optional3 = courseRepository.findById(Long.valueOf(1));
+        Optional<StudentCourse> optional4 = courseRepository.findById(Long.valueOf(2));
+        if(optional3.isPresent()){
+            cs299 = (StudentCourse) optional3.get();
+            ie299 = (StudentCourse) optional4.get();
+        }
+        System.out.println(cs299.getInstructor());
 
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.STUDENT, CS, 22001578, new CourseName[]{CourseName.CS299});
-        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.INSTRUCTOR, CS, 0, null);
+        secretary.rematchStudent(usersService, instructor2.getId(), cs299.getId());
 
+        Optional<StudentCourse> optional5 = courseRepository.findById(Long.valueOf(1));
+        Optional<Users> optional6 = userRepository.findById(Long.valueOf(4));
+        Optional<Users> optional7 = userRepository.findById(Long.valueOf(5));
+        if(optional3.isPresent()){
+            cs299 = (StudentCourse) optional5.get();
+            instructor1 = (Instructor) optional6.get();
+            instructor2 = (Instructor) optional7.get();
+
+        }
+
+        System.out.println(cs299.getInstructor());
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.STUDENT, 22001578, new CourseName[]{CourseName.CS299});
+        secretary.addUser(usersService, "D", "UWU", "asdfghjkl", true, Role.INSTRUCTOR,  0, null);
+
+        secretary.createStudentsFromFile(usersService);
+
+        Admin admin = new Admin("AAAAAAAA", "BBBBBBB","CCCCCCCCc", false, null);
+        this.userRepository.save(admin);
+
+        //System.out.println(cs299.getInstructor());
 
         //System.out.println("AAAAAAAAAAAAAAAAAa");
 
@@ -120,7 +145,7 @@ public class BootStrapData implements CommandLineRunner {
         //reportRepository.save(C299_gradeForm);
         criteriaReportRepository.save(CS299_criteriaReport);
         //evaluationFormRepository.save(CS299_evaluationForm);
-       
+
         //GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
         CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399, ReportStatus.changable);
        // EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
@@ -160,7 +185,34 @@ public class BootStrapData implements CommandLineRunner {
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        System.out.println(cs299.getGradeForm().getReportStatus());*/
+        //System.out.println(cs299.getGradeForm().getReportStatus());
+
+        Question q1 = new Question("AAAAA?", "HHHH", -1);
+        Question q2 = new Question("BBBBB?", "IIII", -1);
+        Question q3 = new Question("CCCCC?", "JJJJJ", -1);
+        Question q4 = new Question("DDDDD?", "KKKKK", -1);
+        Question q5 = new Question("EEEEE?", "LLLLL", -1);
+        Question q6 = new Question("FFFFFF?", "MMMM", -1);
+        Question q7 = new Question("GGGGGG?", "NNNN", -1);
+        questionRepository.save(q1);
+        questionRepository.save(q2);
+        questionRepository.save(q3);
+        questionRepository.save(q4);
+        questionRepository.save(q5);
+        questionRepository.save(q6);
+        questionRepository.save(q7);
+        IE299_criteriaReport.addQuestion(q1);
+        IE299_criteriaReport.addQuestion(q2);
+        IE299_criteriaReport.addQuestion(q3);
+        IE299_criteriaReport.addQuestion(q4);
+        IE299_criteriaReport.addQuestion(q5);
+        IE299_criteriaReport.addQuestion(q6);
+        IE299_criteriaReport.addQuestion(q7);
+        criteriaReportRepository.save(IE299_criteriaReport);
+
+        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
+*/
 
     }
 }

@@ -1,0 +1,2 @@
+"U_U","aaaaaaa","bbbbbbbbb",true,STUDENT,22002312, [CS299,CS399]
+"UwU","ccccccc","ddddddddd",false,INSTRUCTOR

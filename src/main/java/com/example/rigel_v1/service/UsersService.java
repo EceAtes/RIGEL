@@ -45,7 +45,6 @@ public class UsersService {
             counter = counter % instructors.size();
             if(optional.isPresent() && optional.get().getCourseTaker().getDepartment().equals(department)){
                 instructors.get(counter).addCourse(optional.get());
-                instructors.get(counter).setName("OwO UwU");
                 userRepository.save(instructors.get(counter));
                 courseRepository.save(optional.get());
                 counter++;
@@ -70,6 +69,22 @@ public class UsersService {
             return secretary;
         }
         return new Users();
+    }
+
+    public void rematchStudent(Long instructorId, Long courseId) {
+        Optional<StudentCourse> optional1 = courseRepository.findById(courseId);
+        Optional<Users> optional2 = userRepository.findById(instructorId);
+
+        if(optional1.isPresent() && optional2.isPresent()){
+            StudentCourse course  = (StudentCourse) optional1.get();
+            Instructor oldInstructor = (Instructor) course.getInstructor();
+            Instructor instructor = (Instructor) optional2.get();
+            oldInstructor.removeCourse(course);
+            instructor.addCourse(course);
+            course.setInstructor(instructor);
+            courseRepository.save(course);
+
+        }
     }
 
     /*

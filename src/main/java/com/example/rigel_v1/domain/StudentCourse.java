@@ -36,9 +36,10 @@ public class StudentCourse {
     @JoinColumn(name = "course_id")
     private List<InternshipReport> internshipReports;
 
+
     private String internshipReportFolderID;
     
-    private int iterationCount; 
+    private int iterationCount = 0;
     
     @OneToOne
     private CriteriaReport criteriaReport;
@@ -50,7 +51,7 @@ public class StudentCourse {
     // @JsonProperty("score")
     private Score score;
 
-    // @JsonProperty("status")
+    @JsonProperty("status")
     private Status status;
 
     //private Date internshipReportDeadline;
@@ -64,7 +65,8 @@ public class StudentCourse {
         internshipReportFolderID = "none";
         iterationCount = 0;
         //criteriaReport = new CriteriaReport();
-        gradeForms = new LinkedList<>();  
+        gradeForms = new LinkedList<>();
+        this.status = Status.waitingSummerTrainingEvaluationFromCompany;
 
         //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
         //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
@@ -80,7 +82,8 @@ public class StudentCourse {
         internshipReportFolderID = "none";
         iterationCount = 0;
         criteriaReport = new CriteriaReport();
-        gradeForms = new LinkedList<>(); 
+        gradeForms = new LinkedList<>();
+        this.status = Status.waitingSummerTrainingEvaluationFromCompany;
 
         //courseTaker.enrollCourse(this);
         //instructor.addCourse(this);  
@@ -142,5 +145,12 @@ public class StudentCourse {
         return courseName.equals(course.courseName) && instructor.equals(course.instructor);
     }
 
-
+    @Override
+    public String toString() {
+        return "StudentCourse{" +
+                "id=" + id +
+                ", courseName=" + courseName +
+                ", status=" + status +
+                '}';
+    }
 }
