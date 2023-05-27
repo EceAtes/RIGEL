@@ -1,10 +1,13 @@
 package com.example.rigel_v1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,16 +28,17 @@ public class Student extends Users {
 
     //@OneToMany(fetch = FetchType.EAGER)
     @OneToMany
-    private Set<StudentCourse> courses = new HashSet<>();
+    @JsonBackReference
+    private List<StudentCourse> courses = new ArrayList<>();
 
     public Student(String name, String email, String password, boolean notificationToMail, Department department, int studentId) {
         super(name, email, password, notificationToMail, Role.STUDENT, department);
         this.oldReports = new HashSet<>();
-        this.courses = new HashSet<>();
+        this.courses = new ArrayList<>();
         this.studentId = studentId;
     }
 
-    public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department,Set<InternshipReport> oldReports, Set<StudentCourse> courses, List<Section> sections) {
+    public Student(String name, String email, String password, boolean notificationToMail, Role role, Department department,Set<InternshipReport> oldReports, List<StudentCourse> courses, List<Section> sections) {
         super(name, email, password, notificationToMail, Role.STUDENT, department );
         this.oldReports = oldReports;
         this.courses = courses;

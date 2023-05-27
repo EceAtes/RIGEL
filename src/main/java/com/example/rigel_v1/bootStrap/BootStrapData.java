@@ -7,6 +7,7 @@ import com.example.rigel_v1.service.UsersService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Component
@@ -131,15 +132,25 @@ public class BootStrapData implements CommandLineRunner {
         Admin admin = new Admin("AAAAAAAA", "BBBBBBB","CCCCCCCCc", false, null);
         this.userRepository.save(admin);
 
-        //System.out.println(cs299.getInstructor());
+        System.out.println(cs299.getInstructor());
 
-        //System.out.println("AAAAAAAAAAAAAAAAAa");
 
-/*
+
         System.out.println(A.getCourses());
 
+        Question q1 = new Question("AAAAA?", "HHHH", -1);
+        Question q2 = new Question("BBBBB?", "IIII", -1);
+        Question q3 = new Question("CCCCC?", "JJJJJ", -1);
+        questionRepository.save(q1);
+        questionRepository.save(q2);
+        questionRepository.save(q3);
+        ArrayList<Question> qs = new ArrayList<>();
+        qs.add(q1);
+        qs.add(q2);
+        qs.add(q3);
+
         //GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
-        CriteriaReport CS299_criteriaReport = new CriteriaReport(false, CourseName.CS299, cs299, ReportStatus.changable);
+        CriteriaReport CS299_criteriaReport = new CriteriaReport(cs299, qs);
         //EvaluationForm CS299_evaluationForm = new EvaluationForm(7, true, true, true, Recommendation.satisfactory,  "companyName", cs299);
 
         //cs299.uploadGradeForm(C299_gradeForm);
@@ -150,8 +161,8 @@ public class BootStrapData implements CommandLineRunner {
         criteriaReportRepository.save(CS299_criteriaReport);
         //evaluationFormRepository.save(CS299_evaluationForm);
 
-        //GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
-        CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399, ReportStatus.changable);
+        /*//GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
+        CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399);
        // EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
 
         //cs399.uploadGradeForm(C399_gradeForm);
@@ -177,34 +188,21 @@ public class BootStrapData implements CommandLineRunner {
         A.enrollCourse(cs399);
         B.enrollCourse(ie299);
         A.enrollCourse(cs299);
-
+*/
         //cs299.getGradeForm().setSatisfaction(true);
 
         //reportRepository.save(C299_gradeForm);
 
-        userRepository.save(A);
+   /*     userRepository.save(A);
         userRepository.save(B);
 
         courseRepository.save(cs299);
         courseRepository.save(ie299);
         courseRepository.save(cs399);
 
-        //System.out.println(cs299.getGradeForm().getReportStatus());
+    */    //System.out.println(cs299.getGradeForm().getReportStatus());
 
-        Question q1 = new Question("AAAAA?", "HHHH", -1);
-        Question q2 = new Question("BBBBB?", "IIII", -1);
-        Question q3 = new Question("CCCCC?", "JJJJJ", -1);
-        Question q4 = new Question("DDDDD?", "KKKKK", -1);
-        Question q5 = new Question("EEEEE?", "LLLLL", -1);
-        Question q6 = new Question("FFFFFF?", "MMMM", -1);
-        Question q7 = new Question("GGGGGG?", "NNNN", -1);
-        questionRepository.save(q1);
-        questionRepository.save(q2);
-        questionRepository.save(q3);
-        questionRepository.save(q4);
-        questionRepository.save(q5);
-        questionRepository.save(q6);
-        questionRepository.save(q7);
+        /*
         IE299_criteriaReport.addQuestion(q1);
         IE299_criteriaReport.addQuestion(q2);
         IE299_criteriaReport.addQuestion(q3);
@@ -214,6 +212,7 @@ public class BootStrapData implements CommandLineRunner {
         IE299_criteriaReport.addQuestion(q7);
         criteriaReportRepository.save(IE299_criteriaReport);
 */
+
 
     }
 }

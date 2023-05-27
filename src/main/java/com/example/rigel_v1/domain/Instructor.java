@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.*;
 
 import com.example.rigel_v1.domain.enums.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +21,9 @@ public class Instructor extends FeedbackUser{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "instructor_id")
-    private List<StudentCourse> courses = new LinkedList<>();
+    //@JsonProperty("courses")
+    @JsonBackReference
+    private List<StudentCourse> courses = new ArrayList<>();
 
     private File eSignature = new File("pom.xml");
 
@@ -39,7 +44,7 @@ public class Instructor extends FeedbackUser{
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department, Map<Long, Student> students, List<StudentCourse> graded, List<StudentCourse> toBeGraded, File eSignature) {//, Statistics statistics) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, students);
-        this.courses = new LinkedList<>();
+        this.courses = new ArrayList<>();
         this.eSignature = eSignature;
         //this.statistics = statistics;
         department.addInstructor(this);
@@ -69,4 +74,10 @@ public class Instructor extends FeedbackUser{
         studentCourse.setSupervisorEngineer(isSupervisorEngineer);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + ",{" +
+                "courses=" + courses +
+                '}';
+    }
 }

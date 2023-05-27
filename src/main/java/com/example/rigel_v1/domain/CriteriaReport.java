@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class CriteriaReport extends Report{
-    
+
     @OneToMany
     private List<Question> questions;
 
@@ -29,9 +29,9 @@ public class CriteriaReport extends Report{
 
     private Recommendation recommendation;
 
-    public CriteriaReport( StudentCourse course ){
+    public CriteriaReport( StudentCourse course, List<Question> questions){
         super(course);
-        this.questions = new ArrayList<Question>();
+        this.questions = questions;
         this.isCompleted = false;
     }
 
@@ -55,5 +55,5 @@ public class CriteriaReport extends Report{
         return scoreOfItemOne() >= 7 &&
                scoreOfEvaluationOfTheReport() >= 30 &&
                scoreOfEvaluationOfTheReport() >= 7;
-    }
+
 }
