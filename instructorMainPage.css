@@ -36,13 +36,17 @@
     padding: 15px;
 }
 
+.instructorMainPage-header{
+  height: 100px;
+}
 .instructorMainPage-header_title{
+    font-family:Arial, Helvetica, sans-serif;
     text-align: center;
     color: white;
 }
 
 .instructorMainPage-header_welcome_message{
-    width: 96vw;
+    width: 100vw;
     margin-top: 0px;
     text-align: center;
     padding: 15px 15px 15px 35px;
@@ -189,28 +193,31 @@
   width: 300px;
   text-align: right;
 }
+.instructorMainPage-my-div.waitingSummerTrainingEvaluationFromCompany{
+  background-color: #2020FF;
+}
 
 .instructorMainPage-my-div.waitingFirstSubmission{
   background-color: grey;
 }
 
-.instructorMainPage-my-div.reportUploaded{
+.instructorMainPage-my-div.waitingInstructorEvaluation{
 
   background-color: blueviolet;
 }
 
-.instructorMainPage-my-div.revisionAsked{
+.instructorMainPage-my-div.uploadRevision{
   background-color: aqua;
 }
 
-.instructorMainPage-my-div.waitingForCriteria{
+.instructorMainPage-my-div.waitingFinalConfirmation{
   background-color: yellow;
 }
 
-.instructorMainPage-my-div.satisfactory{
+.instructorMainPage-my-div.gradeSatisfactory{
   background-color: green;
 }
 
-.instructorMainPage-my-div.unsatisfactory{
+.instructorMainPage-my-div.gradeUnsatisfactory{
   background-color: red;
 }

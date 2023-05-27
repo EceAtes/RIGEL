@@ -30,13 +30,60 @@ const InstructorMainPage = () => {
   const role = localStorage.getItem('role');
   const userId = localStorage.getItem('userId');
 
-  console.log(name);
-  const statusClass = statusClasses[status];
 
   const OpenFrame = () => {
     console.log("openframe geldi"); 
     navigate('/googledrive');
   }
+  const jsonString = localStorage.getItem('arrayOfStructs');
+
+    // Convert the JSON string back to an array of structs
+  const arrayOfStructs = JSON.parse(jsonString);
+  const [userArray, setUserArray] = React.useState([]);
+  const url = "http://localhost:8080/users/login";
+  
+  const myObject = {
+    email: localStorage.getItem('email'),
+    password: localStorage.getItem('password')
+  };
+  React.useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(myObject),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          console.log("OK");
+          const parsedData = await response.json();
+          const jsonString = JSON.stringify(parsedData.course_info);
+          localStorage.setItem('arrayOfStructs', jsonString);
+          setUserArray(parsedData.course_info);
+        } else {
+          console.log("BAD");
+          throw new Error('Request failed with status code ' + response.status);
+        }
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+
+  const status1 = localStorage.getItem('status1');
+  const course_name1 = localStorage.getItem('course_name1');
+  const student_name1 = localStorage.getItem('student_name1');
+  const TA_check1 = localStorage.getItem('TA_check1');
+
+
+  const statusClass = statusClasses[status];
+
   return (
     <div className="instructorMainPage-all-items">  
       <div className="instructorMainPage-header">
@@ -73,11 +120,16 @@ const InstructorMainPage = () => {
         </div>
 
         <div className="instructorMainPage-student_profile_body">
-          <CustomDiv status = 'waitingFirstSubmission'></CustomDiv> 
-          <CustomDiv openFrame={OpenFrame} status = 'satisfactory'></CustomDiv>
-          <CustomDiv openFrame={OpenFrame} status = 'unsatisfactory'></CustomDiv>
-          <CustomDiv  openFrame={OpenFrame} status = 'reportUploaded'></CustomDiv>
-          <CustomDiv openFrame={OpenFrame} status = 'revisionAsked'></CustomDiv>
+        {userArray.map((user, index) => (
+        <CustomDiv
+          key={index}
+          openFrame={OpenFrame}
+          status={user.status}
+          course_name={user.course_name}
+          student_name={user.student_name}
+          TA_check={user.TA_check}
+        />
+      ))}
         </div>
       </div>
     </div>
@@ -85,54 +137,94 @@ const InstructorMainPage = () => {
 }
 
 
+// burada öğrencileri bulmamız lazım alo
 
 
-function CustomDiv({ status , openFrame}) {
+function CustomDiv({ status , openFrame, course_name, student_name, TA_check}) {
    
   return(
     <div className={`instructorMainPage-my-div ${status}`}>
       {
-        status === 'waitingFirstSubmission'
+        status === 'waitingSummerTrainingEvaluationFromCompany' &&(
+          <>
+          <div className="instructorMainPage-display_inline">
+            <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
+          </div>
+          <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+          <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
+          <h4 className="instructorMainPage-student_status">Status: {status}</h4>
+          </>
+        )
       }
       {
-        status === 'reportUploaded' && (
+        status === 'waitingFirstSubmission' && (
+          <>
+          <div className="instructorMainPage-display_inline">
+            <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+          </div>
+          <h4 className="instructorMainPage-student_course">Course: CS299</h4>
+          <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+          <h4 className="instructorMainPage-student_status">Status: {status}</h4>
+          </>
+        )
+      }
+      {
+        status === 'waitingInstructorEvaluation' && (
           <>
             <button className = "instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-evaluate">EVALUATE</button>
+            <div className="instructorMainPage-display_inline">
+              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+            </div>
+            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </>
         )
       }
       {
-        status === 'revisionAsked' && (
+        status === 'uploadRevision' && (
           <>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
+            <div className="instructorMainPage-display_inline">
+              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+            </div>
+            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </>
         )
       }
       {
-        status === 'waitingForCriteria' && (
+        status === 'waitingFinalConfirmation' && (
           <>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
+            <div className="instructorMainPage-display_inline">
+              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+            </div>
+            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </>
         )
       }
       {
-        (status === 'unsatisfactory' || status === 'satisfactory') && (
+        (status === 'gradeUnsatisfactory' || status === 'gradeSatisfactory') && (
           <>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-sign_grade_form"> Criteria Form </button>
             <button className="instructorMainPage-sign_grade_form"> Grade Form </button>
+            <div className="instructorMainPage-display_inline">
+              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+            </div>
+            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </>
         )
       }
-      <div className="instructorMainPage-display_inline">
-        <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
-      </div>
-      <h4 className="instructorMainPage-student_course">Course: CS299</h4>
-      <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
-      <h4 className="instructorMainPage-student_status">Status: Revision Asked</h4>
     </div>
 
   ); 
