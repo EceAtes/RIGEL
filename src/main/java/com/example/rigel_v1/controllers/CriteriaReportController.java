@@ -37,7 +37,7 @@ public class CriteriaReportController {
     }
 
     @PatchMapping("/edit/{id}")
-    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, ReportStatus status){
+    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestParam("status") ReportStatus status){
         Optional<CriteriaReport> optional = criteriaReportRepository.findById(id);
         if(optional.isPresent()){
             CriteriaReport report = optional.get();
@@ -70,10 +70,7 @@ public class CriteriaReportController {
 
 
     @PostMapping()
-    public void createCriteriaReport(@NonNull @RequestBody CriteriaRequest req){
-        Optional<StudentCourse> optional = courseRepository.findById(req.getOwnerCourseID());
-        if(optional.isPresent()){
-            StudentCourse course = optional.get();
+    public CriteriaReport createCriteriaReport(){
             Question q1 = new Question("AAAAA?", "HHHH", -1);
             Question q2 = new Question("BBBBB?", "IIII", -1);
             Question q3 = new Question("CCCCC?", "JJJJJ", -1);
@@ -92,21 +89,14 @@ public class CriteriaReportController {
             qs.add(q1);
             qs.add(q2);
             qs.add(q3);
-            CriteriaReport criteriaReport = new CriteriaReport(course, qs);
+            CriteriaReport criteriaReport = new CriteriaReport(qs);
             criteriaReportRepository.save(criteriaReport);
+            return criteriaReport;
 
-        }
     }
 
 }
 
-@Getter
-@Setter
-@NoArgsConstructor
-class CriteriaRequest{
-    @JsonProperty("ownerCourseID")
-    private Long ownerCourseID;
-}
 
 @Getter
 @Setter

@@ -139,7 +139,7 @@ public class BootStrapData implements CommandLineRunner {
         qs.add(q3);
 
         //GradeForm C299_gradeForm = new GradeForm(false, CourseName.CS299, cs299, ReportStatus.changable);
-        CriteriaReport CS299_criteriaReport = new CriteriaReport(cs299, qs);
+        CriteriaReport CS299_criteriaReport = new CriteriaReport(qs);
         //EvaluationForm CS299_evaluationForm = new EvaluationForm(7, true, true, true, Recommendation.satisfactory,  "companyName", cs299);
 
         //cs299.uploadGradeForm(C299_gradeForm);

@@ -12,7 +12,7 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
  
@@ -22,23 +22,8 @@ public class Report {
     
     private ReportStatus reportStatus;
 
-    public Report( StudentCourse studentCourse ) {
+    public Report() {
         this.reportStatus = ReportStatus.saved;
     }
 
-    public void toPDF(){        
-    }
-
-    /*
-    public boolean deleteReport(){
-        return true;
-    }
-
-    public boolean saveReport(){
-        return true;
-    }
-
-    public boolean submitReport(){
-        return true;
-    }*/
 }

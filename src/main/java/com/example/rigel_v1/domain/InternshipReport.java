@@ -31,8 +31,8 @@ public class InternshipReport extends Report{
     @OneToMany
     private List<Feedback> instructorFeedback;
 
-    public InternshipReport( StudentCourse course, Student ownerStudent, String reportLink, String description){
-        super(course);
+    public InternshipReport(Student ownerStudent, String reportLink, String description){
+        super();
         this.ownerStudent = ownerStudent;
         this.reportLink = reportLink;
         TA_Feedback = new ArrayList<Feedback>();

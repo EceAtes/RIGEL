@@ -9,7 +9,7 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 public class GradeForm extends Report {
 
     @Id
@@ -29,11 +29,9 @@ public class GradeForm extends Report {
     private boolean isSatisfactory;
     private boolean isSigned;
 
-    @OneToOne // many to one????????????????????
-    StudentCourse course;
 
-    public GradeForm( StudentCourse course ){  
-        super(course);
+
+    public GradeForm(){
         studentScore = 0;
         isRelated = false;
         isSupervisorEngineer = false;

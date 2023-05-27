@@ -72,7 +72,7 @@ public class GoogleDriveService {
                 String reportLink = ("https://drive.google.com/uc?id=" + fileId);
 
                 // Create an InternshipReport instance
-                InternshipReport internshipReport = new InternshipReport(studentCourse, studentCourse.getCourseTaker(), reportLink, "description here");
+                InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), reportLink, "description here");
                 reportRepository.save(internshipReport);
                 // Add the internship report to the student course
                 studentCourse.uploadInternshipReport(internshipReport);
