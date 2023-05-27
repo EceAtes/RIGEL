@@ -71,28 +71,55 @@ public class CriteriaReportController {
 
     @PostMapping()
     public CriteriaReport createCriteriaReport(){
-            Question q1 = new Question("AAAAA?", "HHHH", -1);
-            Question q2 = new Question("BBBBB?", "IIII", -1);
-            Question q3 = new Question("CCCCC?", "JJJJJ", -1);
-            /*Question q4 = new Question("DDDDD?", "KKKKK", -1);
-            Question q5 = new Question("EEEEE?", "LLLLL", -1);
-            Question q6 = new Question("FFFFFF?", "MMMM", -1);
-            Question q7 = new Question("GGGGGG?", "NNNN", -1);*/
+            Question q1 = new Question("1) Able to perform work at the level\n" +
+                    "expected from a summer training in\n" +
+                    "the area of computer engineering.\n" +
+                    "(this is the evaluation of all the work\n" +
+                    "done in the summer training)", "", -1);
+            Question q2 = new Question("(2) Solves complex engineering\n" +
+                    "problems by applying principles of\n" +
+                    "engineering, science, and\n" +
+                    "mathematics.", "", -1);
+            Question q3 = new Question("(3) Recognizes ethical and\n" +
+                    "professional responsibilities in\n" +
+                    "engineering situations", "", -1);
+            Question q4 = new Question("(4) Able to make informed\n" +
+                    "judgments that consider the impact\n" +
+                    "of engineering solutions in global,\n" +
+                    "economic, environmental, and\n" +
+                    "societal contexts.", "", -1);
+            Question q5 = new Question("(5) Able to acquire new knowledge\n" +
+                    "using appropriate learning strategy\n" +
+                    "or strategies.", "", -1);
+            Question q6 = new Question("(6) Able to apply new knowledge as\n" +
+                    "needed.", "", -1);
+            Question q7 = new Question("(7) Has awareness about diversity,\n" +
+                    "equity, and inclusion.", "", -1);        
+            Question q8 = new Question("Able to prepare reports with high\n" +
+                    "standards in terms of content,\n" +
+                    "organization, style and language\n" +
+                    "(the Summer Training report itself is\n" +
+                    "to be evaluated)", "", -1);
             questionRepository.save(q1);
             questionRepository.save(q2);
             questionRepository.save(q3);
-            /*questionRepository.save(q4);
+            questionRepository.save(q4);
             questionRepository.save(q5);
             questionRepository.save(q6);
-            questionRepository.save(q7);*/
+            questionRepository.save(q7);
+            questionRepository.save(q8);
             ArrayList<Question> qs =  new ArrayList<>();
             qs.add(q1);
             qs.add(q2);
             qs.add(q3);
+            qs.add(q4);
+            qs.add(q5);
+            qs.add(q6);
+            qs.add(q7);
+            qs.add(q8);
             CriteriaReport criteriaReport = new CriteriaReport(qs);
             criteriaReportRepository.save(criteriaReport);
             return criteriaReport;
-
     }
 
 }

@@ -113,7 +113,7 @@ public class PDFService {
                 ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 + 2,
                         PageSize.A4.getHeight() * 4 / 5 - 245, 0);
         
-                watermark = new Phrase(dateString.substring(0, 4), watermarkFont);
+                watermark = new Phrase(dateString.substring(2, 4), watermarkFont);
                 ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 + 45,
                         PageSize.A4.getHeight() * 4 / 5 - 245, 0);                          
                  
@@ -142,18 +142,22 @@ public class PDFService {
                 ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() / 2 + 80,
                         PageSize.A4.getHeight() * 4 / 5 - 465, 0);
         
-                System.out.println(dateString); 
+                LocalDate currentDate2 = LocalDate.now();
+                DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String dateString2 = currentDate2.format(formatter2);
+                System.out.println(dateString2); 
                 watermark = new Phrase(dateString.substring(8, 10), watermarkFont);
-                ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 - 25,
-                        PageSize.A4.getHeight() * 4 / 5 - 245, 0);
-        
-                watermark = new Phrase(dateString.substring(5, 7), watermarkFont);
-                ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 + 2,
-                        PageSize.A4.getHeight() * 4 / 5 - 245, 0);
-        
-                watermark = new Phrase(dateString.substring(0, 4), watermarkFont);
-                ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 + 45,
-                        PageSize.A4.getHeight() * 4 / 5 - 245, 0);    
+                ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 - 70,
+                        PageSize.A4.getHeight() * 4 / 5 - 515, 0);
+
+                watermark = new Phrase(dateString2.substring(5, 7), watermarkFont);
+                ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5 + 43,
+                        PageSize.A4.getHeight() * 4 / 5 - 515, 0);
+
+                watermark = new Phrase(dateString2.substring(2, 4), watermarkFont);
+                ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5,
+                        PageSize.A4.getHeight() * 4 / 5 - 515, 0);                       
+                        
         
                 watermark = new Phrase("X", watermarkFont);
                 if(studentCourse.getCriteriaReport().getRecommendation().equals(Recommendation.recommended)){
@@ -168,13 +172,12 @@ public class PDFService {
                         ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() / 8 + 3,
                         PageSize.A4.getHeight() * 4 / 5 - 600, 0);
                 }
-
-                /*/
-                Image signatureImage = Image.getInstance("src/main/resources/bilkent.png");
-                signatureImage.setAbsolutePosition(100, 100); 
-                signatureImage.scaleToFit(200, 100); 
+               
+                Image signatureImage = Image.getInstance("src/main/resources/sign.png");
+                signatureImage.setAbsolutePosition(300, 150); 
+                signatureImage.scaleToFit(80, 80); 
         
-                content.addImage(signatureImage);*/
+                content.addImage(signatureImage);
 
 
                 // ======PAGE 2 2nd column

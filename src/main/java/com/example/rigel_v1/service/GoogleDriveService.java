@@ -2,6 +2,7 @@ package com.example.rigel_v1.service;
 
 import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.domain.enums.ReportStatus;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.ByteArrayContent;
@@ -67,7 +68,6 @@ public class GoogleDriveService {
                 // Update the user's database entry with the file link
                 StudentCourse studentCourse = courseRepository.findById(studentCourseId)
                                 .orElseThrow(() -> new RuntimeException("StudentCourse not found"));
-                String reportLink = ("https://drive.google.com/uc?id=" + studentCourseId);
 
                 File driveFile = new File();
                 driveFile.setName(file.getOriginalFilename());
@@ -83,20 +83,22 @@ public class GoogleDriveService {
                 String fileId = uploadedFile.getId();
 
                 // Create an InternshipReport instance
-                InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), reportLink, description);
+                InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), fileId, description);
                 reportRepository.save(internshipReport);
                 // Add the internship report to the student course
                 studentCourse.uploadInternshipReport(internshipReport);
+                studentCourse.setStatus(Status.waitingInstructorEvaluation);
                 // Save the updated student course
                 courseRepository.save(studentCourse);
 
+                System.out.println("https://drive.google.com/uc?id=" + fileId);
                 return fileId;
         }
 
                                                                               
         public String uploadGeneratedFile(byte[] fileBytes, StudentCourse studentCourse) throws IOException {
                 File driveFile = new File();
-                driveFile.setName(studentCourse.getCourseName().name() + " - " + studentCourse.getCourseTaker().getId());
+                driveFile.setName(studentCourse.getCourseName().name() + " - " + studentCourse.getCourseTaker().getStudentId());
                 driveFile.setParents(Collections.singletonList(studentCourse.getGradeFormFolderKey()));
             
                 ByteArrayContent mediaContent = new ByteArrayContent("application/pdf", fileBytes);
@@ -108,9 +110,24 @@ public class GoogleDriveService {
                 String fileId = uploadedFile.getId();
             
                 // Update the user's database entry with the file link
-                //StudentCourse studentCourse = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Student Course not found"));
+                studentCourse.getLastGradeReport().setGeneratedFormKey(fileId);
                 String reportLink = ("https://drive.google.com/uc?id=" + fileId);
-            
+
+                if(studentCourse.getLastGradeReport().isWillBeRevised()){
+                        GradeForm gradeForm = new GradeForm();
+                        studentCourse.getGradeForms().add(gradeForm);
+                        studentCourse.setIterationCount(studentCourse.getIterationCount()+1);
+                        studentCourse.setStatus(Status.uploadRevision);
+                }
+                else{
+                        if(studentCourse.getCriteriaReport().isOverallSatisfactory()){
+                              studentCourse.setStatus(Status.gradeSatisfactory);  
+                        }
+                        else{
+                                studentCourse.setStatus(Status.gradeUnsatisfactory);  
+                        }
+                }
+                courseRepository.save(studentCourse);
                 return reportLink;
             }
 

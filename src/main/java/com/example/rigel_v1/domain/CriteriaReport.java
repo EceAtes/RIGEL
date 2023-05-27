@@ -31,11 +31,13 @@ public class CriteriaReport extends Report{
         super();
         this.questions = new ArrayList<Question>();
         this.isCompleted = false;
+        recommendation = Recommendation.satisfactory;
     }
 
     public CriteriaReport(List<Question> questions){
         this.questions = questions;
         this.isCompleted = false;
+        recommendation = Recommendation.satisfactory;
     }
 
     public int scoreOfItemOne(){
@@ -44,14 +46,14 @@ public class CriteriaReport extends Report{
 
     public int sumOfItemsFromTwoToSeven(){
         int sum = 0;
-        for(int i = 1; i < 7; i++ ){
-            sum = sum + questions.get(0).getScore();
+        for(int i = 0; i < 7; i++ ){
+            sum = sum + questions.get(i).getScore();
         }
         return sum;
     }
 
     public int scoreOfEvaluationOfTheReport(){
-        return questions.get(7).getScore();
+        return questions.get(6).getScore(); 
     }
 
     public boolean isOverallSatisfactory(){

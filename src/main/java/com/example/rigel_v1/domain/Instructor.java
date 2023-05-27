@@ -32,7 +32,7 @@ public class Instructor extends FeedbackUser{
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, new HashMap<>());
         //department.addInstructor(this);
-        eSignature = new File("pom.xml");
+        eSignature = new File("src/main/resources/bilkent.png");
     }
 
     public Instructor(List<StudentCourse> courses, File eSignature) { //, Statistics statistics) {

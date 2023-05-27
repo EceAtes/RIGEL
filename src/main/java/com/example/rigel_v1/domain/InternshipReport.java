@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class InternshipReport extends Report{
 
-    private String reportLink;
+    private String reportKey;
     private String description;
     private boolean TA_check;
 
@@ -31,10 +31,10 @@ public class InternshipReport extends Report{
     @OneToMany
     private List<Feedback> instructorFeedback;
 
-    public InternshipReport(Student ownerStudent, String reportLink, String description){
+    public InternshipReport(Student ownerStudent, String reportKey, String description){
         super();
         this.ownerStudent = ownerStudent;
-        this.reportLink = reportLink;
+        this.reportKey = reportKey;
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
