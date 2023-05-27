@@ -39,7 +39,7 @@ public class InternshipReportController {
             Users student = optional.get();
             StudentCourse course = optional1.get();
             if(student instanceof Student){ 
-                InternshipReport report = new InternshipReport(course, (Student) student, " ", req.getText()); // REPORT LINK_?????????????????????????
+                InternshipReport report = new InternshipReport((Student) student, " ", req.getText()); // REPORT LINK_?????????????????????????
                 this.internshipReportRepository.save(report);
             }
         }

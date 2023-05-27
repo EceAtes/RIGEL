@@ -92,9 +92,8 @@ public class CriteriaReportController {
             qs.add(q1);
             qs.add(q2);
             qs.add(q3);
-            CriteriaReport criteriaReport = new CriteriaReport(course, qs);
+            CriteriaReport criteriaReport = new CriteriaReport(qs);
             criteriaReportRepository.save(criteriaReport);
-
         }
     }
 

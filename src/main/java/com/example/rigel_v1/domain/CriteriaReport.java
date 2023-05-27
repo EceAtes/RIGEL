@@ -27,8 +27,7 @@ public class CriteriaReport extends Report{
 
     private Recommendation recommendation;
 
-    public CriteriaReport( StudentCourse course, List<Question> questions){
-        super(course);
+    public CriteriaReport(List<Question> questions){
         this.questions = questions;
         this.isCompleted = false;
     }

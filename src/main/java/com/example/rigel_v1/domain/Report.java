@@ -12,33 +12,16 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Report {
- 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     private ReportStatus reportStatus;
 
-    public Report( StudentCourse studentCourse ) {
+    public Report() {
         this.reportStatus = ReportStatus.saved;
     }
-
-    public void toPDF(){        
-    }
-
-    /*
-    public boolean deleteReport(){
-        return true;
-    }
-
-    public boolean saveReport(){
-        return true;
-    }
-
-    public boolean submitReport(){
-        return true;
-    }*/
 }

@@ -169,6 +169,14 @@ public class PDFService {
                         PageSize.A4.getHeight() * 4 / 5 - 600, 0);
                 }
 
+                /*/
+                Image signatureImage = Image.getInstance("src/main/resources/bilkent.png");
+                signatureImage.setAbsolutePosition(100, 100); 
+                signatureImage.scaleToFit(200, 100); 
+        
+                content.addImage(signatureImage);*/
+
+
                 // ======PAGE 2 2nd column
                 content = stamper.getUnderContent(2);
                 watermark = new Phrase("" + studentCourse.getCriteriaReport().getQuestions().get(0).getScore(), watermarkFont);

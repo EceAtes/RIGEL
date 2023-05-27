@@ -63,7 +63,12 @@ public class GoogleDriveService {
          * @throws IOException when an error occurs in the API request
          * 
          */
-        public String uploadInternshipReport(MultipartFile file, String folderId, Long userId, String description) throws IOException {
+        public String uploadInternshipReport(MultipartFile file, String folderId, Long studentCourseId, String description) throws IOException {
+                // Update the user's database entry with the file link
+                StudentCourse studentCourse = courseRepository.findById(studentCourseId)
+                                .orElseThrow(() -> new RuntimeException("StudentCourse not found"));
+                String reportLink = ("https://drive.google.com/uc?id=" + studentCourseId);
+
                 File driveFile = new File();
                 driveFile.setName(file.getOriginalFilename());
                 driveFile.setParents(Collections.singletonList(folderId));
@@ -77,14 +82,8 @@ public class GoogleDriveService {
 
                 String fileId = uploadedFile.getId();
 
-                // Update the user's database entry with the file link
-                StudentCourse studentCourse = courseRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
-                String reportLink = ("https://drive.google.com/uc?id=" + fileId);
-
                 // Create an InternshipReport instance
-                InternshipReport internshipReport = new InternshipReport(studentCourse, studentCourse.getCourseTaker(), reportLink, "description here");
-                internshipReport.setDescription(description);
+                InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), reportLink, description);
                 reportRepository.save(internshipReport);
                 // Add the internship report to the student course
                 studentCourse.uploadInternshipReport(internshipReport);

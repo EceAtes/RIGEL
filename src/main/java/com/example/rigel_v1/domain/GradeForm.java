@@ -21,11 +21,4 @@ public class GradeForm extends Report {
     // PART B
     private boolean willBeRevised;
 
-//    @ManyToOne // many to one????????????????????
-//    StudentCourse course;
-
-    public GradeForm( StudentCourse course ){  
-        super(course);
-        willBeRevised = true;
-    }
 }
