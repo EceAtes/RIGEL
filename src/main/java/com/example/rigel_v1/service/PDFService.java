@@ -51,7 +51,7 @@ public class PDFService {
                 PageSize.A4.getHeight() * 4 / 5 - 43, 0);
         }
 
-        watermark = new Phrase(String.valueOf(studentCourse.getStudentScore()), watermarkFont);
+        watermark = new Phrase(String.valueOf(studentCourse.getCompanyScore()), watermarkFont);
         ColumnText.showTextAligned(content, Element.ALIGN_CENTER, watermark, PageSize.A4.getWidth() * 4 / 5,
                 PageSize.A4.getHeight() * 4 / 5 - 90, 0);
         if(studentCourse.isRelated()){

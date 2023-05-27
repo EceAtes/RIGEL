@@ -25,8 +25,6 @@ public class CriteriaReport extends Report{
 
     private boolean isCompleted;
 
-    private String generatedReportLink;
-
     private Recommendation recommendation;
 
     public CriteriaReport( StudentCourse course, List<Question> questions){
@@ -55,5 +53,5 @@ public class CriteriaReport extends Report{
         return scoreOfItemOne() >= 7 &&
                scoreOfEvaluationOfTheReport() >= 30 &&
                scoreOfEvaluationOfTheReport() >= 7;
-
+    }
 }

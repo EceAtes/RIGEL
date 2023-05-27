@@ -1,6 +1,7 @@
 package com.example.rigel_v1.controllers;
 
 import com.example.rigel_v1.domain.StudentCourse;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.service.*;
 import com.lowagie.text.DocumentException;
@@ -30,11 +31,16 @@ public class PDFController {
         this.courseRepository = courseRepository;
     }
 
-    @PostMapping("/grade-report")
-    public void submitCriteriaReport(@RequestParam("courseId") Long courseId) throws IOException, DocumentException {
+    @PostMapping("/grade-form")
+    public void generateSummerTrainingGradeForm(@RequestParam("courseId") Long courseId) throws IOException, DocumentException {
             StudentCourse studentCourse = courseRepository.findById(courseId)
-                                         .orElseThrow(() -> new RuntimeException("User not found"));
-            System.out.println(googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse));
-            System.out.println("SUCCESS");
+                                         .orElseThrow(() -> new RuntimeException("Student course not found"));
+            if(true) {  // company grade geldi
+                if(true){ // e signature var
+                    System.out.println(googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse));
+                    System.out.println("SUCCESS");
+                    //studentCourse.getLastGradeReport().
+                }
+            }
     }
 }

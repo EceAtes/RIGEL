@@ -14,9 +14,7 @@ import lombok.*;
 
 
 @Entity
-@Setter
-@Getter
-@NoArgsConstructor
+@Setter @Getter @NoArgsConstructor
 public class StudentCourse {
 
     @Id
@@ -74,11 +72,6 @@ public class StudentCourse {
         //criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
         this.status = Status.waitingSummerTrainingEvaluationFromCompany;
-
-        //gradeForm = new GradeForm(false, courseName, this, ReportStatus.changable);
-        //criteriaReport = new CriteriaReport(false, courseName, this, ReportStatus.changable);
-        //evaluationForm = new EvaluationForm();
-        //courseTaker.enrollCourse(this);
     }
 
     public StudentCourse(Student courseTaker, CourseName courseName, Instructor instructor) {

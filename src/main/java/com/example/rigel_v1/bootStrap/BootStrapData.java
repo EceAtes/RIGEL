@@ -161,7 +161,7 @@ public class BootStrapData implements CommandLineRunner {
         criteriaReportRepository.save(CS299_criteriaReport);
         //evaluationFormRepository.save(CS299_evaluationForm);
 
-        /*//GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
+        /*GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
         CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399);
        // EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
 

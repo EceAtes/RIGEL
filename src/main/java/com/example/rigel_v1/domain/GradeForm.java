@@ -16,20 +16,16 @@ public class GradeForm extends Report {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;   
     
+    String generatedFormKey;
+
     // PART B
     private boolean willBeRevised;
 
-    // PART C
-    private boolean isSatisfactory;
-    private boolean isSigned;
-
-    @OneToOne // many to one????????????????????
-    StudentCourse course;
+//    @ManyToOne // many to one????????????????????
+//    StudentCourse course;
 
     public GradeForm( StudentCourse course ){  
         super(course);
         willBeRevised = true;
-        isSatisfactory = false;
     }
-
 }

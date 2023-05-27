@@ -3,6 +3,7 @@ package com.example.rigel_v1.domain;
 import com.example.rigel_v1.controllers.UsersController;
 import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.domain.enums.Role;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.service.UsersService;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -145,7 +146,8 @@ public class Secretary extends Users{
     }
 
     public void enterCompanyGrade(StudentCourse studentCourse, int grade){
-        studentCourse.setStudentScore(grade);
+        studentCourse.setCompanyScore(grade);
+        //studentCourse.setStatus(Status.); //???????????????
     }
 
     public void enterCompanyName(StudentCourse studentCourse, String name){
