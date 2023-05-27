@@ -8,6 +8,7 @@ import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
+import com.example.rigel_v1.service.UsersService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,11 +32,13 @@ public class UsersController {
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
     private final CourseRepository courseRepository;
+    private final UsersService usersService;
 
-    public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository) {
+    public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository, UsersService usersService) {
         this.userRepository = userRepository;
         this.departmentRepository = departmentRepository;
         this.courseRepository = courseRepository;
+        this.usersService = usersService;
     }
 
     @RequestMapping("/add_course")
@@ -178,6 +181,13 @@ public class UsersController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @RequestMapping("/automatch/{id}")
+    public void automatch(@PathVariable Long id) {
+        Optional<Users> optional = userRepository.findById(id);
+        if(optional.isPresent() && optional.get() instanceof Secretary){
+            ((Secretary) optional.get()).automatch(usersService);
+        }
+    }
 
     //this doesn't change the department
     @PatchMapping("/{id}")
