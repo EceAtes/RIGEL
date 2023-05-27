@@ -11,9 +11,19 @@ export const fetchStudentCourseData = async (courseID) => {
   }
 };
 
+export const setStatus = async (courseId, ) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/courses/${courseId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch user data');
+  }
+}
+
 export const fetchUserData = async (userId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/users/${userId}`);
+    const response = await axios.get(`${API_BASE_URL}/users/get/${userId}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -32,6 +42,12 @@ export const fetchQuestionData = async () => {
 
 }
 
+export const sendFeedbackData = async (body) =>{
+  axios.post("http://localhost:8080/feedbacks",
+            body)
+        .then(res => console.log("posting data", res))
+        .catch(err => console.log(err))
+}
 export const sendUserData = async (body) => {
     axios.post("http://localhost:8080/users", 
         {   name: body[0][0],
