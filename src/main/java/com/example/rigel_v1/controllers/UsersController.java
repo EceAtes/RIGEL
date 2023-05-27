@@ -193,30 +193,6 @@ public class UsersController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @RequestMapping("/automatch/{id}")
-    public void automatch(@PathVariable Long id) {
-        Optional<Users> optional = userRepository.findById(id);
-        if(optional.isPresent() && optional.get() instanceof Secretary){
-            ((Secretary) optional.get()).automatch(usersService);
-        }
-    }
-
-    @RequestMapping("/rematch/{id}")
-    public void rematch(@PathVariable Long id, @RequestParam("InstructorID") Long InstructorID, @RequestParam("courseID") Long courseID) {
-        Optional<Users> optional = userRepository.findById(id);
-        if(optional.isPresent() && optional.get() instanceof Secretary){
-            ((Secretary) optional.get()).rematchStudent(usersService, InstructorID, courseID);
-        }
-    }
-
-    @RequestMapping("/CreateFromFile/{id}")
-    public void rematch(@PathVariable Long id) {
-        Optional<Users> optional = userRepository.findById(id);
-        if(optional.isPresent() && optional.get() instanceof Secretary){
-            ((Secretary) optional.get()).createStudentsFromFile(usersService);
-        }
-    }
-
     //this doesn't change the department
     @PatchMapping("/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody UserRequest request) {

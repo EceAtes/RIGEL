@@ -26,23 +26,15 @@ public class InternshipReport extends Report{
     private Student ownerStudent;
 
     @OneToMany
-    private List<Feedback> TA_Feedback;
-
-    @OneToMany
-    private List<Feedback> instructorFeedback;
+    private List<Feedback> feedbacks;
 
     public InternshipReport(Student ownerStudent, String reportLink, String description){
         super();
         this.ownerStudent = ownerStudent;
         this.reportLink = reportLink;
-        TA_Feedback = new ArrayList<Feedback>();
-        instructorFeedback = new ArrayList<Feedback>();
+        feedbacks = new ArrayList<Feedback>();
         TA_check = false;
         this.description = description;
-    }
-
-    public void giveFeedback(Feedback feedback){ 
-        TA_Feedback.add(feedback);
     }
 
 }

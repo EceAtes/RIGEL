@@ -33,7 +33,7 @@ public class FeedbackController {
         return feedbackRepository.findById(id);
     }
 
-    @PostMapping
+    /*@PostMapping
     public void addFeedback(@NonNull @RequestBody FeedbackCreationRequest req){
         Optional<Users> optional1 = userRepository.findById(Long.valueOf(req.getFeedback_giver_id()));
         Optional<InternshipReport> optional2 = internshipReportRepository.findById(Long.valueOf(req.getInternship_report_id()));
@@ -52,7 +52,7 @@ public class FeedbackController {
                 internshipReportRepository.save(report);
             }
         }
-    }
+    }*/
 }
 
 @Getter

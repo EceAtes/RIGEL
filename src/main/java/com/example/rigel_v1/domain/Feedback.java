@@ -22,12 +22,8 @@ public class Feedback {
     private InternshipReport report;*/
 
 
-    @OneToOne
-    private FeedbackUser givenBy;
-
-    public Feedback(String feedback, FeedbackUser givenBy) {
+    public Feedback(String feedback) {
         this.feedback = feedback;
-        this.givenBy = givenBy;
     }
 
  /*  public Feedback(String feedback, InternshipReport report, FeedbackUser givenBy) {
@@ -36,8 +32,5 @@ public class Feedback {
         this.givenBy = givenBy;
     }*/
 
-    public boolean deleteFeedback(){
-        return true;
-    }
     
 }
