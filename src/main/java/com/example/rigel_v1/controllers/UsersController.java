@@ -4,6 +4,7 @@ package com.example.rigel_v1.controllers;
 import com.example.rigel_v1.domain.*;
 import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.domain.enums.Role;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
@@ -63,7 +64,11 @@ public class UsersController {
                 if (req.getPassword().equals(user.getPassword()) && req.getEmail().equals(user.getEmail())) {
                     if (user.getRole() == Role.INSTRUCTOR) {
                         return new InstructorLoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), ((Instructor) user).getCourses());
-                    } else {
+                    }
+                    else if(user.getRole() == Role.ADMIN){
+                        return new LoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), 0L, user.getId());
+                    }
+                    else {
                         return new LoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId());
                     }
                 }
@@ -124,7 +129,6 @@ public class UsersController {
                     Admin admin = new Admin(request.getName(), request.getEmail(), request.getPassword(), request.isNotifToMail(), null);
                     this.userRepository.save(admin);
                     System.out.println(admin);
-
                 } else {
                     Users user = new Users(request.getName(), request.getEmail(), request.getPassword(), request.isNotifToMail(), Role.NOT_REGISTERED, department);
                     this.userRepository.save(user);
@@ -189,20 +193,28 @@ public class UsersController {
             Users user = optional.get();
             Instructor instructor;
             Student student;
-            List<Long> courses = new ArrayList<>();
+            /*List<Long> courses = new ArrayList<>();*/
+            /*List<Status> courses = new ArrayList<>();*/
+            List<CourseResponseObject> response = new ArrayList<>();
             if (user instanceof Instructor) {
                 instructor = (Instructor) optional.get();
                 for(int i = 0; i < instructor.getCourses().size(); i++){
-                    courses.add(instructor.getCourses().get(i).getId());
+                    StudentCourse currCourse = instructor.getCourses().get(i);
+                    //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
+                    CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName());
+                    response.add(obj);
                 }
-                return new GetUserRequest(courses, instructor);
+                return new GetUserRequest(response, instructor);
             }
             else if(user instanceof Student){
                 student = (Student) optional.get();
                 for(int i = 0; i < student.getCourses().size(); i++){
-                    courses.add(student.getCourses().get(i).getId());
+                    StudentCourse currCourse = student.getCourses().get(i);
+                    //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
+                    CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName());
+                    response.add(obj);
                 }
-                return new GetUserRequest(courses, student);
+                return new GetUserRequest(response, student);
             }
 
         }
@@ -298,6 +310,7 @@ class InstructorLoginResponse extends LoginResponse {
 }
 
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -327,13 +340,39 @@ class UserRequest {
 }
 
 class GetUserRequest {
-    @JsonProperty("course_ids")
-    private List<Long> courses;
+    @JsonProperty("course_info")
+    private List<CourseResponseObject> courseStatus;
     @JsonProperty("user")
     private Users user;
 
-    public GetUserRequest(List<Long> courses, Users user) {
+    /*public GetUserRequest(List<Long> courses, Users user) {
         this.courses = courses;
         this.user = user;
+    }*/
+    public GetUserRequest(List<CourseResponseObject> courseStatus, Users user) {
+        this.courseStatus = courseStatus;
+        this.user = user;
+    }
+
+}
+
+class CourseResponseObject{
+    @JsonProperty("course_id")
+    private Long id;
+    @JsonProperty("status")
+    private Status status;
+    @JsonProperty("course_name")
+    private CourseName name;
+    @JsonProperty("TA_check")
+    private boolean check;
+    @JsonProperty("student_name")
+    private String studentName;
+
+    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName) {
+        this.id = id;
+        this.status = status;
+        this.name = name;
+        this.check = check;
+        this.studentName = studentName;
     }
 }

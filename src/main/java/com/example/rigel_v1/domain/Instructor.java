@@ -21,7 +21,7 @@ public class Instructor extends FeedbackUser{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "instructor_id")
-    @JsonProperty("courses")
+    //@JsonProperty("courses")
     @JsonBackReference
     private List<StudentCourse> courses = new ArrayList<>();
 
