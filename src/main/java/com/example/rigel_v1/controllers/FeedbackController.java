@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RequestMapping("/feedbacks")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class FeedbackController {
         private final FeedbackRepository feedbackRepository;
         private final UserRepository userRepository;
@@ -25,6 +26,11 @@ public class FeedbackController {
         this.feedbackRepository = feedbackRepository;
         this.userRepository = userRepository;
         this.internshipReportRepository = internshipReportRepository;
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Feedback> getUser(@PathVariable Long id){
+        return feedbackRepository.findById(id);
     }
 
     @PostMapping

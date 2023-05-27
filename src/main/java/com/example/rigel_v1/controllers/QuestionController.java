@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RequestMapping("/questions")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class QuestionController {
     private final QuestionRepository questionRepository;
 

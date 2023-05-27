@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RequestMapping("/departments")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class DepartmentController {
 
     private final DepartmentRepository departmentRepository;

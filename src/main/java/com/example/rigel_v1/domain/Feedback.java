@@ -17,6 +17,10 @@ public class Feedback {
     private Long id;
     private String feedback;
 
+  /*  @ManyToOne
+    @JoinColumn(name = "internship_report_id")
+    private InternshipReport report;*/
+
 
     @OneToOne
     private FeedbackUser givenBy;
@@ -25,6 +29,12 @@ public class Feedback {
         this.feedback = feedback;
         this.givenBy = givenBy;
     }
+
+ /*  public Feedback(String feedback, InternshipReport report, FeedbackUser givenBy) {
+        this.feedback = feedback;
+        this.report = report;
+        this.givenBy = givenBy;
+    }*/
 
     public boolean deleteFeedback(){
         return true;

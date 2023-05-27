@@ -27,6 +27,18 @@ public class CourseController {
         this.userRepository = userRepository;
     }
 
+    @PatchMapping("/{id}")
+    public void updateCourse(@PathVariable Long id, @RequestBody CourseResponse response){//can be modified upon request
+        Optional<StudentCourse> optional = courseRepository.findById(Long.valueOf(id));
+        if(optional.isPresent()){
+            StudentCourse course = optional.get();
+            if(response.getCourseStatus() != null){
+                course.setStatus(response.getCourseStatus());
+                courseRepository.save(course);
+            }
+        }
+    }
+
     @PostMapping
     public void addCourse(@NonNull @RequestBody CourseRequest request){
         System.out.println(request.getName());
@@ -47,6 +59,8 @@ public class CourseController {
         }
 
     }
+
+
 
     @GetMapping("/{id}")
     public CourseResponse getCourse(@PathVariable Long id){
@@ -106,6 +120,7 @@ class CourseResponse {
     private int iteration_count;
     private Long criteria_report_id;
     private Long grade_form_id;
+    @JsonProperty("courseStatus")
     private Status courseStatus;
 
     public CourseResponse(Long id, CourseName name, Long student_id, String internshipReportFolderID, int iteration_count, Long criteria_report_id, Long grade_form_id, Status courseStatus) {

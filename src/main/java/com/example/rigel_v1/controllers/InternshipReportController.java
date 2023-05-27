@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/internship_report")
+@CrossOrigin("http://localhost:3000")
 public class InternshipReportController {
     private final InternshipReportRepository internshipReportRepository;
     private final UserRepository userRepository;
