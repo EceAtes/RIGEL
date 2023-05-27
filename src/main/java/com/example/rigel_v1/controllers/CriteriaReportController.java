@@ -44,9 +44,30 @@ public class CriteriaReportController {
             report.setReportStatus(status);
             criteriaReportRepository.save(report);
             System.out.println(report.getReportStatus());
+
         }
         return null;
     }
+
+    @PatchMapping("/answer/{id}/{qID}")
+    public void answerQuestion(@PathVariable Long id, @PathVariable int qID, @RequestBody QuestionUpdate update){
+        System.out.println("ENTERED");
+        Optional<CriteriaReport> optional = criteriaReportRepository.findById(id);
+        if(optional.isPresent()){
+            CriteriaReport report = optional.get();
+            Question currQ = report.getQuestions().get(qID);
+            if(update.getAnswer() != null){
+                currQ.setAnswer(update.getAnswer());
+                questionRepository.save(currQ);
+            }
+            if(update.getScore() != -1){
+                currQ.setScore(update.getScore());
+                questionRepository.save(currQ);
+            }
+            criteriaReportRepository.save(report);
+        }
+    }
+
 
     @PostMapping()
     public void createCriteriaReport(@NonNull @RequestBody CriteriaRequest req){
@@ -86,3 +107,15 @@ class CriteriaRequest{
     @JsonProperty("ownerCourseID")
     private Long ownerCourseID;
 }
+
+@Getter
+@Setter
+@NoArgsConstructor
+class QuestionUpdate{
+    @JsonProperty("answer")
+    private String answer;
+    @JsonProperty("score")
+    private int score;
+
+}
+
