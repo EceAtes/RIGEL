@@ -1,12 +1,17 @@
 package com.example.rigel_v1.controllers;
 
-import com.example.rigel_v1.service.PDFService;
+import com.example.rigel_v1.domain.StudentCourse;
+import com.example.rigel_v1.domain.enums.Status;
+import com.example.rigel_v1.repositories.CourseRepository;
+import com.example.rigel_v1.service.*;
 import com.lowagie.text.DocumentException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -17,37 +22,25 @@ import java.util.Date;
 @CrossOrigin("http://localhost:3000")
 public class PDFController {
     private final PDFService pdfService;
+    private final GoogleDriveService googleDriveService;
+    private final CourseRepository courseRepository;
 
-    public PDFController(PDFService pdfService) {
+    public PDFController(PDFService pdfService, GoogleDriveService googleDriveService, CourseRepository courseRepository) {
         this.pdfService = pdfService;
+        this.googleDriveService = googleDriveService;
+        this.courseRepository = courseRepository;
     }
 
-    //downloads the generated pdf file
-    @GetMapping("/generate/pdf")
-    public void generatePDF(HttpServletResponse response) throws IOException, DocumentException {
-        File pdfFile = pdfService.export();
-
-        // Set the content type and attachment header
-        response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=generatedPDF.pdf");
-
-        // Copy the file to the response output stream
-        try (InputStream inputStream = new FileInputStream(pdfFile);
-             OutputStream outputStream = response.getOutputStream()) {
-            IOUtils.copy(inputStream, outputStream);
-        }
+    @PostMapping("/grade-form")
+    public void generateSummerTrainingGradeForm(@RequestParam("courseId") Long courseId) throws IOException, DocumentException {
+            StudentCourse studentCourse = courseRepository.findById(courseId)
+                                         .orElseThrow(() -> new RuntimeException("Student course not found"));
+            if(true) {  // company grade geldi
+                if(true){ // e signature var
+                    System.out.println(googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse));
+                    System.out.println("SUCCESS");
+                    //studentCourse.getLastGradeReport().
+                }
+            }
     }
-
-    /*@GetMapping("/pdf/generate")
-    public void generatePDF(HttpServletResponse response) throws IOException {
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        this.pdfService.export(response);
-    }*/
 }

@@ -37,8 +37,19 @@ public class BootStrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Department CS = new Department("CS");
         Department IE = new Department("IE");
+        Department EE = new Department("EE");
+        Department ME = new Department("ME");
         departmentRepository.save(CS);
         departmentRepository.save(IE);
+        departmentRepository.save(EE);
+        departmentRepository.save(ME);
+
+        
+        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
+
+ /*     Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        userRepository.save(admin);
 
         Student A = new Student("A", "a@gmail.com", "1234", true, null, 123456);
         CS.addStudent(A, 299);
@@ -150,7 +161,7 @@ public class BootStrapData implements CommandLineRunner {
         criteriaReportRepository.save(CS299_criteriaReport);
         //evaluationFormRepository.save(CS299_evaluationForm);
 
-        /*//GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
+        /*GradeForm C399_gradeForm = new GradeForm(false, CourseName.CS399, cs399, ReportStatus.changable);
         CriteriaReport CS399_criteriaReport = new CriteriaReport(false, CourseName.CS399, cs399);
        // EvaluationForm CS399_evaluationForm = new EvaluationForm(5, false, true, false, Recommendation.not_recommended,  "companyName", cs299);
 
@@ -198,11 +209,9 @@ public class BootStrapData implements CommandLineRunner {
         IE299_criteriaReport.addQuestion(q4);
         IE299_criteriaReport.addQuestion(q5);
         IE299_criteriaReport.addQuestion(q6);
-        IE299_criteriaReport.addQuestion(q7);*/
-        //criteriaReportRepository.save(IE299_criteriaReport);
-/*
-        Admin admin = new Admin("admin", "mail", "pass", false, CS);
-        userRepository.save(admin);*/
+        IE299_criteriaReport.addQuestion(q7);
+        criteriaReportRepository.save(IE299_criteriaReport);
+*/
 
 
     }

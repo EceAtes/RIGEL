@@ -65,6 +65,14 @@ public class Instructor extends FeedbackUser{
     public void removeCourse(StudentCourse course){
         this.courses.remove(course);
     }
+    
+    public void fillPartAQuestionOne(StudentCourse studentCourse, boolean isRelated ){
+        studentCourse.setRelated(isRelated);
+    }
+
+    public void fillPartAQuestionTwo(StudentCourse studentCourse, boolean isSupervisorEngineer){
+        studentCourse.setSupervisorEngineer(isSupervisorEngineer);
+    }
 
     @Override
     public String toString() {

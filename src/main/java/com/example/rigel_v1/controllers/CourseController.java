@@ -61,7 +61,6 @@ public class CourseController {
     }
 
 
-
     @GetMapping("/{id}")
     public CourseResponse getCourse(@PathVariable Long id){
         System.out.println("ENTERED getCourse");
@@ -78,7 +77,7 @@ public class CourseController {
                 lastGradeReportId = gradeForms.get(gradeForms.size()-1).getId();
             }
 
-            return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), course.getInstructor().getName(), course.getInternshipReportFolderID(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus());
+            return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), course.getInstructor().getName(), course.getInternshipReportFolderKey(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus());
         }
         return null;
     }

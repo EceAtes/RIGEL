@@ -16,27 +16,9 @@ public class GradeForm extends Report {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;   
     
-    //  PART A
-    private String companyName;
-    private int studentScore;
-    private boolean isRelated;
-    private boolean isSupervisorEngineer;
+    String generatedFormKey;
 
     // PART B
     private boolean willBeRevised;
-
-    // PART C
-    private boolean isSatisfactory;
-    private boolean isSigned;
-
-
-
-    public GradeForm(){
-        studentScore = 0;
-        isRelated = false;
-        isSupervisorEngineer = false;
-        willBeRevised = true;
-        isSatisfactory = false;
-    }
 
 }

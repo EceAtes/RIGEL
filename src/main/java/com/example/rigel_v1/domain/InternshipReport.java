@@ -17,8 +17,8 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class InternshipReport extends Report{
 
-    private String reportLink;
-    private String description;
+    private String reportLink = "";
+    private String description = "";
     private boolean TA_check;
 
     @ManyToOne
@@ -38,7 +38,7 @@ public class InternshipReport extends Report{
         TA_Feedback = new ArrayList<Feedback>();
         instructorFeedback = new ArrayList<Feedback>();
         TA_check = false;
-        description = "";
+        this.description = description;
     }
 
     public void giveFeedback(Feedback feedback){ 
