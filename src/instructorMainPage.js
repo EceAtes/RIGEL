@@ -40,7 +40,7 @@ const InstructorMainPage = () => {
     // Convert the JSON string back to an array of structs
   const arrayOfStructs = JSON.parse(jsonString);
   const [userArray, setUserArray] = React.useState([]);
-  const url = "http://localhost:8080/users/login";
+  const url = `http://localhost:8080/users/get/${localStorage.getItem('userId')}` ;
   
   const myObject = {
     email: localStorage.getItem('email'),
@@ -51,8 +51,7 @@ const InstructorMainPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(myObject),
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           }
