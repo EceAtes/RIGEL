@@ -40,12 +40,12 @@ public class Secretary extends Users{
     private String withdrawDeadline;           //yyyy-mm-dd
     private String departmentFolderKey;    
     
-    private List<String> reportFolderKeys;    //[0] internship reports, [1] criteria reports, [2] grade forms
+    private List<String> reportFolderKeys;    //[0] Internship Reports, [1] Summer Training Grade Forms
  
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.SECRETARY, department);
         this.gradeForms = new HashMap<>();
-        reportFolderKeys = new LinkedList<String>();
+        reportFolderKeys = new ArrayList<String>();
     }
 
     /*public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
@@ -142,6 +142,14 @@ public class Secretary extends Users{
     
         // true, if the add-drop period has passed
         return comparison <= 0;
+    }
+
+    public void enterCompanyGrade(StudentCourse studentCourse, int grade){
+        studentCourse.setStudentScore(grade);
+    }
+
+    public void enterCompanyName(StudentCourse studentCourse, String name){
+        studentCourse.setCompanyName(name);
     }
     
 }

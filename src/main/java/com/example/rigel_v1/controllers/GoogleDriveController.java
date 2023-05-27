@@ -45,8 +45,8 @@ public class GoogleDriveController {
     public ResponseEntity<String> uploadInternshipReport(
             @RequestParam("folderId") String folderId,
             @RequestPart("file") MultipartFile file,
-            @RequestParam("userId") Long userId // shoud be changed
-
+            @RequestParam("courseId") Long courseId,
+            @RequestParam("description") String description
     ) {
         // Check if a file is uploaded
         if (file.isEmpty()) {
@@ -59,7 +59,7 @@ public class GoogleDriveController {
         }
 
         try {
-            String fileKey = googleDriveService.uploadInternshipReport(file, folderId, userId);
+            String fileKey = googleDriveService.uploadInternshipReport(file, folderId, courseId, description);
             return ResponseEntity.ok("File uploaded successfully. File Key: " + fileKey);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -114,7 +114,7 @@ public class GoogleDriveController {
     }
 
     @PostMapping("/start-courses")
-    public StudentFolderCreationResponse createStudentFolder(@RequestParam("internshipFolderKey") String internshipFolderKey, @RequestParam("userId") Long userId) {
+    public StudentFolderCreationResponse createStudentFolder(@RequestParam("userId") Long userId) {
         try {
             Optional<Users> userOptional = userRepository.findById(userId); 
             if (userOptional.isPresent()) {
@@ -125,9 +125,10 @@ public class GoogleDriveController {
                             if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
                                 if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
                                     ((Secretary) user).automatch(usersService);
-                                    String folderKey = googleDriveService.createStudentCourseFolders(internshipFolderKey);
+                                    String folderKey_internship = googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(0), true); //isInternshipReportFolderKey
+                                    String folderKey_gradeform = googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(1), false);                                     
                                     System.out.println("Student folders created successfully.");
-                                    return new StudentFolderCreationResponse(folderKey, false, true, true, true, true);                             
+                                    return new StudentFolderCreationResponse(folderKey_internship, false, true, true, true, true);                             
                                 }
                                 else{
                                     return new StudentFolderCreationResponse("", false, false, true, true, false);                             
@@ -168,15 +169,12 @@ public class GoogleDriveController {
     }
     
     public boolean atLeastOneInstructorExist(String department){
-        System.out.println("girdim");
         Iterable<Instructor> instructors = instructorRepository.findAll();
         for (Instructor instructor : instructors) {
-            System.out.println("for");
             if (instructor.getDepartment().getName().equals(department)) {
                 return true;
             }
         }
-        System.out.println("cikiyorum");
         return false;
     }
 

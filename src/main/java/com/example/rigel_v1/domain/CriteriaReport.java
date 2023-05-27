@@ -27,9 +27,33 @@ public class CriteriaReport extends Report{
 
     private String generatedReportLink;
 
+    private Recommendation recommendation;
+
     public CriteriaReport( StudentCourse course ){
         super(course);
         this.questions = new ArrayList<Question>();
         this.isCompleted = false;
+    }
+
+    public int scoreOfItemOne(){
+        return questions.get(0).getScore();
+    }
+
+    public int sumOfItemsFromTwoToSeven(){
+        int sum = 0;
+        for(int i = 1; i < 7; i++ ){
+            sum = sum + questions.get(0).getScore();
+        }
+        return sum;
+    }
+
+    public int scoreOfEvaluationOfTheReport(){
+        return questions.get(7).getScore();
+    }
+
+    public boolean isOverallSatisfactory(){
+        return scoreOfItemOne() >= 7 &&
+               scoreOfEvaluationOfTheReport() >= 30 &&
+               scoreOfEvaluationOfTheReport() >= 7;
     }
 }

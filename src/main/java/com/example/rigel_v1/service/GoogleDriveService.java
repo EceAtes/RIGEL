@@ -9,11 +9,17 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.ColumnText;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -52,10 +58,12 @@ public class GoogleDriveService {
          * @param file      The file to upload
          * @param folderId  The ID of the folder to upload the file into
          * @param studentId The ID of the user performing the action
+         * @param description 
          * @return The ID of the uploaded file
          * @throws IOException when an error occurs in the API request
+         * 
          */
-        public String uploadInternshipReport(MultipartFile file, String folderId, Long userId) throws IOException {
+        public String uploadInternshipReport(MultipartFile file, String folderId, Long userId, String description) throws IOException {
                 File driveFile = new File();
                 driveFile.setName(file.getOriginalFilename());
                 driveFile.setParents(Collections.singletonList(folderId));
@@ -76,21 +84,21 @@ public class GoogleDriveService {
 
                 // Create an InternshipReport instance
                 InternshipReport internshipReport = new InternshipReport(studentCourse, studentCourse.getCourseTaker(), reportLink, "description here");
+                internshipReport.setDescription(description);
                 reportRepository.save(internshipReport);
                 // Add the internship report to the student course
                 studentCourse.uploadInternshipReport(internshipReport);
-
                 // Save the updated student course
                 courseRepository.save(studentCourse);
 
                 return fileId;
         }
 
-                                                                                //courseID ?????
-        public String uploadGeneratedFile(byte[] fileBytes, String folderId) throws IOException {
+                                                                              
+        public String uploadGeneratedFile(byte[] fileBytes, StudentCourse studentCourse) throws IOException {
                 File driveFile = new File();
-                driveFile.setName("generatedPDF.pdf");
-                driveFile.setParents(Collections.singletonList(folderId));
+                driveFile.setName(studentCourse.getCourseName().name() + " - " + studentCourse.getCourseTaker().getId());
+                driveFile.setParents(Collections.singletonList(studentCourse.getGradeFormFolderKey()));
             
                 ByteArrayContent mediaContent = new ByteArrayContent("application/pdf", fileBytes);
             
@@ -164,7 +172,7 @@ public class GoogleDriveService {
                     admin.saveReportFolderID(createdDepartmentFolder.getId());
             
                     // Create subfolders within the department folder
-                    String[] subfolderNamesWithinDepartment = { "Internship Reports", "Criteria Reports", "Grade Forms" };
+                    String[] subfolderNamesWithinDepartment = { "Internship Reports", "Summer Training Grade Forms" };
             
                     for (String subfolderNameWithinDepartment : subfolderNamesWithinDepartment) {
                         File subfolder = new File();
@@ -178,9 +186,8 @@ public class GoogleDriveService {
             
                         String subfolderLink = "https://drive.google.com/drive/folders/" + createdSubfolder.getId();
                         System.out.println("Subfolder (View): " + subfolderLink);
-                        admin.saveReportFolderID(createdDepartmentFolder.getId());
+                        admin.saveReportFolderID(createdSubfolder.getId());
 
-                        //admin.distributeSemesterFolderKeys(secretaryRepository);            
                     }
                 }
                 userRepository.save(admin);
@@ -190,12 +197,12 @@ public class GoogleDriveService {
 
         /**
          */
-        public String createStudentCourseFolders(String parentFolderKey) throws IOException {
+        public String createStudentCourseFolders(String parentFolderKey, boolean isInternshipReportFolderKey) throws IOException {
                 Iterable<StudentCourse> studentCourses = courseRepository.findAll();
                 for (StudentCourse studentCourse : studentCourses) {
                         File studentCourseFolder = new File();
                         studentCourseFolder.setParents(Collections.singletonList(parentFolderKey));
-                        String folderName = studentCourse.getCourseTaker().getDepartment().getName() + "-" + studentCourse.getCourseName() + "-" + studentCourse.getCourseTaker().getId();
+                        String folderName = studentCourse.getCourseName() + "-" + studentCourse.getCourseTaker().getStudentId();
                         studentCourseFolder.setName(folderName);
                         studentCourseFolder.setMimeType("application/vnd.google-apps.folder");      
                         
@@ -212,11 +219,11 @@ public class GoogleDriveService {
                         System.out.println("Student Course Key: " + createdStudentCourseFolder.getId());
                         String studentFolderLink = "https://drive.google.com/drive/folders/" + createdStudentCourseFolder.getId();
                         System.out.println("Student Folder ( View ): " + studentFolderLink);
-                        studentCourse.setInternshipReportFolderKey(createdStudentCourseFolder.getId());
+                        if(isInternshipReportFolderKey) { studentCourse.setInternshipReportFolderKey(createdStudentCourseFolder.getId()); }
+                        else { studentCourse.setGradeFormFolderKey(createdStudentCourseFolder.getId()); }
         
                         courseRepository.save(studentCourse);
                 }
                 return "done";
         }
-
 }

@@ -35,11 +35,9 @@ public class StudentCourse {
     @OneToMany
     @JoinColumn(name = "course_id")
     private List<InternshipReport> internshipReports;
-
-
     private String internshipReportFolderKey;
-    
     private int iterationCount = 0;
+    //private Date internshipReportDeadline;
     
     @OneToOne
     private CriteriaReport criteriaReport;
@@ -47,15 +45,16 @@ public class StudentCourse {
     @OneToMany
     @JoinColumn(name = "course_id")
     private List<GradeForm> gradeForms;
- 
-    // @JsonProperty("score")
-    private Score score;
+    private String gradeFormFolderKey;
+
+    //  PART A
+    private String companyName;
+    private int studentScore;
+    private boolean isRelated;
+    private boolean isSupervisorEngineer;
 
     @JsonProperty("status")
     private Status status;
-
-    //private Date internshipReportDeadline;
-
 
     public StudentCourse(Student courseTaker, CourseName courseName){   
         this.courseTaker = courseTaker;
@@ -84,24 +83,29 @@ public class StudentCourse {
         criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
         this.status = Status.waitingSummerTrainingEvaluationFromCompany;
-
-        //courseTaker.enrollCourse(this);
-        //instructor.addCourse(this);  
+        studentScore = -1;
     }
 
     public void uploadInternshipReport(InternshipReport rep){
         internshipReports.add(rep);
         System.out.println("internship report of " + courseTaker.getName() + " && " + courseName + " uploaded");
+        this.status = Status.waitingInstructorEvaluation;
     }
-    
+
+     //might be empty    
     public InternshipReport getLastInternshipReportSubmitted(){
-        return internshipReports.get(0);        // last iteration
+        return internshipReports.get(internshipReports.size()-1);   // last iteration
     }
     
+    //might be empty
+    public GradeForm getLastGradeReport(){
+        return gradeForms.get(gradeForms.size()-1);        // last iteration
+    }
+
     public boolean generateGradeForm(){ 
         if(instructor.getESignature() != null){
             if(gradeForms.get(0).isWillBeRevised() 
-               || (criteriaReport.getReportStatus() == ReportStatus.submitted)&&  gradeForms.get(0).getStudentScore() != -1 )
+               || (criteriaReport.getReportStatus() == ReportStatus.submitted)&&  studentScore != -1 )
                     System.out.println("You can create pdf file");
                     // create pdf!!
                     //
@@ -117,7 +121,7 @@ public class StudentCourse {
     public boolean generateCriteriaReport(){ 
         if(instructor.getESignature() != null){         // NOT NECESSEARY I GUESS?????
             if(!gradeForms.get(0).isWillBeRevised() 
-               || (criteriaReport.getReportStatus() == ReportStatus.submitted) &&  gradeForms.get(0).getStudentScore() != -1 )
+               || (criteriaReport.getReportStatus() == ReportStatus.submitted) &&  studentScore != -1 )
                     System.out.println("You can create pdf file");
                     // create pdf!!
                     //
@@ -128,11 +132,6 @@ public class StudentCourse {
             System.out.println("Cannot create criteria report -- e-signature missing");
             return false;
         }
-    }
-  
-    public void setCourseTaker(Student courseTaker) {
-        this.courseTaker = courseTaker;
-        //instructor.addCourse(this);
     }
 
     @Override
