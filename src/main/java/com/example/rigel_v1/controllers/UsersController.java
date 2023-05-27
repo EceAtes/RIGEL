@@ -63,7 +63,26 @@ public class UsersController {
                 Users user = optional.get();
                 if (req.getPassword().equals(user.getPassword()) && req.getEmail().equals(user.getEmail())) {
                     if (user.getRole() == Role.INSTRUCTOR) {
-                        return new InstructorLoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), ((Instructor) user).getCourses());
+                        List<CourseResponseObject> response = new ArrayList<>();
+                        Instructor instructor = (Instructor) optional.get();
+                        for(int j = 0; j < instructor.getCourses().size(); j++){
+                            StudentCourse currCourse = instructor.getCourses().get(j);
+                            //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
+                            CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName());
+                            response.add(obj);
+                        }
+                        return new InstructorLoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
+                    }
+                    else if (user.getRole() == Role.STUDENT) {
+                        List<CourseResponseObject> response = new ArrayList<>();
+                        Student student = (Student) optional.get();
+                        for(int j = 0; j < student.getCourses().size(); j++){
+                            StudentCourse currCourse = student.getCourses().get(j);
+                            //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
+                            CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName());
+                            response.add(obj);
+                        }
+                        return new InstructorLoginResponse(true, user.getRole(), student.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
                     }
                     else if(user.getRole() == Role.ADMIN){
                         return new LoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), 0L, user.getId());
@@ -284,6 +303,7 @@ class LoginResponse {
     public LoginResponse(boolean isVerified, Role role, String name, String email, boolean notifToMail, Long department_id, Long userId) {
         this.isVerified = isVerified;
         this.role = role;
+        this.email = email;
         this.name = name;
         this.notifToMail = notifToMail;
         this.department_id = department_id;
@@ -300,10 +320,11 @@ class LoginResponse {
 @Setter
 @NoArgsConstructor
 class InstructorLoginResponse extends LoginResponse {
-    @JsonProperty("courses")
-    private List<StudentCourse> courses;
+    @JsonProperty("course_info")
+    private List<CourseResponseObject> courses;
 
-    public InstructorLoginResponse(boolean isVerified, Role role, String name, String email, boolean notifToMail, Long department_id, Long userId, List<StudentCourse> courses) {
+
+    public InstructorLoginResponse(boolean isVerified, Role role, String name, String email, boolean notifToMail, Long department_id, Long userId, List<CourseResponseObject> courses) {
         super(isVerified, role, name, email, notifToMail, department_id, userId);
         this.courses = courses;
     }
