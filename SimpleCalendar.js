@@ -8,8 +8,7 @@ import "./simpleCalendar.css"
 export default function BasicDateCalendar() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar defaultValue={dayjs('2022-04-17')}
-      />
+      <DateCalendar defaultValue={dayjs()} />    
     </LocalizationProvider>
   );
 }
