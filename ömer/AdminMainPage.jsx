@@ -1,4 +1,4 @@
-import Navbar from "../components/navbar/navbar";
+import Navbar from "./navbar";
 import {Box, Collapse, IconButton, Table, Typography, Button, InputLabel, Select, MenuItem, FormGroup} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { Paper, TableContainer, TableCell, TableHead, TableRow, TableBody, Checkbox, FormControlLabel} from "@mui/material";

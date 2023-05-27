@@ -6,7 +6,8 @@ import AnnouncementsPage from './announcements.js';
 import GoogleDrive from './googledrive.js';
 import StudentCard from './StudentCard.js';
 import StudentMainPage from './StudentMainPage.js';
-
+import SecretaryMainPage from './ömer/SecretaryMainPage.js';
+import AdminMainPage from './ömer/AdminMainPage.js';
 function Navbar() {
   return (
     <nav>
@@ -34,6 +35,9 @@ const pageMerge = () => {
                     <Route path = "/googledrive" element = {<GoogleDrive/>}/>
                     <Route path = "/studentCard" element = {<StudentCard/>}/>
                     <Route path = "/studentMainPage" element = {<StudentMainPage/>}/>
+                    <Route path = "/secretaryMainPage" element = {<SecretaryMainPage/>}/>                    
+                    <Route path = "/adminMainPage" element = {<AdminMainPage/>}/>
+
                 </Routes>
             </>
         </Router>

@@ -1,5 +1,5 @@
 
-import Navbar from "../components/navbar/navbar";
+import Navbar from "./navbar";
 import { Typography, Box, Table, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import { Paper, TableContainer, TableCell, TableHead, TableRow, TableBody, TablePagination} from "@mui/material";
 import React from "react";

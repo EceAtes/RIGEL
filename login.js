@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL="http://localhost:8080"
 const isInstructor = false;   
-const isStudent  = false;    
-  const Login = ({ isInstructor, isStudent }) => {
+const isStudent  = false;
+const isSecretary = false;    
+  const Login = ({ isInstructor, isStudent , isSecretary, isAdmin}) => {
     const validate = () => {
   
       const emailRegex = /^\S+@\S+\.\S+/;
@@ -74,21 +75,19 @@ const isStudent  = false;
             else if(parsedData.isVerified === true && parsedData.role === "STUDENT"){
               isStudent = true;
             }
-            handleLogin({isInstructor, isStudent});
+            else if(parsedData.isVerified === true && parsedData.role === "SECRETARY"){
+              isSecretary = true;
+            }
+            else if(parsedData.isVerified === true && parsedData.role === "ADMIN"){
+              isAdmin = true;
+            }
+            handleLogin({isInstructor, isStudent, isSecretary, isSecretary});
           })  
           .catch(error => {
             console.log("ERROR!!!");
             // Handle any errors that occurred during the request
           });
-          
-          /*const arr = [username,password];
-          axios.post("http://localhost:8080/users/login", myObject)
-          .then(res => console.log("uwuwuuw",res))
-          .catch(err => console.log(err))
-          console.log(arr[0]);
-          console.log(arr[1]);*/
-  
-          
+                    
       }
     };
   
@@ -118,6 +117,12 @@ const isStudent  = false;
       }
       else if (isStudent){
         navigate('/studentMainPage');
+      }
+      else if(isSecretary){
+        navigate('/secretaryMainPage');
+      }
+      else if(isAdmin){
+        navigate('/adminMainPage');
       }
        else {
         navigate('/login'); // Navigate back to the login page if the login fails
