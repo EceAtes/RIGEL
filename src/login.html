@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="login.js"></script>       
+        <link rel = "stylesheet" href = "login.css"/>
+        <title> Login Page </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class = "all-items">
+            <div class = "image-div">
+                <img src = "bilkent.png" alt = "Bilkent University logo" class = "image">
+            </div>
+            <div class = "form-div">
+                <h2 class = "Heading"> RIGEL </h2>
+                <form action="/login" method="POST" onsubmit="return validate()">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email"><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"><br><br>
+                    <div class = "container">
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="forgot-password"> Forgot Password?</a>
+                        <button class = "login-button" type = "submit" onclick = "submitForm()"> Login</button>    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
