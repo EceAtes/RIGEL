@@ -64,6 +64,8 @@ const isStudent  = false;
             }
           })
           .then(parsedData => {
+            console.log(parsedData);
+
             localStorage.setItem('departmentId', parsedData.department_id);
             localStorage.setItem('email',parsedData.email);
             localStorage.setItem('password',parsedData.password);
@@ -72,6 +74,7 @@ const isStudent  = false;
             localStorage.setItem('notifToMail', parsedData.notifToMail);
             localStorage.setItem('role',parsedData.role);
             localStorage.setItem('userId', parsedData.userId);
+
 
             /*localStorage.setItem('status',parsedData.course_info[0].status);
             localStorage.setItem('course_name',parsedData.course_info[0].course_name);

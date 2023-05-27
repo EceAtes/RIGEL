@@ -13,7 +13,7 @@ export const fetchStudentCourseData = async (courseID) => {
 
 export const fetchUserData = async (userId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/users/${userId}`);
+    const response = await axios.get(`${API_BASE_URL}/users/get/${userId}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
