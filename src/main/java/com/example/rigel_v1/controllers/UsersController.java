@@ -33,12 +33,16 @@ public class UsersController {
     private final DepartmentRepository departmentRepository;
     private final CourseRepository courseRepository;
     private final UsersService usersService;
+    private final CriteriaReportController criteriaReportController;
+    private final GradeFormController gradeFormController;
 
-    public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository, UsersService usersService) {
+    public UsersController(UserRepository userRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository, UsersService usersService, CriteriaReportController criteriaReportController, GradeFormController gradeFormController) {
         this.userRepository = userRepository;
         this.departmentRepository = departmentRepository;
         this.courseRepository = courseRepository;
         this.usersService = usersService;
+        this.criteriaReportController = criteriaReportController;
+        this.gradeFormController = gradeFormController;
     }
 
     @RequestMapping("/add_course")
@@ -112,6 +116,13 @@ public class UsersController {
                         StudentCourse studentCourse = new StudentCourse(student, request.getCourses()[i]);
                         student.getCourses().add(studentCourse);
                         courseRepository.save(studentCourse);
+                        CriteriaReport cReport = criteriaReportController.createCriteriaReport();
+                        GradeForm gForm = gradeFormController.createGradeForm();
+                        studentCourse.setCriteriaReport(cReport);
+                        courseRepository.save(studentCourse);
+                        studentCourse.getGradeForms().add(gForm);
+                        courseRepository.save(studentCourse);
+
                     }
                     this.userRepository.save(student);
                     if (request.getCourses().length == 1) {
@@ -187,6 +198,22 @@ public class UsersController {
         Optional<Users> optional = userRepository.findById(id);
         if(optional.isPresent() && optional.get() instanceof Secretary){
             ((Secretary) optional.get()).automatch(usersService);
+        }
+    }
+
+    @RequestMapping("/rematch/{id}")
+    public void rematch(@PathVariable Long id, @RequestParam("InstructorID") Long InstructorID, @RequestParam("courseID") Long courseID) {
+        Optional<Users> optional = userRepository.findById(id);
+        if(optional.isPresent() && optional.get() instanceof Secretary){
+            ((Secretary) optional.get()).rematchStudent(usersService, InstructorID, courseID);
+        }
+    }
+
+    @RequestMapping("/CreateFromFile/{id}")
+    public void rematch(@PathVariable Long id) {
+        Optional<Users> optional = userRepository.findById(id);
+        if(optional.isPresent() && optional.get() instanceof Secretary){
+            ((Secretary) optional.get()).createStudentsFromFile(usersService);
         }
     }
 

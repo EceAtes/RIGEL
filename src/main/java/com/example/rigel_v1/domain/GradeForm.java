@@ -9,7 +9,7 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 public class GradeForm extends Report {
 
     @Id

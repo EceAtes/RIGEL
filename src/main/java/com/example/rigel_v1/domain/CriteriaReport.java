@@ -17,7 +17,7 @@ import lombok.Setter;
 
 //@Document("Administrations")
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 public class CriteriaReport extends Report{
 
     @OneToMany
@@ -26,6 +26,12 @@ public class CriteriaReport extends Report{
     private boolean isCompleted;
 
     private Recommendation recommendation;
+
+    public CriteriaReport(){
+        super();
+        this.questions = new ArrayList<Question>();
+        this.isCompleted = false;
+    }
 
     public CriteriaReport(List<Question> questions){
         this.questions = questions;
