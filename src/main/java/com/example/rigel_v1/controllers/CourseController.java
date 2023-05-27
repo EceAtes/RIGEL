@@ -78,7 +78,7 @@ public class CourseController {
                 lastGradeReportId = gradeForms.get(gradeForms.size()-1).getId();
             }
 
-            return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), course.getInternshipReportFolderID(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus());
+            return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), course.getInstructor().getName(), course.getInternshipReportFolderID(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus());
         }
         return null;
     }
@@ -116,6 +116,8 @@ class CourseResponse {
     private CourseName name;
     @JsonProperty("student_id")
     private Long student_id;
+    @JsonProperty("instructor_name")
+    private String instructor_name;
     private String internshipReportFolderID;
     private int iteration_count;
     private Long criteria_report_id;
@@ -123,10 +125,11 @@ class CourseResponse {
     @JsonProperty("courseStatus")
     private Status courseStatus;
 
-    public CourseResponse(Long id, CourseName name, Long student_id, String internshipReportFolderID, int iteration_count, Long criteria_report_id, Long grade_form_id, Status courseStatus) {
+    public CourseResponse(Long id, CourseName name, Long student_id, String instructor_name, String internshipReportFolderID, int iteration_count, Long criteria_report_id, Long grade_form_id, Status courseStatus) {
         this.id = id;
         this.name = name;
         this.student_id = student_id;
+        this.instructor_name = instructor_name;
         this.internshipReportFolderID = internshipReportFolderID;
         this.iteration_count = iteration_count;
         this.criteria_report_id = criteria_report_id;
