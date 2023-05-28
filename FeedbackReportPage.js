@@ -17,9 +17,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {sendFeedbackData} from "./api_connection/apiConnect";
+import {sendFeedbackData, fetchInternshipReportKey} from "./api_connection/apiConnect";
 
-function Popup(open, handleOpen, handleClose, handleGiveFeedback) {
+function Popup(open, handleOpen, handleClose, handleGiveFeedback, setCompany) {
     if (!open) return;
 
     return (
@@ -33,6 +33,9 @@ function Popup(open, handleOpen, handleClose, handleGiveFeedback) {
                 {"Do you want to submit your feedback?"}
             </DialogTitle>
             <DialogActions>
+                <React.Fragment>
+                    {RadioButtonsGroup(setCompany)}
+                </React.Fragment>
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleGiveFeedback} autoFocus>
                     Submit
@@ -41,6 +44,30 @@ function Popup(open, handleOpen, handleClose, handleGiveFeedback) {
         </Dialog>
 
     );
+}
+
+function RadioButtonsGroup(setCompany) {
+    
+    const handleChange = (event) => {
+        setCompany(event.target.value);
+    };
+    
+  return (
+    <FormControl>
+      <FormLabel sx={{ color: "black" }} id="demo-radio-buttons-group-label"></FormLabel>
+      <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue={null}
+        onChange={handleChange}
+        name="radio-buttons-group"
+      >
+        <FormControlLabel value="I strongly recommend this place for future students" control={<Radio />} label="I strongly recommend this place for future students" />
+        <FormControlLabel value="I am satidfied with this place" control={<Radio />} label="I am satidfied with this place" />
+        <FormControlLabel value="I recommend this place not to be allowed for future students" control={<Radio />} label="I recommend this place not to be allowed for future students" />
+      </RadioGroup>
+    </FormControl>
+  );
+  
 }
 
 function RowRadioButtonsGroup(revision, setRevision) {
@@ -68,26 +95,36 @@ function RowRadioButtonsGroup(revision, setRevision) {
 
 function FeedbackReportPage() {
     const linkImg = require("./images/reports-img.png");
-    const url = "https://drive.google.com/file/d/1OHFYGVO6U3jCSuuSl_8ZYe2TQjGDt3Qi/preview";
+    const [data, setData]= useState({});
+    const [key, setKey]= useState();
     const [feedback, setFeedback] = useState();
     const [sent, setSent] = useState({});
     const [open, setOpen]= useState(false);
     const [revision, setRevision] = useState('No');
+    const [company, setCompany] = useState(null);
     
-    /*useEffect(() => {
-        console.log(sent);
-      }, [sent]);*/
+    useEffect(() => {
+        const courseInfo= localStorage.getItem('arrayOfStructs');
+        const index= localStorage.getItem('index');
+        const course= courseInfo[index];
+        setData(course);
+        
+        const internship_report= course.lastInternshipReportID;
+        const report_data= fetchInternshipReportKey(internship_report);
+        setKey(report_data.reportKey);
+        
+    }, []);
       
     const handleClose = (event) => {
         setOpen(false);
     };
     
     const handleGiveFeedback = (event) => {
-        setSent({feedback:feedback, feedback_giver_id:4, internship_report_id: 1});
-        const feedbackData= {feedback:feedback, feedback_giver_id:4, internship_report_id: 1};
+        setSent({feedback:feedback});
+        const feedbackData= {feedback:feedback};
         setOpen(false);
         console.log("submitted");
-        sendFeedbackData(feedbackData);
+        sendFeedbackData(data.lastInternshipReportID, feedbackData);
     };
     
     const handleOpen = (event) => {
@@ -110,7 +147,7 @@ function FeedbackReportPage() {
                         "verticalAlign": "top", "width": "70%", "height": "100%"
                     }}
                 >
-                    <iframe src="https://drive.google.com/file/d/1OHFYGVO6U3jCSuuSl_8ZYe2TQjGDt3Qi/preview" width="100%" height="100%" allow="autoplay"></iframe>
+                    <iframe src={`https://drive.google.com/file/d/${key}/preview`} width="100%" height="100%" allow="autoplay"></iframe>
                 </div>
 
                 <div classnName="FeedbackHolder"
@@ -122,6 +159,10 @@ function FeedbackReportPage() {
                     <div className="feedbackItems"
                         style={{ width: "80%", height: "100%", display: "flex", flexDirection: "column", jusfyContent: "space-between", margin: "auto", paddingTop: "10vh" }}>
 
+                        <React.Fragment>
+                            {RadioButtonsGroup(company, setCompany)}
+                        </React.Fragment>
+                        <br/><br/>
                         <React.Fragment>
                             {RowRadioButtonsGroup(revision, setRevision)}
                         </React.Fragment>
