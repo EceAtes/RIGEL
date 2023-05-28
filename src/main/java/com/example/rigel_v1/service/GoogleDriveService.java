@@ -67,7 +67,6 @@ public class GoogleDriveService {
                 // Update the user's database entry with the file link
                 StudentCourse studentCourse = courseRepository.findById(studentCourseId)
                                 .orElseThrow(() -> new RuntimeException("StudentCourse not found"));
-                String reportLink = ("https://drive.google.com/uc?id=" + studentCourseId);
 
                 File driveFile = new File();
                 driveFile.setName(file.getOriginalFilename());
@@ -83,7 +82,7 @@ public class GoogleDriveService {
                 String fileId = uploadedFile.getId();
 
                 // Create an InternshipReport instance
-                InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), reportLink, description);
+                InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), fileId, description);
                 reportRepository.save(internshipReport);
                 // Add the internship report to the student course
                 studentCourse.uploadInternshipReport(internshipReport);
