@@ -1,9 +1,9 @@
 
+
 import React, { iframe } from 'react';
-import Header from "./common_mainpage_comp/Headers.js";
+import Header from "./Headers.js";
 import Button from '@mui/material/Button';
-import "./eval_page_comp/EvaluationPage.css";
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import "./EvaluationPage.css";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -17,12 +17,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {sendFeedbackData, fetchInternshipReportKey} from "./api_connection/apiConnect";
+import {sendFeedbackData, fetchInternshipReport} from "./apiConnect";
 
 function Popup(open, handleOpen, handleClose, handleGiveFeedback, setCompany) {
     if (!open) return;
 
     return (
+           
         <Dialog
             open={open}
             onClose={handleOpen}
@@ -94,7 +95,8 @@ function RowRadioButtonsGroup(revision, setRevision) {
 }
 
 function FeedbackReportPage() {
-    const linkImg = require("./images/reports-img.png");
+    const [report, setReport] = useState();
+    const linkImg = require("./bilkent.png");
     const [data, setData]= useState({});
     const [key, setKey]= useState();
     const [feedback, setFeedback] = useState();
@@ -103,16 +105,32 @@ function FeedbackReportPage() {
     const [revision, setRevision] = useState('No');
     const [company, setCompany] = useState(null);
     
+    const fetchData = async () => {
+        try {
+            const courseInfo= localStorage.getItem('arrayOfStructs');
+            const array = JSON.parse(courseInfo);
+            console.log(array);
+            const indexString= localStorage.getItem('index');
+            const index = parseInt(indexString);
+            console.log(index);
+            const course= array[index];
+            setData(course);
+            console.log(course);
+            console.log(course.lastInternshipReportID);
+            const internship_report= course.lastInternshipReportID;
+            const internship_report_int = parseInt(internship_report);
+          const report_data = await fetchInternshipReport(internship_report_int);
+          console.log("Yeto");
+          console.log(report_data);
+          setKey(report_data);
+        } catch (error) {
+          console.log('Error fetching data:', error);
+        }
+      };
+
     useEffect(() => {
-        const courseInfo= localStorage.getItem('arrayOfStructs');
-        const index= localStorage.getItem('index');
-        const course= courseInfo[index];
-        setData(course);
-        
-        const internship_report= course.lastInternshipReportID;
-        const report_data= fetchInternshipReportKey(internship_report);
-        setKey(report_data.reportKey);
-        
+
+        fetchData();
     }, []);
       
     const handleClose = (event) => {
@@ -130,8 +148,8 @@ function FeedbackReportPage() {
     const handleOpen = (event) => {
         setOpen(true);
     };
-    
-    return (
+    console.log(key);
+    return  (
         <div className="EvaluationPage">
             <Header
                 link={linkImg}

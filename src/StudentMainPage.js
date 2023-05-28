@@ -62,7 +62,7 @@ function StudentMainPage(props) {
   }
 
   return (courseData && studentData) ? (
-    <div className="StudentMainPage">
+    <div className="StudentMainPage" style = {{width: "100vw", height: "100vh"}}>
       <Header />
       <NameHeader name={studentData.name} />
       <div className="courses" style={{ width: "100vw", height: "80vh", display: "flex", flexDirection: "row" }}>

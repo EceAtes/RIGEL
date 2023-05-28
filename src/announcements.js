@@ -1,11 +1,12 @@
 import React from 'react';
 import './announcements.css';
+import image from './announcements-image.png';
 
 const AnnouncementsPage = () => {
   return (
     <div className = "announcements-all-items">
         <div className="announcements-headerContainer">
-        <img src="./announcements-image.png" className="announcements-image" alt="image of megaphone on a purple background" />
+        <img src = {image} className="announcements-image" alt="image of megaphone on a purple background" />
         <h1 className="announcements-title">Announcements</h1>
         </div>
 

@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import { UploadFile } from "@mui/icons-material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from "axios";
+import logo from "../bilkent.png";
 
 const API_BASE_URL="http://localhost:8080"
 export const fetchUserData = async (userId) => {
@@ -167,30 +168,51 @@ function Row(props) {
   );
 }
 
-  function createData(name, surname, role, mail, course, status) {
-    return {
-      name,
-      surname,
-      role,
-      mail,
-      course,
-      history: [
-        {
-          course: 'CS299',
-          assignedInstructor: 'Eray Tüzün',
-          companyName: 'Google',
-          status: 'active',
-        },
-      ],
-    };
+  function createData() {
+
+      const username = localStorage.getItem("email");
+      const password = localStorage.getItem("password");
+      
+      console.log("Secretary main page");
+      const url = "http://localhost:8080/users";
+      const myObject = {
+      email: username,
+      password: password,
+      };
+          
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(myObject),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log("OK");
+          return response.json(); // Parse the JSON if the response is successful (status code 200)
+        } else {
+          console.log("BAD");
+          throw new Error('Request failed with status code ' + response.status);
+        }
+      })
+      .then(parsedData => {
+        console.log(parsedData);
+        const name = parsedData.name;
+        const email = parsedData.email; 
+        const roles = parsedData.roles; 
+        const password = parsedData.password;  
+          return { name,email, roles, password };
+      })  
+      .catch(error => {
+        console.log("ERROR!!!");
+      
+        // Handle any errors that occurred during the request
+      });
   }
 
   const rows = [
-    createData('Ömer Asım', 'Doğan', 'Student', 'asim@gmail.com', 3.99),
-    createData('Dilay', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+    createData()
   ];
 
   const PlusButton = ({onClick}) => {
@@ -202,6 +224,12 @@ function Row(props) {
   };
 
   const BasicModal = () => {
+    const [userType, setUserType] = useState(""); // State for user type selection
+
+    const handleUserTypeChange = (event) => {
+      setUserType(event.target.value); // Update user type when selection changes
+    };
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -254,7 +282,7 @@ function Row(props) {
     const [finalObject, setFinalObject] = React.useState({});
   
     const handleInputChange = (event, attributeName) => {
-      const value = attributeName === 'companyGrade' || attributeName === 'idSelect' ? parseInt(event.target.value) : event.target.value;
+      const value = event.target.value;
       
       setInputValues(prevValues => ({
         ...prevValues,
@@ -270,23 +298,25 @@ function Row(props) {
       setRowsPerPage(+event.target.value);
       setPage(0);
     };
-const handleSubmit = (event) => {
-  event.preventDefault();
 
-  // Create your object using the form data
-  const myObject = {
-    nameInput: inputValues.nameInput,
-    surnameInput: inputValues.surnameInput,
-    emailInput: inputValues.emailInput,
-    roleSelect: selectedValues.roleSelect,
-    idSelect: inputValues.idSelect,
-    courseSelect:selectedValues.courseSelect,
-    companyGrade: inputValues.companyGrade,
-  };
+    const uwu = localStorage.getItem("departmentId");
+    const handleSubmit = (event) => {
+      event.preventDefault();
+
+      // Create your object using the form data
+      const myObject = {
+        name: inputValues.nameInput,
+        department_id: uwu,
+        email: inputValues.emailInput,
+        role: userType,
+        studentId: inputValues.idSelect,
+        courses:selectedValues.courseSelect,
+        password: inputValues.password
+      };
 
 
   console.log(myObject);
-
+  console.log(rows);
   axios.post("http://localhost:8080/users", myObject)
         .then(res => console.log("posting data", res))
         .catch(err => console.log(err))
@@ -309,11 +339,12 @@ const handleSubmit = (event) => {
       >
       <Box sx={style}>
       <div style = {{display: "flex", flexDirection: "row"}}>
+
         <FormControl component= "form" onSubmit = {handleSubmit} sx={{ marginLeft:'2vw', width: "9vw" }} size="small">
           <InputLabel id="demo-select-small-label"  sx={{color: 'black'}}>Role</InputLabel>
           <Select
-              value={selectedValues.roleSelect} 
-              onChange={(e) => handleSelectChange(e, 'roleSelect')}
+              value={userType} 
+              onChange={handleUserTypeChange}
               labelId="demo-select-small-label"
               id="roleSelect"
               label="select-role"
@@ -322,12 +353,12 @@ const handleSubmit = (event) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"Student"}>Student</MenuItem>
-              <MenuItem value={"Instructor"}>Instructor</MenuItem>
-              <MenuItem value={"Secretary"}>Secretary</MenuItem>
+              <MenuItem value={"STUDENT"}>Student</MenuItem>
+              <MenuItem value={"INSTRUCTOR"}>Instructor</MenuItem>
+              <MenuItem value={"SECRETARY"}>Secretary</MenuItem>
           </Select>
         </FormControl>
-        
+        {userType === "STUDENT" && (
         <FormGroup sx={{ m: 1, marginLeft:'4vw', marginTop: -1 }} >
           <h7>Course</h7>
           <FormControlLabel control={<Checkbox checked={selectedValues.courseSelect.includes("CS299")}
@@ -342,19 +373,7 @@ const handleSubmit = (event) => {
                                       />} label="CS399" />
 
         </FormGroup>
-
-        <CustomInput 
-          value={inputValues.companyGrade} 
-          onChange={(e) => handleInputChange(e, 'companyGrade')}
-          sx ={{border: '1px solid black', marginTop: '0vw', height: '5vh'}}
-        >
-          <StyledInputBase 
-            placeholder="GRADE" 
-            inputProps={{ 'aria-label': 'search' }}
-            sx = {{width: '10vw', height: '5vh'}}
-          />
-        </CustomInput>
-
+      )}
       </div>
 
       <Box sx={{marginLeft: 0}} >
@@ -374,11 +393,11 @@ const handleSubmit = (event) => {
         
         <CustomInput 
           sx ={{border: '1px solid black', marginTop: '1vw'}}
-          value={inputValues.surnameInput} 
-          onChange={(e) => handleInputChange(e, 'surnameInput')}
+          value={inputValues.password} 
+          onChange={(e) => handleInputChange(e, 'password')}
         >
           <StyledInputBase
-            placeholder="SURNAME" 
+            placeholder="PASSWORD" 
             inputProps={{ 'aria-label': 'search' }}
             sx = {{width: '15vw'}}
           />
@@ -399,7 +418,7 @@ const handleSubmit = (event) => {
             sx = {{width: '15vw'}}
           />
         </CustomInput>
-        
+        {userType === "STUDENT" && (
         <CustomInput 
           sx ={{border: '1px solid black', marginTop: '1vw', height: "5vh", width: "12vw"}}
           value={inputValues.idSelect} 
@@ -407,12 +426,13 @@ const handleSubmit = (event) => {
           onChange={(e) => handleInputChange(e, 'idSelect')}
         >
           <StyledInputBase
-            placeholder="ID" 
+            placeholder="STUDENT ID" 
             type = "id"
             inputProps={{ 'aria-label': 'search' }}
             sx = {{width: '15vw'}}
           />
         </CustomInput>
+        )}
         </Box>
       </Box>
       <Button 
@@ -551,13 +571,20 @@ const SecretaryMainPage = () => {
       const handleClick = () => {
         navigate('/MatchUser');
       };
+      const name = localStorage.getItem("name");
 
     return(
-        <div>
-            <Navbar/>
-            <Box sx={ {display: 'flex', flexDirection: "row", height:'8vh', backgroundColor:'darkblue',  alignItems:'center', paddingX: "40px", paddingY: '10px'} }>
-                <Typography  variant="h6" sx={{color: 'white'}} >Hello Begüm Çınar!</Typography>  
-            </Box>
+      <div>
+          <div className="instructorMainPage-header">
+            <div className="instructorMainPage-image-div">
+              <img src={logo} alt="Bilkent University logo" className="instructorMainPage-image" />
+              <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
+            </div>
+            <img className="instructorMainPage-announcement_icon" />
+            <img className="instructorMainPage-nofitication_icon" />
+            <img className="instructorMainPage-logout_icon" />
+          </div>
+          <h3 className="instructorMainPage-header_welcome_message" style = {{margin: "0px"}}>Hello, {name}</h3>
             <Box sx = {{display: "flex", flexDirection: "row", paddingX: "40px", paddingY: "40px", backgroundColor: "#D4E7FF", alignItems: "center", justifyContent: "center"}}>
             <Box sx = {{height: "70vh", width: "60vh", backgroundColor: "#324966",  marginRight: "200px", borderRadius: 4, display: "flex", flexDirection: "column"}}>
                 <Box sx = {{height: "40vh", width: "100%"}}>

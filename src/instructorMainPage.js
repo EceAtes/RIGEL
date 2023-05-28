@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import GoogleDrive from './googledrive';
 
 const InstructorMainPage = () => {
+  const [selectedStudent, setSelectedStudent] = React.useState();
 
   const navigate = useNavigate();
   const [status, setStatus] = React.useState('reportUploaded');
@@ -34,6 +35,10 @@ const InstructorMainPage = () => {
   const OpenFrame = () => {
     console.log("openframe geldi"); 
     navigate('/googledrive');
+  }
+  const goToReportsPage = () => {
+    console.log("reports page gidildi");
+    navigate('/feedbackMode');
   }
   const jsonString = localStorage.getItem('arrayOfStructs');
 
@@ -74,13 +79,10 @@ const InstructorMainPage = () => {
     fetchData();
   }, []);
   
-
-  const status1 = localStorage.getItem('status1');
-  const course_name1 = localStorage.getItem('course_name1');
-  const student_name1 = localStorage.getItem('student_name1');
-  const TA_check1 = localStorage.getItem('TA_check1');
-
-
+  const handleCardClick = (index) => {
+    console.log(`EVENT LISTENER ${index}`);
+    localStorage.setItem("index", index);
+  };
   const statusClass = statusClasses[status];
 
   return (
@@ -121,7 +123,9 @@ const InstructorMainPage = () => {
         <div className="instructorMainPage-student_profile_body">
         {userArray.map((user, index) => (
         <CustomDiv
-          key={index}
+          goToReportsPage={goToReportsPage}
+          handleCardClick={handleCardClick}
+          index={index}
           openFrame={OpenFrame}
           status={user.status}
           course_name={user.course_name}
@@ -139,51 +143,51 @@ const InstructorMainPage = () => {
 // burada öğrencileri bulmamız lazım alo
 
 
-function CustomDiv({ status , openFrame, course_name, student_name, TA_check}) {
+function CustomDiv({ status , openFrame, course_name, student_name, TA_check, handleCardClick, index, goToReportsPage}) {
    
   return(
     <div className={`instructorMainPage-my-div ${status}`}>
       {
         status === 'waitingSummerTrainingEvaluationFromCompany' &&(
-          <>
+          <div onClick={() => handleCardClick(index)}>
           <div className="instructorMainPage-display_inline">
             <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
           </div>
           <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
           <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
           <h4 className="instructorMainPage-student_status">Status: {status}</h4>
-          </>
+          </div>
         )
       }
       {
         status === 'waitingFirstSubmission' && (
-          <>
+          <div onClick={() => handleCardClick(index)}>
           <div className="instructorMainPage-display_inline">
             <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
           </div>
           <h4 className="instructorMainPage-student_course">Course: CS299</h4>
           <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
           <h4 className="instructorMainPage-student_status">Status: {status}</h4>
-          </>
+          </div>
         )
       }
       {
         status === 'waitingInstructorEvaluation' && (
-          <>
+          <div onClick={() => handleCardClick(index)}>
             <button className = "instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
-            <button className="instructorMainPage-evaluate">EVALUATE</button>
+            <button className="instructorMainPage-evaluate" onClick = {goToReportsPage}>EVALUATE</button>
             <div className="instructorMainPage-display_inline">
               <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
             </div>
             <h4 className="instructorMainPage-student_course">Course: CS299</h4>
             <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
-          </>
+          </div>
         )
       }
       {
         status === 'uploadRevision' && (
-          <>
+          <div onClick={() => handleCardClick(index)}>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
             <div className="instructorMainPage-display_inline">
@@ -192,12 +196,12 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check}) {
             <h4 className="instructorMainPage-student_course">Course: CS299</h4>
             <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
-          </>
+          </div>
         )
       }
       {
         status === 'waitingFinalConfirmation' && (
-          <>
+          <div onClick={() => handleCardClick(index)}>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
             <div className="instructorMainPage-display_inline">
@@ -206,12 +210,12 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check}) {
             <h4 className="instructorMainPage-student_course">Course: CS299</h4>
             <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
-          </>
+          </div>
         )
       }
       {
         (status === 'gradeUnsatisfactory' || status === 'gradeSatisfactory') && (
-          <>
+          <div onClick={() => handleCardClick(index)}>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-sign_grade_form"> Criteria Form </button>
             <button className="instructorMainPage-sign_grade_form"> Grade Form </button>
@@ -221,7 +225,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check}) {
             <h4 className="instructorMainPage-student_course">Course: CS299</h4>
             <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
-          </>
+          </div>
         )
       }
     </div>

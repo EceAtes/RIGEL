@@ -14,6 +14,7 @@ import { UploadFile } from "@mui/icons-material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from "axios";
 import { isVisible } from "@testing-library/user-event/dist/utils";
+import logo from "../bilkent.png";
 
 const API_BASE_URL="http://localhost:8080"
 export const fetchUserData = async (userId) => {
@@ -566,14 +567,21 @@ const AdminMainPage = () => {
               console.error(error);
             });
         };
-
+        const name = localStorage.getItem("name");
     return(
-        <div>
-            <Navbar/>
-            <Box sx={ {display: 'flex', flexDirection: "row", height:'8vh', backgroundColor:'darkblue',  alignItems:'center', paddingX: "40px", paddingY: '10px'} }>
-                <Typography  variant="h6" sx={{color: 'white'}} >Hello Begüm Çınar!</Typography>  
-            </Box>
-            <Box sx = {{display: "flex", flexDirection: "row", paddingX: "40px", paddingY: "40px", backgroundColor: "#D4E7FF", alignItems: "center", justifyContent: "center"}}>
+        <div style={{width: "100%", height: "100%", display: "flex", flexDirection: "column"}}>
+          <div className="instructorMainPage-header">
+            <div className="instructorMainPage-image-div">
+              <img src={logo} alt="Bilkent University logo" className="instructorMainPage-image" />
+              <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
+            </div>
+          <img className="instructorMainPage-announcement_icon" />
+          <img className="instructorMainPage-nofitication_icon" />
+          <img className="instructorMainPage-logout_icon" />
+          </div>
+          <h3 className="instructorMainPage-header_welcome_message" style = {{marginTop: "0px",marginBottom: "0px", width: "96%"}}>Hello, {name}</h3>
+          <div style = {{width: "100vw", height: "75vh"}}>
+          <Box sx = {{display: "flex", flexDirection: "row", paddingX: "40px", paddingY: "40px", backgroundColor: "#D4E7FF", alignItems: "center", justifyContent: "center"}}>
             <Box sx = {{height: isVisible ? "50vh" : "30vh", width: "60vh", backgroundColor: "#324966",  marginRight: "200px", borderRadius: 4, display: "flex", flexDirection: "column"}}>
                 <Box sx = {{height: "40vh", width: "100%"}}>
                   <Box sx = {{width: "100%", height: "15%", display: "flex", flexDirection: "row"}}>
@@ -658,6 +666,8 @@ const AdminMainPage = () => {
             </Box>
             <CustomTable/>
             </Box>
+          </div>
+
         </div>
     );
 }
