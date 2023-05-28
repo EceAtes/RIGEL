@@ -13,8 +13,12 @@ import org.springframework.lang.NonNull;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RequestMapping("/courses")
 @RestController
@@ -34,6 +38,13 @@ public class CourseController {
             StudentCourse course = optional.get();
             if(response.getCourseStatus() != null){
                 course.setStatus(response.getCourseStatus());
+                courseRepository.save(course);
+            }
+            if(response.getDeadline() != null){
+                String patternFormat = "dd-MM-yyyy";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patternFormat);
+                LocalDate date = LocalDate.parse(response.getDeadline(), formatter);
+                course.setInternshipReportUploadDeadline(date);
                 courseRepository.save(course);
             }
         }
@@ -76,8 +87,13 @@ public class CourseController {
             if(gradeForms.size() != 0) {
                 lastGradeReportId = gradeForms.get(gradeForms.size()-1).getId();
             }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-            return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), course.getInstructor().getName(), course.getInternshipReportFolderKey(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus());
+            if(course.getInstructor() != null){
+                return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), course.getInstructor().getName(), course.getInternshipReportFolderKey(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus(), course.getInternshipReportUploadDeadline().format(formatter));
+            } else{
+                return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), "", course.getInternshipReportFolderKey(), course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus(), course.getInternshipReportUploadDeadline().format(formatter));
+            }
         }
         return null;
     }
@@ -95,6 +111,23 @@ public class CourseController {
     public String getCourses(Model model){
         model.addAttribute("courses", courseRepository.findAll());
         return "courses/list";
+    }
+
+    @PatchMapping("/updatePartA/{courseID}")
+    public void enterPartA(@PathVariable Long courseID, @RequestParam("companyName") String companyName, @RequestParam int companyScore, @RequestParam boolean isRelated, @RequestParam boolean isSupervisorEngineer){
+        Optional<StudentCourse> optional = courseRepository.findById(courseID);
+        if(optional.isPresent()){
+            StudentCourse course = optional.get();
+            if(companyName != null){
+                course.setCompanyName(companyName);
+            }
+            if(companyScore >= 0 && companyScore<10){
+                course.setCompanyScore(companyScore);
+            }
+            course.setRelated(isRelated);
+            course.setSupervisorEngineer(isSupervisorEngineer);
+            courseRepository.save(course);
+        }
     }
 }
 
@@ -123,8 +156,10 @@ class CourseResponse {
     private Long grade_form_id;
     @JsonProperty("courseStatus")
     private Status courseStatus;
+    @JsonProperty("deadline")
+    private String deadline;
 
-    public CourseResponse(Long id, CourseName name, Long student_id, String instructor_name, String internshipReportFolderID, int iteration_count, Long criteria_report_id, Long grade_form_id, Status courseStatus) {
+    public CourseResponse(Long id, CourseName name, Long student_id, String instructor_name, String internshipReportFolderID, int iteration_count, Long criteria_report_id, Long grade_form_id, Status courseStatus, String deadline) {
         this.id = id;
         this.name = name;
         this.student_id = student_id;
@@ -134,5 +169,6 @@ class CourseResponse {
         this.criteria_report_id = criteria_report_id;
         this.grade_form_id = grade_form_id;
         this.courseStatus = courseStatus;
+        this.deadline = deadline;
     }
 }
