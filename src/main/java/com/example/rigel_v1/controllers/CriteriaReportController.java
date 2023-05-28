@@ -37,7 +37,7 @@ public class CriteriaReportController {
     }
 
     @PatchMapping("/edit/{id}")
-    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestParam("status") ReportStatus status){
+    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestBody ReportStatus status){
         Optional<CriteriaReport> optional = criteriaReportRepository.findById(id);
         if(optional.isPresent()){
             CriteriaReport report = optional.get();

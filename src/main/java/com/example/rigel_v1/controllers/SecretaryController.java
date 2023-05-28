@@ -4,11 +4,11 @@ import com.example.rigel_v1.domain.Secretary;
 import com.example.rigel_v1.domain.Users;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.example.rigel_v1.service.UsersService;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -32,10 +32,10 @@ public class SecretaryController {
     }
 
     @RequestMapping("/rematch/{id}")
-    public void rematch(@PathVariable Long id, @RequestParam("InstructorID") Long InstructorID, @RequestParam("courseID") Long courseID) {
+    public void rematch(@PathVariable Long id, @RequestBody RematchRequest req) {
         Optional<Users> optional = userRepository.findById(id);
         if(optional.isPresent() && optional.get() instanceof Secretary){
-            ((Secretary) optional.get()).rematchStudent(usersService, InstructorID, courseID);
+            ((Secretary) optional.get()).rematchStudent(usersService, req.getInstructorID(), req.getCourseID());
         }
     }
 
@@ -50,4 +50,12 @@ public class SecretaryController {
 
 
     //set deadline
+}
+
+@Getter
+@Setter
+@NoArgsConstructor
+class RematchRequest{
+    private Long InstructorID;
+    private Long courseID;
 }
