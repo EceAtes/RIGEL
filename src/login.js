@@ -76,23 +76,11 @@ const isStudent  = false;
             localStorage.setItem('userId', parsedData.userId);
 
 
-            /*localStorage.setItem('status',parsedData.course_info[0].status);
-            localStorage.setItem('course_name',parsedData.course_info[0].course_name);
-            localStorage.setItem('student_name',parsedData.course_info[0].student_name);
-            localStorage.setItem('TA_check',parsedData.course_info[0].TA_check);
-*/
+
             const jsonString = JSON.stringify(parsedData.course_info);
 
     // Store the JSON string in localStorage
             localStorage.setItem('arrayOfStructs', jsonString);
-
-            /*parsedData.course_info.map((element, index) => {
-              localStorage.setItem(`status_${index}`, element.status);
-              localStorage.setItem(`course_name_${index}`, element.course_name);
-              localStorage.setItem(`student_name_${index}`, element.student_name);
-              localStorage.setItem(`TA_check_${index}`, element.TA_check);
-              return null; // Returning null to satisfy the map function requirements
-            });*/
 
 
             if(parsedData.isVerified === true && parsedData.role === "INSTRUCTOR"){

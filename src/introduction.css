@@ -139,7 +139,15 @@ body{
     animation-name: zoomIn;
 }
 
+
 .introduction-button{
+    width: 20%;
+    text-align: center;
+    line-height: 50px;
+    margin-top: 100px;
+    position: absolute;
+    left: 850px;
+    top: 70%;
     background-color: white;
     color:#105BA5;
     font-size: 30px;
@@ -156,13 +164,13 @@ body{
 
 .introduction-button.login-btn{
     position:absolute;
-    top: 250px;
+    top: 150px;
     right: 30px;
 }
 
 .introduction-button.announcement-btn{
     position:absolute;
-    bottom: 200px;
+    top: 450px;
     right: 30px;
 }
 

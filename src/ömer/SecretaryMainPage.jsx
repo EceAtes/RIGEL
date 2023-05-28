@@ -66,26 +66,6 @@ const FileUpload = () => {
     const payload = {
       fileContent: fileContent,
     };
-  
-    // Send the request to the backend
-    fetch('/your-backend-api-endpoint', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => {
-        // Handle the response from the backend
-        if (response.ok) {
-          // File successfully uploaded
-        } else {
-          // Error occurred during file upload
-        }
-      })
-      .catch((error) => {
-        // Handle network or other errors
-      });
   };
   
   return (
@@ -100,7 +80,7 @@ const FileUpload = () => {
         variant="contained"
         onClick={handleButtonClick}
         startIcon={<CloudUploadIcon />}
-        style={{ marginTop: 15, marginLeft: 370, height: "6vh", borderRadius: 20}} // Add some margin-top to separate the button from the hidden input
+        style={{ marginTop: "15px", margin: "10px 30px 10px 30px", height: "4vh", borderRadius: 20}} // Add some margin-top to separate the button from the hidden input
       >
         Upload File
       </Button>
@@ -127,9 +107,9 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.surname}</TableCell>
+        <TableCell align="right">{row.email}</TableCell>
         <TableCell align="right">{row.role}</TableCell>
-        <TableCell align="right">{row.mail}</TableCell>
+        <TableCell align="right">{row.password}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -139,26 +119,6 @@ function Row(props) {
                 History
               </Typography>
               <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Course</TableCell>
-                    <TableCell>Assigned Instructor</TableCell>
-                    <TableCell align="right">Company Name</TableCell>
-                    <TableCell align="right">Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.course}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.course}
-                      </TableCell>
-                      <TableCell>{historyRow.assignedInstructor}</TableCell>
-                      <TableCell align="right">{historyRow.companyName}</TableCell>
-                      <TableCell align="right">{historyRow.status}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
               </Table>
             </Box>
           </Collapse>
@@ -170,19 +130,11 @@ function Row(props) {
 
   function createData() {
 
-      const username = localStorage.getItem("email");
-      const password = localStorage.getItem("password");
-      
       console.log("Secretary main page");
       const url = "http://localhost:8080/users";
-      const myObject = {
-      email: username,
-      password: password,
-      };
-          
+
       fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(myObject),
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -197,22 +149,23 @@ function Row(props) {
         }
       })
       .then(parsedData => {
-        console.log(parsedData);
-        const name = parsedData.name;
-        const email = parsedData.email; 
-        const roles = parsedData.roles; 
-        const password = parsedData.password;  
-          return { name,email, roles, password };
+                
+        parsedData.forEach(struct => {
+          rows.push(struct);
+        });
+        console.log("rowsa gelindi");
+        console.log(rows);
       })  
       .catch(error => {
+        console.log("hello");
         console.log("ERROR!!!");
       
         // Handle any errors that occurred during the request
       });
   }
-
+ 
   const rows = [
-    createData()
+
   ];
 
   const PlusButton = ({onClick}) => {
@@ -220,7 +173,7 @@ function Row(props) {
       <IconButton onClick={onClick} color="primary" aria-label="add" style = {{color: "black", marginLeft: 10, marginTop: 10, height: 50, width: 50}}>
         <AddIcon />
       </IconButton>
-    );
+    ); 
   };
 
   const BasicModal = () => {
@@ -229,7 +182,7 @@ function Row(props) {
     const handleUserTypeChange = (event) => {
       setUserType(event.target.value); // Update user type when selection changes
     };
-
+    
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -243,7 +196,7 @@ function Row(props) {
       
     });
 
-    const handleCheckboxChange = (event, name) => {
+    const handleCheckboxChange = (event, userName) => {
       const isChecked = event.target.checked;
       const courseValue = event.target.value;
       setSelectedValues(prevValues => {
@@ -251,24 +204,24 @@ function Row(props) {
           // Add the selected course to the array
           return {
             ...prevValues,
-            [name]: [...prevValues[name], courseValue],
+            [userName]: [...prevValues[userName], courseValue],
           };
         } else {
           // Remove the deselected course from the array
           return {
             ...prevValues,
-            [name]: prevValues[name].filter(course => course !== courseValue),
+            [userName]: prevValues[userName].filter(course => course !== courseValue),
           };
         }
       });
     };
     // ...
   
-    const handleSelectChange = (event, name) => {
+    const handleSelectChange = (event, userName) => {
       const selectedValue = event.target.value;
       setSelectedValues(prevValues => ({
         ...prevValues,
-        [name]: selectedValue,
+        [userName]: selectedValue,
         idSelect: selectedValue
       }));
     };
@@ -472,16 +425,16 @@ const CustomTable = () => {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Surname</TableCell>
-            <TableCell align="right">Role</TableCell>
-            <TableCell align="right">Mail</TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align = "center">Name</TableCell>
+            <TableCell align="center">Surname</TableCell>
+            <TableCell align="center">Role</TableCell>
+            <TableCell align="center">Mail</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row row={row} />
           ))}
         </TableBody>
       </Table>
@@ -559,6 +512,11 @@ const SecretaryMainPage = () => {
     };
   
     useEffect(() => {
+      // Call the update function when the component mounts
+      createData();
+    }, []); 
+    
+    useEffect(() => {
       document.addEventListener('mousedown', handleOutsideClick);
   
       return () => {
@@ -569,13 +527,35 @@ const SecretaryMainPage = () => {
       const navigate = useNavigate();
     
       const handleClick = () => {
-        navigate('/MatchUser');
+        const url = "http://localhost:8080/start-courses";
+        const secretaryId = localStorage.getItem("userId");
+        console.log(secretaryId);
+
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(secretaryId),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log("OK");
+            return response.json(); // Parse the JSON if the response is successful (status code 200)
+          } else {
+            console.log("BAD");
+            throw new Error('Request failed with status code ' + response.status);
+          }
+        })
+        .then(parsedData => {
+          console.log(parsedData);
+        })
       };
       const name = localStorage.getItem("name");
 
     return(
-      <div>
-          <div className="instructorMainPage-header">
+      <div className = "secretaryMainPage-all-items" style = {{width: "100vw"}}>
+          <div className="instructorMainPage-header" style = {{width: "100vw"}}>
             <div className="instructorMainPage-image-div">
               <img src={logo} alt="Bilkent University logo" className="instructorMainPage-image" />
               <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
@@ -584,9 +564,16 @@ const SecretaryMainPage = () => {
             <img className="instructorMainPage-nofitication_icon" />
             <img className="instructorMainPage-logout_icon" />
           </div>
-          <h3 className="instructorMainPage-header_welcome_message" style = {{margin: "0px"}}>Hello, {name}</h3>
+          <h3 className="instructorMainPage-header_welcome_message" style = {{width: "100vw",
+    margin: "0px",
+    textAlign: "center",
+    padding: "15px 0px 15px 0px",
+    backgroundColor: "#6CCFF6",
+    color: "#4D5057"}}>Hello, {name}</h3>
+          <div className = "items-container" style = {{width: "100vw"}}>  
             <Box sx = {{display: "flex", flexDirection: "row", paddingX: "40px", paddingY: "40px", backgroundColor: "#D4E7FF", alignItems: "center", justifyContent: "center"}}>
             <Box sx = {{height: "70vh", width: "60vh", backgroundColor: "#324966",  marginRight: "200px", borderRadius: 4, display: "flex", flexDirection: "column"}}>
+              <div className = "container-size">  
                 <Box sx = {{height: "40vh", width: "100%"}}>
                   <Box sx = {{width: "100%", height: "20%", display: "flex", flexDirection: "row"}}>
                     <h3 style = {{color: "white", margin: "3vh"}}>Semester Info</h3>
@@ -663,15 +650,17 @@ const SecretaryMainPage = () => {
                     </div>
                 </Box>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
-                <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>Matchings</Button>
+                <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>START SEMESTER</Button>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
                 <Button sx = {{color: "white" , width: "100%"}}>Semester Statistics</Button>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
                 <Button sx = {{color: "white" , width: "100%"}}>All Reports</Button>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
+              </div>
             </Box>
             <CustomTable/>
             </Box>
+          </div>
         </div>
     );
 }
