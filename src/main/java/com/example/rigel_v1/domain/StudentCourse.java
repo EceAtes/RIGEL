@@ -1,6 +1,7 @@
 package com.example.rigel_v1.domain;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -59,6 +60,8 @@ public class StudentCourse {
     private boolean isRelated;
     private boolean isSupervisorEngineer;
 
+    private LocalDate internshipReportUploadDeadline;
+
     @JsonProperty("status")
     private Status status = Status.waitingSummerTrainingEvaluationFromCompany;
 
@@ -72,6 +75,7 @@ public class StudentCourse {
         //criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
         this.status = Status.waitingSummerTrainingEvaluationFromCompany;
+        this.internshipReportUploadDeadline = LocalDate.now().plusDays(14);
     }
 
     public StudentCourse(Student courseTaker, CourseName courseName, Instructor instructor) {
