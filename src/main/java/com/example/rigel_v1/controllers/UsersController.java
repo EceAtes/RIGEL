@@ -20,6 +20,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class UsersController {
         this.gradeFormController = gradeFormController;
     }
 
+    //adds a course for a specified instructor //mostly for manue testing
     @RequestMapping("/add_course")
     public void addCourseToInstructor(@NonNull @RequestBody addCourseRequest req) {
         System.out.println(req.getCourseID());
@@ -57,13 +59,15 @@ public class UsersController {
             System.out.println(instructor.getCourses());
             instructor.addCourse(course);
             System.out.println(instructor.getCourses());
-            userRepository.save(instructor);//hmmm
+            userRepository.save(instructor);
             System.out.println(instructor);
         }
     }
 
+    //this function checks credetials of the users for login. It returns the information about the the user (includes course information for students and instructors)
     @RequestMapping("/login")
     public LoginResponse findUser(@NonNull @RequestBody LoginRequest req) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         for (int i = 1; i < userRepository.count() + 1; i++) {
             Optional<Users> optional = userRepository.findById(Long.valueOf(i));
             if (optional.isPresent()) {
@@ -76,15 +80,16 @@ public class UsersController {
                             StudentCourse currCourse = instructor.getCourses().get(j);
                             //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
                             CourseResponseObject obj;
+                            //returns the course's last internship report's ID if it exists, else returns it as 0.
                             if(currCourse.getInternshipReports().size() != 0){
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
 
                             } else{
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
                             }
                             response.add(obj);
                         }
-                        return new InstructorLoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
+                        return new LoginResponseAdditionalInfo(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
                     }
                     else if (user.getRole() == Role.STUDENT) {
                         List<CourseResponseObject> response = new ArrayList<>();
@@ -93,15 +98,16 @@ public class UsersController {
                             StudentCourse currCourse = student.getCourses().get(j);
                             //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
                             CourseResponseObject obj;
+                            //returns the course's last internship report's ID if it exists, else returns it as 0.
                             if(currCourse.getInternshipReports().size() != 0){
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
 
                             } else{
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L,  currCourse.getInternshipReportUploadDeadline().format(formatter));
                             }
                             response.add(obj);
                         }
-                        return new InstructorLoginResponse(true, user.getRole(), student.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
+                        return new LoginResponseAdditionalInfo(true, user.getRole(), student.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
                     }
                     else if(user.getRole() == Role.ADMIN){
                         return new LoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), 0L, user.getId());
@@ -115,6 +121,7 @@ public class UsersController {
         return new LoginResponse(false, Role.NOT_REGISTERED);
     }
 
+    //adds a new user from JSON file, return information about the user (includes course information for students and instructors)
     @PostMapping
     public void addUser(@NonNull @RequestBody UserRequest request) {
         Optional<Department> optional = departmentRepository.findById(Long.valueOf(request.getDepartment_id()));
@@ -128,6 +135,7 @@ public class UsersController {
                         StudentCourse studentCourse = new StudentCourse(student, request.getCourses()[i]);
                         student.getCourses().add(studentCourse);
                         courseRepository.save(studentCourse);
+                        //creates criteriaForm and GradeForm of the each course the student takes (they don't include any information at this stage)
                         CriteriaReport cReport = criteriaReportController.createCriteriaReport();
                         GradeForm gForm = gradeFormController.createGradeForm();
                         studentCourse.setCriteriaReport(cReport);
@@ -184,6 +192,7 @@ public class UsersController {
         }
     }
 
+    /*//changes the given users department with the given department
     @PatchMapping("/department/{id}")
     public ResponseEntity<Users> updateUserDepartment(@PathVariable Long id, @RequestBody Map<String, Object> patchRequestBody) {
         Optional<Users> optional = userRepository.findById(id);
@@ -203,8 +212,9 @@ public class UsersController {
         Users updatedUser = userRepository.save(user);
 
         return ResponseEntity.ok(updatedUser);
-    }
+    }*/
 
+    //updates the user information
     //this doesn't change the department
     @PatchMapping("/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody UserRequest request) {
@@ -231,9 +241,12 @@ public class UsersController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    //for instructors and students
+    //returns user information and course information
     @GetMapping("/get/{id}")
-    public GetUserRequest getInstructor(@PathVariable Long id) {
+    public GetUserRequest getInstructorOrStudent(@PathVariable Long id) {
         Optional<Users> optional = userRepository.findById(id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         if (optional.isPresent()) {
             Users user = optional.get();
             Instructor instructor;
@@ -247,11 +260,12 @@ public class UsersController {
                     StudentCourse currCourse = instructor.getCourses().get(i);
                     //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
                     CourseResponseObject obj;
+                    //returns the course's last internship report's ID if it exists, else returns it as 0.
                     if(currCourse.getInternshipReports().size() != 0){
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
 
                     } else{
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
                     }
                     response.add(obj);
                 }
@@ -263,11 +277,12 @@ public class UsersController {
                     StudentCourse currCourse = student.getCourses().get(i);
                     //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
                     CourseResponseObject obj;
+                    //returns the course's last internship report's ID if it exists, else returns it as 0.
                     if(currCourse.getInternshipReports().size() != 0){
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
 
                     } else{
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
                     }
                     response.add(obj);
                 }
@@ -292,6 +307,8 @@ public class UsersController {
         return null;
     }*/
 
+    //for all users
+    //returns user information
     @GetMapping("/{id}")
     public Optional<Users> getUser(@PathVariable Long id) {
         return userRepository.findById(id);
@@ -305,6 +322,7 @@ public class UsersController {
         return list;
     }
 
+    //returns all users' information
     @RequestMapping("/users")
     public String getUsers(Model model) {
         model.addAttribute("students", userRepository.findAll());
@@ -313,6 +331,7 @@ public class UsersController {
 
 }
 
+//object to be send into findUser() (login function)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -323,6 +342,7 @@ class LoginRequest {
     private String password;
 }
 
+//object that's returned from findUser() (login function) for secretary and admin users
 @Getter
 @Setter
 @NoArgsConstructor
@@ -354,22 +374,23 @@ class LoginResponse {
     }
 }
 
+//object that's returned from findUser() (login function) for instructor and student users
 @Getter
 @Setter
 @NoArgsConstructor
-class InstructorLoginResponse extends LoginResponse {
+class LoginResponseAdditionalInfo extends LoginResponse {
     @JsonProperty("course_info")
     private List<CourseResponseObject> courses;
 
 
-    public InstructorLoginResponse(boolean isVerified, Role role, String name, String email, boolean notifToMail, Long department_id, Long userId, List<CourseResponseObject> courses) {
+    public LoginResponseAdditionalInfo(boolean isVerified, Role role, String name, String email, boolean notifToMail, Long department_id, Long userId, List<CourseResponseObject> courses) {
         super(isVerified, role, name, email, notifToMail, department_id, userId);
         this.courses = courses;
     }
 }
 
 
-
+//object to be send to addCourseToInstructor() (fucnction that adds course to a specified instructor)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -380,6 +401,7 @@ class addCourseRequest {
     private Long courseID;
 }
 
+//object to be send to addUser() (fucntion that creates a new user [for students also creates the courses]) and updateUser (function that changes user data)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -398,6 +420,8 @@ class UserRequest {
 
 }
 
+//this is for the special GET mapping funtion getInstructorOrStudent() that returns the general information and additional course information for student
+// and instructor users
 class GetUserRequest {
     @JsonProperty("course_info")
     private List<CourseResponseObject> courseStatus;
@@ -415,6 +439,7 @@ class GetUserRequest {
 
 }
 
+//this object represents the additional course information to be send when a student or an instructor logs in or a GET request to /get/{id} is made
 class CourseResponseObject{
     @JsonProperty("course_id")
     private Long id;
@@ -434,8 +459,10 @@ class CourseResponseObject{
     private Long gradeFormID;
     @JsonProperty("lastInternshipReportID")
     private Long lastInternshipReportID;
+    @JsonProperty("deadline")
+    private String deadline;
 
-    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName, String folder_id, Long criteriaReportID, Long gradeFormID, Long lastInternshipReportID) {
+    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName, String folder_id, Long criteriaReportID, Long gradeFormID, Long lastInternshipReportID, String deadline) {
         this.id = id;
         this.status = status;
         this.name = name;
@@ -445,5 +472,6 @@ class CourseResponseObject{
         this.criteriaReportID = criteriaReportID;
         this.gradeFormID = gradeFormID;
         this.lastInternshipReportID = lastInternshipReportID;
+        this.deadline = deadline;
     }
 }
