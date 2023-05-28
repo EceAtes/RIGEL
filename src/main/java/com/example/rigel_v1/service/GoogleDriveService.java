@@ -55,10 +55,10 @@ public class GoogleDriveService {
         /**
          * Upload a file to Google Drive and store the file link in the user's database.
          *
-         * @param file      The file to upload
-         * @param folderId  The ID of the folder to upload the file into
-         * @param studentId The ID of the user performing the action
-         * @param description
+         * @param file                  The file to upload
+         * @param folderId              The ID of the folder to upload the file into
+         * @param studentCourseId       The ID of the student course which uploaded internship report belongs to
+         * @param description           The description of the internship report which is uploaded
          * @return The ID of the uploaded file
          * @throws IOException when an error occurs in the API request
          *
@@ -92,7 +92,15 @@ public class GoogleDriveService {
                 return fileId;
         }
 
-
+        /**
+         * Upload the auto generated file to student course object.
+         *
+         * @param file                  The auto generated file to upload
+         * @param studentCourseId       The student course which generated report belongs to
+         * @return                      The key of the uploaded file
+         * @throws IOException when an error occurs in the API request
+         *
+         */
         public String uploadGeneratedFile(byte[] fileBytes, StudentCourse studentCourse) throws IOException {
                 File driveFile = new File();
                 driveFile.setName(studentCourse.getCourseName().name() + " - " + studentCourse.getCourseTaker().getId());
@@ -107,11 +115,12 @@ public class GoogleDriveService {
                 String fileId = uploadedFile.getId();
 
                 // Update the user's database entry with the file link
-                //StudentCourse studentCourse = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Student Course not found"));
                 String reportLink = ("https://drive.google.com/uc?id=" + fileId);
+                System.out.println("Uploaded report link: " + reportLink);
 
-                return reportLink;
-            }
+                return fileId;
+        }
+
 
 
         /**
@@ -194,8 +203,14 @@ public class GoogleDriveService {
 
 
         /**
+         * Create a student course subfolder for each student, this folder will include iterations of either internship or grade forms. 
+         * Folder name: COURSE NAME + STUDENT ID
+         *
+         * @param parentFolderKey               Either an Internship Report Folder or Grade Form Folder of the department
+         * @param isInternshipReportFolderKey   Indicates whether it is an Internship Report Folder or Grade Form Folder
+         * @throws IOException when an error occurs in the API request
          */
-        public String createStudentCourseFolders(String parentFolderKey, boolean isInternshipReportFolderKey) throws IOException {
+        public void createStudentCourseFolders(String parentFolderKey, boolean isInternshipReportFolderKey) throws IOException {
                 Iterable<StudentCourse> studentCourses = courseRepository.findAll();
                 for (StudentCourse studentCourse : studentCourses) {
                         File studentCourseFolder = new File();
@@ -222,6 +237,5 @@ public class GoogleDriveService {
 
                         courseRepository.save(studentCourse);
                 }
-                return "done";
         }
 }

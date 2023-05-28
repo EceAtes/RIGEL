@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Optional;
 
 import lombok.*;
@@ -41,6 +40,17 @@ public class GoogleDriveController {
         this.usersService = usersService;
     }
 
+    
+    /**
+     * Upload an internship report, only pdf files are allowed
+     * 
+     * @param folderId
+     * @param file
+     * @param courseId
+     * @param description 
+     * @throws IOException when an error occurs in the API request
+     * 
+     */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadInternshipReport(
             @RequestParam("folderId") String folderId,
@@ -67,6 +77,18 @@ public class GoogleDriveController {
         }
     }
 
+    /**
+     * Create a semester, set semester dates and create parent folders
+     * 
+     * @param folderName        Semester name
+     * @param userId            Admin id
+     * @param firstDay
+     * @param lastDay 
+     * @param addDropDeadline
+     * @param withdrawDeadline
+     * @throws IOException when an error occurs in the API request
+     * 
+     */
     @PostMapping("/create-semester")
     public FolderCreationResponse createSemester(@RequestParam("folderName") String folderName, @RequestParam("userId") Long userId,
                                                  @RequestParam("firstDay") String firstDay, @RequestParam("lastDay") String lastDay,
@@ -125,36 +147,36 @@ public class GoogleDriveController {
                             if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
                                 if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
                                     ((Secretary) user).automatch(usersService);
-                                    String folderKey_internship = googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(0), true); //isInternshipReportFolderKey
-                                    String folderKey_gradeform = googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(1), false);                                     
+                                    googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(0), true);
+                                    googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(1), false);                                     
                                     System.out.println("Student folders created successfully.");
-                                    return new StudentFolderCreationResponse(folderKey_internship, false, true, true, true, true);                             
+                                    return new StudentFolderCreationResponse( false, true, true, true, true);                             
                                 }
                                 else{
-                                    return new StudentFolderCreationResponse("", false, false, true, true, false);                             
+                                    return new StudentFolderCreationResponse(false, false, true, true, false);                             
                                 }
                             }
                             else{
-                                return new StudentFolderCreationResponse("", false, false, true, false, true);                             
+                                return new StudentFolderCreationResponse(false, false, true, false, true);                             
                             }
                         }
                         else{
-                            return new StudentFolderCreationResponse("", false, false, false, true, true);                             
+                            return new StudentFolderCreationResponse( false, false, false, true, true);                             
                         }
                     }
                     else{
-                        return new StudentFolderCreationResponse("", false, false, false, true, true);                             
+                        return new StudentFolderCreationResponse(false, false, false, true, true);                             
                     }
                 }
                 else{
-                    return new StudentFolderCreationResponse("4", true, false, false, true, true);                             
+                    return new StudentFolderCreationResponse( true, false, false, true, true);                             
                 }
             }
             else{
-                return new StudentFolderCreationResponse("5", true, false, false, true, true);                             
+                return new StudentFolderCreationResponse( true, false, false, true, true);                             
             }
         }catch (IOException e) {
-            return new StudentFolderCreationResponse("6", false, false, false, false, false);                             
+            return new StudentFolderCreationResponse( false, false, false, false, false);                             
         }
     }
 
@@ -241,10 +263,9 @@ class StudentFolderCreationResponse{
     @JsonProperty("atLeastOneStudentExist")
     private boolean atLeastOneStudentExist;
 
-    public StudentFolderCreationResponse(String folderKey, boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist ){
+    public StudentFolderCreationResponse( boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist ){
         this.accessDenied = accessDenied;
         this.isCreated = isCreated;
-        this.folderKey = folderKey;
         this.addDropPeriodFinished = addDropPeriodFinished;
         this.atLeastOneInstructorExist = atLeastOneInstructorExist;
         this.atLeastOneStudentExist = atLeastOneStudentExist;
