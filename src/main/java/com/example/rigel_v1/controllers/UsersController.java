@@ -75,7 +75,13 @@ public class UsersController {
                         for(int j = 0; j < instructor.getCourses().size(); j++){
                             StudentCourse currCourse = instructor.getCourses().get(j);
                             //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
-                            CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId());
+                            CourseResponseObject obj;
+                            if(currCourse.getInternshipReports().size() != 0){
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+
+                            } else{
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                            }
                             response.add(obj);
                         }
                         return new InstructorLoginResponse(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
@@ -86,7 +92,13 @@ public class UsersController {
                         for(int j = 0; j < student.getCourses().size(); j++){
                             StudentCourse currCourse = student.getCourses().get(j);
                             //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
-                            CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId());
+                            CourseResponseObject obj;
+                            if(currCourse.getInternshipReports().size() != 0){
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+
+                            } else{
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                            }
                             response.add(obj);
                         }
                         return new InstructorLoginResponse(true, user.getRole(), student.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
@@ -234,7 +246,13 @@ public class UsersController {
                 for(int i = 0; i < instructor.getCourses().size(); i++){
                     StudentCourse currCourse = instructor.getCourses().get(i);
                     //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
-                    CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId());
+                    CourseResponseObject obj;
+                    if(currCourse.getInternshipReports().size() != 0){
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+
+                    } else{
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                    }
                     response.add(obj);
                 }
                 return new GetUserRequest(response, instructor);
@@ -244,7 +262,13 @@ public class UsersController {
                 for(int i = 0; i < student.getCourses().size(); i++){
                     StudentCourse currCourse = student.getCourses().get(i);
                     //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
-                    CourseResponseObject obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId());
+                    CourseResponseObject obj;
+                    if(currCourse.getInternshipReports().size() != 0){
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId());
+
+                    } else{
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L);
+                    }
                     response.add(obj);
                 }
                 return new GetUserRequest(response, student);
@@ -408,8 +432,10 @@ class CourseResponseObject{
     private Long criteriaReportID;
     @JsonProperty("gradeFormID")
     private Long gradeFormID;
+    @JsonProperty("lastInternshipReportID")
+    private Long lastInternshipReportID;
 
-    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName, String folder_id, Long criteriaReportID, Long gradeFormID) {
+    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName, String folder_id, Long criteriaReportID, Long gradeFormID, Long lastInternshipReportID) {
         this.id = id;
         this.status = status;
         this.name = name;
@@ -418,5 +444,6 @@ class CourseResponseObject{
         this.folder_id = folder_id;
         this.criteriaReportID = criteriaReportID;
         this.gradeFormID = gradeFormID;
+        this.lastInternshipReportID = lastInternshipReportID;
     }
 }

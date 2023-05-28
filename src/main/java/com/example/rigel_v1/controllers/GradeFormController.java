@@ -49,5 +49,3 @@ public class GradeFormController {
 
 }
 
-
-//course içine internship report id koy
