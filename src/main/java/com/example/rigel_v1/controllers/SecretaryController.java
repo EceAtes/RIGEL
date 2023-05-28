@@ -39,7 +39,7 @@ public class SecretaryController {
         }
     }
 
-    @RequestMapping("/CreateFromFile/{id}")
+    @RequestMapping("/createFromFile/{id}")
     public void rematch(@PathVariable Long id) {
         Optional<Users> optional = userRepository.findById(id);
         if(optional.isPresent() && optional.get() instanceof Secretary){
