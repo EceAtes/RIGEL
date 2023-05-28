@@ -3,6 +3,9 @@ package com.example.rigel_v1.controllers;
 import com.example.rigel_v1.domain.CriteriaReport;
 import com.example.rigel_v1.domain.GradeForm;
 import com.example.rigel_v1.repositories.GradeFormRepository;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,14 +27,14 @@ public class GradeFormController {
     }
 
     @PatchMapping("/{id}")
-    public GradeForm updateGradeForm(@PathVariable Long id, @RequestParam String generatedFormKey, @RequestParam boolean wilBbeRevised){
+    public GradeForm updateGradeForm(@PathVariable Long id, @RequestBody FormUpdate req){
         Optional<GradeForm> optional = gradeFormRepository.findById(id);
         if(optional.isPresent()){
             GradeForm form = optional.get();
-            if(generatedFormKey != null && generatedFormKey != ""){
-                form.setGeneratedFormKey(generatedFormKey);
+            if(req.getGeneratedFormKey() != null && req.getGeneratedFormKey() != ""){
+                form.setGeneratedFormKey(req.getGeneratedFormKey());
             }
-            form.setWillBeRevised(wilBbeRevised);
+            form.setWillBeRevised(req.isWillBeRevised());
             return form;
         }
         return null;
@@ -49,3 +52,9 @@ public class GradeFormController {
 
 }
 
+@Getter @Setter
+@NoArgsConstructor
+class FormUpdate{
+    private String generatedFormKey;
+    private boolean willBeRevised;
+}

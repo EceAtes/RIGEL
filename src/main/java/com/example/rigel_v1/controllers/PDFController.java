@@ -35,12 +35,8 @@ public class PDFController {
     public void generateSummerTrainingGradeForm(@RequestParam("courseId") Long courseId) throws IOException, DocumentException {
             StudentCourse studentCourse = courseRepository.findById(courseId)
                                          .orElseThrow(() -> new RuntimeException("Student course not found"));
-            if(true) {  // company grade geldi
-                if(true){ // e signature var
-                    System.out.println(googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse));
-                    System.out.println("SUCCESS");
-                    //studentCourse.getLastGradeReport().
-                }
-            }
+            String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
+            System.out.println("SUCCESS");
+            studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
     }
 }

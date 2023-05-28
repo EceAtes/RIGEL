@@ -114,8 +114,7 @@ public class GoogleDriveController {
     }
 
     @PostMapping("/start-courses")
-    public StudentFolderCreationResponse createStudentFolder(@RequestParam("userId") String id) {
-        Long userId = Long.valueOf(Integer.parseInt(id));
+    public StudentFolderCreationResponse createStudentFolder(@RequestParam("userId") Long userId) {
         try {
             Optional<Users> userOptional = userRepository.findById(userId); 
             if (userOptional.isPresent()) {

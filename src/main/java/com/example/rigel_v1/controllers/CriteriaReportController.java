@@ -5,6 +5,7 @@ import com.example.rigel_v1.domain.Question;
 import com.example.rigel_v1.domain.StudentCourse;
 import com.example.rigel_v1.domain.Users;
 import com.example.rigel_v1.domain.enums.ReportStatus;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.CriteriaReportRepository;
 import com.example.rigel_v1.repositories.QuestionRepository;
@@ -37,11 +38,11 @@ public class CriteriaReportController {
     }
 
     @PatchMapping("/edit/{id}")
-    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestParam("status") ReportStatus status){
+    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestBody StatusUpdate req){
         Optional<CriteriaReport> optional = criteriaReportRepository.findById(id);
         if(optional.isPresent()){
             CriteriaReport report = optional.get();
-            report.setReportStatus(status);
+            report.setReportStatus(req.getStatus());
             criteriaReportRepository.save(report);
             System.out.println(report.getReportStatus());
 
@@ -128,6 +129,13 @@ public class CriteriaReportController {
 
 }
 
+@Getter
+@Setter
+@NoArgsConstructor
+class StatusUpdate{
+    @JsonProperty("status")
+    private ReportStatus status;
+}
 
 @Getter
 @Setter
@@ -137,6 +145,5 @@ class QuestionUpdate{
     private String answer;
     @JsonProperty("score")
     private int score;
-
 }
 

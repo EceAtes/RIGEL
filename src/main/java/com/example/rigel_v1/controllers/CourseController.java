@@ -6,6 +6,7 @@ import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.websocket.server.ServerEndpoint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -114,21 +115,33 @@ public class CourseController {
     }
 
     @PatchMapping("/updatePartA/{courseID}")
-    public void enterPartA(@PathVariable Long courseID, @RequestParam("companyName") String companyName, @RequestParam int companyScore, @RequestParam boolean isRelated, @RequestParam boolean isSupervisorEngineer){
+    public void enterPartA(@PathVariable Long courseID, @RequestBody updateRequest req){
         Optional<StudentCourse> optional = courseRepository.findById(courseID);
         if(optional.isPresent()){
             StudentCourse course = optional.get();
-            if(companyName != null){
-                course.setCompanyName(companyName);
+            if(req.getCompanyName() != null){
+                course.setCompanyName(req.getCompanyName());
             }
-            if(companyScore >= 0 && companyScore<10){
-                course.setCompanyScore(companyScore);
+            if(req.getCompanyScore() >= 0 && req.getCompanyScore()<10){
+                course.setCompanyScore(req.getCompanyScore());
             }
-            course.setRelated(isRelated);
-            course.setSupervisorEngineer(isSupervisorEngineer);
+            course.setRelated(req.isRelated());
+            course.setSupervisorEngineer(req.isSupervisorEngineer());
             courseRepository.save(course);
         }
     }
+}
+
+@Getter @Setter
+@NoArgsConstructor
+class updateRequest{
+    private String companyName;
+    private int companyScore;
+    @JsonProperty("isRelated")
+    private boolean isRelated;
+    @JsonProperty("isSupervisorEngineer")
+    private boolean isSupervisorEngineer;
+
 }
 
 @Getter @Setter
