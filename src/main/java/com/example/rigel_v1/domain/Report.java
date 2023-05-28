@@ -24,5 +24,4 @@ public class Report {
     public Report() {
         this.reportStatus = ReportStatus.saved;
     }
-
 }

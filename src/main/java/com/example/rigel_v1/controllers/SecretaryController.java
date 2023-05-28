@@ -33,6 +33,7 @@ public class SecretaryController {
 
     @RequestMapping("/rematch/{id}")
     public void rematch(@PathVariable Long id, @RequestBody RematchRequest req) {
+
         Optional<Users> optional = userRepository.findById(id);
         if(optional.isPresent() && optional.get() instanceof Secretary){
             ((Secretary) optional.get()).rematchStudent(usersService, req.getInstructorID(), req.getCourseID());
@@ -48,8 +49,6 @@ public class SecretaryController {
     }
 
 
-
-    //set deadline
 }
 
 @Getter

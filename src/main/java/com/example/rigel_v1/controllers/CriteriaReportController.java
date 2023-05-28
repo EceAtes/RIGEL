@@ -5,6 +5,7 @@ import com.example.rigel_v1.domain.Question;
 import com.example.rigel_v1.domain.StudentCourse;
 import com.example.rigel_v1.domain.Users;
 import com.example.rigel_v1.domain.enums.ReportStatus;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.CriteriaReportRepository;
 import com.example.rigel_v1.repositories.QuestionRepository;
@@ -37,6 +38,7 @@ public class CriteriaReportController {
     }
 
     @PatchMapping("/edit/{id}")
+
     public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestBody ReportStatus status){
         Optional<CriteriaReport> optional = criteriaReportRepository.findById(id);
         if(optional.isPresent()){
@@ -93,7 +95,9 @@ public class CriteriaReportController {
                     "or strategies.", "", -1);
             Question q6 = new Question("(6) Able to apply new knowledge as\n" +
                     "needed.", "", -1);
-            Question q7 = new Question("Able to prepare reports with high\n" +
+            Question q7 = new Question("(7) Has awareness about diversity,\n" +
+                    "equity, and inclusion.", "", -1);
+            Question q8 = new Question("Able to prepare reports with high\n" +
                     "standards in terms of content,\n" +
                     "organization, style and language\n" +
                     "(the Summer Training report itself is\n" +
@@ -105,6 +109,7 @@ public class CriteriaReportController {
             questionRepository.save(q5);
             questionRepository.save(q6);
             questionRepository.save(q7);
+            questionRepository.save(q8);
             ArrayList<Question> qs =  new ArrayList<>();
             qs.add(q1);
             qs.add(q2);
@@ -113,14 +118,17 @@ public class CriteriaReportController {
             qs.add(q5);
             qs.add(q6);
             qs.add(q7);
+            qs.add(q8);
             CriteriaReport criteriaReport = new CriteriaReport(qs);
             criteriaReportRepository.save(criteriaReport);
+
             return criteriaReport;
 
-    }
+        }
+
+
 
 }
-
 
 @Getter
 @Setter
@@ -130,6 +138,5 @@ class QuestionUpdate{
     private String answer;
     @JsonProperty("score")
     private int score;
-
 }
 

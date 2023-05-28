@@ -6,6 +6,7 @@ import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.websocket.server.ServerEndpoint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
