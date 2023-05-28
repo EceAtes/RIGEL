@@ -96,6 +96,23 @@ public class CourseController {
         model.addAttribute("courses", courseRepository.findAll());
         return "courses/list";
     }
+
+    @PatchMapping("/updatePartA/{courseID}")
+    public void enterPartA(@PathVariable Long courseID, @RequestParam("companyName") String companyName, @RequestParam int companyScore, @RequestParam boolean isRelated, @RequestParam boolean isSupervisorEngineer){
+        Optional<StudentCourse> optional = courseRepository.findById(courseID);
+        if(optional.isPresent()){
+            StudentCourse course = optional.get();
+            if(companyName != null){
+                course.setCompanyName(companyName);
+            }
+            if(companyScore >= 0 && companyScore<10){
+                course.setCompanyScore(companyScore);
+            }
+            course.setRelated(isRelated);
+            course.setSupervisorEngineer(isSupervisorEngineer);
+            courseRepository.save(course);
+        }
+    }
 }
 
 @Getter @Setter
