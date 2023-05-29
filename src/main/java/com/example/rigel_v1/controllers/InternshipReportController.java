@@ -13,7 +13,6 @@ import lombok.Setter;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -34,14 +33,15 @@ public class InternshipReportController {
     }
 
     @PostMapping
-    public void addInternshipReport(@NonNull @RequestBody InternReportRequest req){
+    public void addInternshipReport(@NonNull @RequestBody InternReportRequest req) {
         Optional<Users> optional = userRepository.findById(Long.valueOf(req.getOwnerStudent_id()));
         Optional<StudentCourse> optional1 = courseRepository.findById(Long.valueOf(req.getStudent_course_id()));
         if (optional.isPresent() && optional1.isPresent()) {
             Users student = optional.get();
             StudentCourse course = optional1.get();
-            if(student instanceof Student){ 
-                InternshipReport report = new InternshipReport((Student) student, " ", req.getText()); // REPORT LINK_?????????????????????????
+            if (student instanceof Student) {
+                InternshipReport report = new InternshipReport((Student) student, " ", req.getText()); // REPORT
+                                                                                                       // LINK_?????????????????????????
                 this.internshipReportRepository.save(report);
                 this.courseRepository.save(course);
                 course.getInternshipReports().add(report);
@@ -52,41 +52,28 @@ public class InternshipReportController {
     }
 
     @GetMapping("/{id}")
-    public Optional<InternshipReport> getInternshipReport(@PathVariable Long id){
+    public Optional<InternshipReport> getInternshipReport(@PathVariable Long id) {
         return internshipReportRepository.findById(id);
 
     }
 
     @PatchMapping("/give_feedback/{courseId}")
-    public Feedback addFeedback(@PathVariable Long courseId, @RequestBody FeedbackRequest req){
+    public Feedback addFeedback(@PathVariable Long courseId, @RequestBody String feedback) {
 
         Optional<StudentCourse> optional = courseRepository.findById(courseId);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             System.out.println("ENTERED GIVE FEEDBACK");
             StudentCourse course = optional.get();
-            Feedback newFeedback = new Feedback(req.getFeedback());
+            Feedback newFeedback = new Feedback(feedback);
             feedbackRepository.save(newFeedback);
-            System.out.println(course.getInternshipReports().size()-1);
-            course.getInternshipReports().get(course.getInternshipReports().size()-1).getFeedbacks().add(newFeedback);
-            if(!(req.isSatisfactory())){        //added
-                course.setInternshipReportUploadDeadline(LocalDate.now().plusDays(14));
-                courseRepository.save(course);
-            }
-            internshipReportRepository.save(course.getInternshipReports().get(course.getInternshipReports().size()-1));
+            System.out.println(course.getInternshipReports().size() - 1);
+            course.getInternshipReports().get(course.getInternshipReports().size() - 1).getFeedbacks().add(newFeedback);
+            internshipReportRepository
+                    .save(course.getInternshipReports().get(course.getInternshipReports().size() - 1));
             return newFeedback;
         }
         return null;
     }
-}
-
-@Getter
-@Setter
-@NoArgsConstructor
-class FeedbackRequest{
-    @JsonProperty("feedback")
-    private String feedback;
-    @JsonProperty("isSatisfactory")
-    private boolean isSatisfactory;
 }
 
 @Getter

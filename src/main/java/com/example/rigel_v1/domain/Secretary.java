@@ -123,7 +123,7 @@ public class Secretary extends Users{
         int comparison = inputDate.compareTo(currentDate);
 
         // true, if the add-drop period has passed
-        return comparison > 0;
+        return comparison < 0;
     }
 
     /*
