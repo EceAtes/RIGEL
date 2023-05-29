@@ -163,10 +163,10 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
         status === 'waitingFirstSubmission' && (
           <div onClick={() => handleCardClick(index)}>
           <div className="instructorMainPage-display_inline">
-            <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+            <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
           </div>
-          <h4 className="instructorMainPage-student_course">Course: CS299</h4>
-          <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+          <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+          <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
           <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -177,10 +177,10 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
             <button className = "instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-evaluate" onClick = {goToReportsPage}>EVALUATE</button>
             <div className="instructorMainPage-display_inline">
-              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+              <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
-            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
-            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -191,10 +191,10 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
             <div className="instructorMainPage-display_inline">
-              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+              <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
-            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
-            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -205,10 +205,10 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
             <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
             <div className="instructorMainPage-display_inline">
-              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+              <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
-            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
-            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -220,10 +220,10 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
             <button className="instructorMainPage-sign_grade_form"> Criteria Form </button>
             <button className="instructorMainPage-sign_grade_form"> Grade Form </button>
             <div className="instructorMainPage-display_inline">
-              <h4 className="instructorMainPage-student_name">Name: Ece Ateş</h4>
+              <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
-            <h4 className="instructorMainPage-student_course">Course: CS299</h4>
-            <h4 className="instructorMainPage-student_check">TA Check: Passed</h4>
+            <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )

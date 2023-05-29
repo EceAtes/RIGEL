@@ -36,6 +36,8 @@ function StudentMainPage(props) {
         const student = fetchedStudentData.user;
         setStudentData(student);
         const course = fetchedStudentData.course_info;
+        localStorage.setItem("courses", course);
+
         setCourseData(prevCourseData => [...prevCourseData, course]);
         
         console.log(course);
@@ -79,18 +81,23 @@ function StudentMainPage(props) {
           <InfoCard name={studentData.name} studentid={studentData.studentId} courses={determineCourses(courseData)} email={studentData.email} />
         </div>
         <div style={{ width: "65vw", marginLeft: "12vw", marginTop: "6vh", flex: "display", flexDirection: "column" }}>
-          {courseData[0].map((course, index) => (
-            <div key={index} >
-              <StudentCard
-                courseName={course.course_name}
-                instructor={"eray tüzün"}
-                status={course.status}
-                deadline={course.deadline}
-                courseId= {course.course_id}
-                folderId={course.folder_id}
-              />
-            </div>
-          ))}
+        {courseData[0].map((course, index) => {
+            console.log(course.lastInternshipReportID);
+            return (
+              <div key={index}>
+                <StudentCard
+                  courseName={course.course_name}
+                  instructor={"eray tüzün"}
+                  course_index={index}
+                  status={course.status}
+                  deadline={course.deadline}
+                  courseId={course.course_id}
+                  folderId={course.folder_id}
+                  lastInternshipId={course.lastInternshipReportID}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

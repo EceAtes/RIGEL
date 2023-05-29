@@ -14,7 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react'
 import { useHistory, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
+import { fetchInternshipReportKey } from './apiConnect';
 import axios from 'axios';
 
 function determineStatus(param) {
@@ -54,9 +54,6 @@ function determineBackgroundColor(param) {
 
 let uploadedFile;
 
-const handleFeedbackClick = () => {
-    
-}
 const handleFileOpen = () => {
     if (uploadedFile) {
         const fileUrl = URL.createObjectURL(uploadedFile);
@@ -97,18 +94,17 @@ function handleSubmit(params) {
 }
 
 const UploadHandler = (event, param) => {
-
     const file = event.target.files[0];
 
     if (!file) return;
     uploadedFile = file;
     uploadedFile.isUploading = true;
-
+    
     param.setFile(uploadedFile)
     console.log(param.file);
 }
 
-function Icons(props, status) {
+function Icons(props, status, isDeadlinePassed) {
     const [file, setFile] = useState();
     const [open, setOpen] = useState(false);
     const [text, setText] =useState();
@@ -147,6 +143,7 @@ function Icons(props, status) {
                             UploadHandler(event, { status: props.status, files: file, setFile: setFile });
                             handleOpen();
                         }}
+                        disabled={isDeadlinePassed} 
                         style={{ cursor: "pointer", opacity: 0, width: "10vw", height: "15vh", zIndex: "2", position: "absolute" }} />
                     <button style={{ border: '10px solid #1976d2', borderRadius: '45px' }}>
                         <FileUploadIcon style={{ zIndex: 1, color: "#1976d2", width: "8vw", height: "12vh" }} />
@@ -189,9 +186,9 @@ function Icons(props, status) {
     }
 }
 
-function Buttons(status, handleSeeReports) {
+function Buttons(status, handleSeeReports, handleFeedbackClick) {
     if (status === "Waiting") {
-        return (<div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        return (<div style={{ display: "flex", flexDirection: "column", flex: 1 , margin: "auto"}}>
             <Link to="/googledrive">
                 <Button onClick = {handleSeeReports} variant="contained" sx={{
                     borderRadius: "2vw", width: "12vw", height: "4.5vh",
@@ -223,11 +220,11 @@ function Buttons(status, handleSeeReports) {
                     <Button onClick = {handleSeeReports} variant="contained"
                         sx={{
                             borderRadius: "2vw", width: "12vw", height: "4.5vh",
-                            fontSize: "0.9vw", marginBottom: "0.5vh", left: "4.5vw", top: "5vh"
+                            fontSize: "0.9vw", margin: "2vh 0px 0.5vh 0px", left: "4.5vw", top: "5vh"
                         }}>See Reports</Button>
                 </Link>
                 <br />
-                <Button variant="contained" sx={{
+                <Button onClick = {handleFeedbackClick} variant="contained" sx={{
                     borderRadius: "2vw", width: "12vw", height: "4.5vh",
                     fontSize: "0.9vw", marginBottom: "0.5vh", left: "4.5vw", top: "5vh"
                 }}>See Feedback</Button>
@@ -240,9 +237,47 @@ function Buttons(status, handleSeeReports) {
 
 export function StudentCard(props) {
     const navigate = useNavigate();
-    const handleSeeReports = () => {
+    const [url, setUrl]=useState();
+
+    const handleFeedbackClick = () => {
+        const fetchData = async () => {
+            try {
+              if(props.lastInternshipReportID===0 || props.lastInternshipReportID=== undefined){
+                alert("You have not uploaded any reports. Sorry, you cannot view feedbacks right now.")
+              } 
+              else{
+                const internship_report = await fetchInternshipReportKey(props.lastInternshipReportID);
+                const key = internship_report.reportKey;              
+                console.log(props.lastInternshipReportID);
+                console.log(internship_report);
+                console.log(key);
+                setUrl(`https://drive.google.com/file/d/${key}/preview`);
+                window.open(url, '_blank');
+              }
+            } catch (error) {
+              // Handle error
+            }
+          };
+      
+        fetchData();
+    }
+    const handleSeeReports = (index) => {
+        localStorage.setItem("folder-id", props.folderId);
         navigate("./googleDrive");
     }
+
+    function isDeadlinePassed(deadline){
+        const length = deadline.length;
+        const reversedStr = deadline.substring(length / 2).split('').reverse().join('');
+        console.log(reversedStr);
+        const today= new Date();
+        const deadlineDate= new Date(reversedStr);
+        if(today>deadlineDate){
+            return true;
+        }
+        return false;
+    }
+
     //first render uploadFile should be set to the file from localhost:8080 with useEffect
     const status = determineStatus(props.status);
 
@@ -267,11 +302,11 @@ export function StudentCard(props) {
             </div>
 
             <React.Fragment>
-                {Buttons(status,handleSeeReports)}
+                {Buttons(status,handleSeeReports,handleFeedbackClick)}
             </React.Fragment>
 
             <React.Fragment>
-                {Icons(props, status)}
+                {Icons(props, status, isDeadlinePassed(props.deadline))}
             </React.Fragment>
 
         </div>

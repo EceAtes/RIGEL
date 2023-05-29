@@ -9,10 +9,10 @@ const GoogleDrive = () => {
     useEffect(() =>{
         const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/users/1`);
-            const data= response.data;
-            console.log(data);
-            setKey(data.semesterFolderKey)
+            const folder= localStorage.getItem("folder-id");
+            console.log(folder);
+            //const response = await axios.get(`http://localhost:8080/users/1`);
+            setKey(folder)
           } catch (error) {
             throw new Error('Failed to fetch user data');
         }
@@ -21,7 +21,7 @@ const GoogleDrive = () => {
     },[]);
 
     
-    return(
+    return(key) ? (
         <div style = {{display: "flex", flexDirection: "column"}}>
             
             <div className="instructorMainPage-header">
@@ -36,6 +36,6 @@ const GoogleDrive = () => {
             <h3 className="instructorMainPage-header_welcome_message" style = {{marginTop: "0px",marginBottom: "0px", width: "96%"}}>Reports Page</h3>
             <iframe src={`https://drive.google.com/embeddedfolderview?id=${key}`} style={{ width:"100vw", height:"100vh", backgroundColor: 'white'}}/>
         </div>
-      );
+      ): null;
 };
 export default GoogleDrive; 

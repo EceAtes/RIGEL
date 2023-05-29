@@ -10,7 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useState, useEffect } from 'react'
 import { Navigate, useHistory, useNavigate } from 'react-router-dom';
-
+import logo from './bilkent.png';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -44,7 +44,7 @@ function Popup(props, open, handleOpen, handleClose, handleGiveFeedback) {
     );
 }
 
-function RowRadioButtonsGroup(revision, setRevision) {
+function RowRadioButtonsGroup(revision, setRevision,textareaDisabled) {
     
     const handleChange = (event) => {
         setRevision(event.target.value);
@@ -60,15 +60,36 @@ function RowRadioButtonsGroup(revision, setRevision) {
                 value={revision}
                 onChange={handleChange}
             >
-                <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                <FormControlLabel value="No" control={<Radio />} label="No" />
+                <FormControlLabel disabled = {textareaDisabled} value="Yes" control={<Radio />} label="Yes" />
+                <FormControlLabel disabled = {textareaDisabled} value="No" control={<Radio />} label="No" />
             </RadioGroup>
         </FormControl>
     );
 }
 
 function FeedbackReportPage() {
+
+    const [option1, setOption1] = useState('not-selected');
+    const [option2, setOption2] = useState('not-selected');
+    const [textareaDisabled, setTextareaDisabled] = useState(true);
+
+    const handleOption1Change = (e) => {
+        setOption1(e.target.value);
+        updateTextareaDisabledState(e.target.value, option2);
+    };
+
+    const handleOption2Change = (e) => {
+        setOption2(e.target.value);
+        updateTextareaDisabledState(option1, e.target.value);
+    };
+
+    const updateTextareaDisabledState = (option1Value, option2Value) => {
+        const disableTextarea = !(option1Value === 'yes' && option2Value === 'yes');
+        setTextareaDisabled(disableTextarea);
+    };
+
     const linkImg = require("./bilkent.png");
+    const [firstTime, setFirstTime] = useState(true);
     const [data, setData]= useState({});
     const [key, setKey]= useState();
     const [feedback, setFeedback] = useState();
@@ -94,7 +115,9 @@ function FeedbackReportPage() {
           console.log(course);        
           const internship_report = course.lastInternshipReportID;
           console.log("INTERNSHIP REPORT ID:" + internship_report);
+       
 
+          
           try {
             const report_data = await fetchInternshipReportKey(internship_report);
             localStorage.setItem("internship-report", report_data.reportKey);
@@ -127,7 +150,42 @@ function FeedbackReportPage() {
     };
     
     const handleOpen = (event) => {
-        setOpen(true);
+        const courseIdVariable = parseInt(data.course_id, 10);
+        console.log(`course id ENTER ${courseIdVariable}`);
+        
+        if (option1 === false || option2 === false) {
+          const body = { courseId: courseIdVariable, isRelated: option1, isSupervisorEngineer: option2 };
+          axios
+            .post('http://localhost:8080/grade-form', body)
+            .then((res) => {
+              console.log("submitted -", body);
+            })
+            .catch((err) => {
+              // Inform the user about the error
+              console.error(err);
+              // Remove the file (assuming you have a function to handle file removal)
+              // removeFile(uploadedFile.name);
+            });
+        } else {
+          if (revision === "Yes") {
+            const body = { courseId: courseIdVariable, revisionRequired: revision };
+            axios
+              .post('http://localhost:8080/grade-form', body)
+              .then((res) => {
+                console.log("submitted -", body);
+              })
+              .catch((err) => {
+                // Inform the user about the error
+                console.error(err);
+                // Remove the file (assuming you have a function to handle file removal)
+                // removeFile(uploadedFile.name);
+              });
+          } else {
+            setFirstTime(false);
+            setOpen(true);
+          }
+        }
+        
     };
     
     const handleOpenCriteria = (event) => {
@@ -145,10 +203,15 @@ function FeedbackReportPage() {
     
     return (key)? (
         <div className="EvaluationPage">
-            <Header
-                link={linkImg}
-                headerText="Evaluate Report"
-            />
+            <div className="instructorMainPage-header">
+                <div className="instructorMainPage-image-div">
+                <img src={logo} alt="Bilkent University logo" className="instructorMainPage-image" />
+                <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
+                </div>
+                <img className="instructorMainPage-announcement_icon" />
+                <img className="instructorMainPage-nofitication_icon" />
+                <img className="instructorMainPage-logout_icon" />
+            </div>
             <div className="EvaluationPanel"
                 style={{ "width": "100%", "height": "100vh" }}
             >
@@ -170,10 +233,56 @@ function FeedbackReportPage() {
 
                     <div className="feedbackItems"
                         style={{ width: "80%", height: "100%", display: "flex", flexDirection: "column", jusfyContent: "space-between", margin: "auto", paddingTop: "10vh" }}>
-                        <React.Fragment>
-                            {RowRadioButtonsGroup(revision, setRevision)}
+                    {firstTime &&  (
+                        <>
+                        <div>
+                            <label>
+                            Is the work done related to computer engineering? [Y/N]:
+                            <input
+                                type="radio"
+                                name="option1"
+                                value="yes"
+                                checked={option1 === 'yes'}
+                                onChange={handleOption1Change}
+                            />{' '}
+                            Yes
+                            <input
+                                type="radio"
+                                name="option1"
+                                value="no"
+                                checked={option1 === 'no'}
+                                onChange={handleOption1Change}
+                            />{' '}
+                            No
+                            </label>
+                        </div>
+                        <div style = {{marginTop: "15px", marginBottom: "15px"}}>
+                            <label>
+                            Is the supervisor a computer engineer or has a similar engineering background? [Y/N] :
+                            <input
+                                type="radio"
+                                name="option2"
+                                value="yes"
+                                checked={option2 === 'yes'}
+                                onChange={handleOption2Change}
+                            />{' '}
+                            Yes
+                            <input
+                                type="radio"
+                                name="option2"
+                                value="no"
+                                checked={option2 === 'no'}
+                                onChange={handleOption2Change}
+                            />{' '}
+                            No
+                            </label>
+                        </div>
+                        </>
+                        )}
+                        <React.Fragment >
+                            {RowRadioButtonsGroup(revision, setRevision, textareaDisabled)}
                         </React.Fragment>
-                        <textarea className="PostTextField"
+                        <textarea disabled={textareaDisabled} className="PostTextField"
                             type="text"
                             placeHolder="Write your feedback here..."
                             value={feedback}
@@ -193,7 +302,7 @@ function FeedbackReportPage() {
                                 margin: 0
                             }}
                         />
-                        <Button className="sendFeedback" variant="contained" onClick={handleOpen} sx={{ width: "16vw", height: "8vh", borderRadius: "3vh", marginTop: "5vh", left: "5vw" }}>Give Feedback</Button>
+                        <Button className="sendFeedback" variant="contained" onClick={handleOpen} sx={{ width: "16vw", height: "8vh", borderRadius: "3vh", marginTop: "5vh", left: "5vw" }}>SUBMIT</Button>
                     </div>
                 </div>
             </div>
