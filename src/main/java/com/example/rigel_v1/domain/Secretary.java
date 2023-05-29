@@ -43,6 +43,7 @@ public class Secretary extends Users{
 
     private boolean isSemesterStarted;
 
+    @ElementCollection
     private List<String> reportFolderKeys;    //[0] Internship Reports, [1] Summer Training Grade Forms
  
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
@@ -69,13 +70,14 @@ public class Secretary extends Users{
     }*/
 
     public void addUser(UsersService usersService, String name, String email, String password, boolean notifToMail, Role role, int studentId, CourseName[] courseTypes){
-        Users newUser = usersService.createUser(name, email, password, notifToMail, role, this.getDepartment(), studentId);
-        if(role == Role.STUDENT){   ///equals()??
-            for(int i = 0; i < courseTypes.length; i++){
-                StudentCourse studentCourse = new StudentCourse((Student) newUser, courseTypes[i]);
-                ((Student) newUser).getCourses().add(studentCourse);
-            }
+        System.out.println("ENTERED USER");
+        Users newUser;
+        if(courseTypes != null){
+            newUser = usersService.createUser(name, email, password, notifToMail, role, this.getDepartment(), studentId, courseTypes);
+        } else {
+            newUser = usersService.createUser(name, email, password, notifToMail, role, this.getDepartment(), studentId, null);
         }
+
     }
 
     public void automatch(UsersService usersService){
@@ -91,6 +93,7 @@ public class Secretary extends Users{
 
     //hardcoded path
     public void createStudentsFromFile(UsersService usersService){
+        System.out.println("ENTERED SECRETARY");
         String basePath = System.getProperty("user.dir");
         String filePath = basePath + "\\users.txt";
 
