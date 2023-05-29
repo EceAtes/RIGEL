@@ -10,6 +10,7 @@ import com.example.rigel_v1.repositories.DepartmentRepository;
 import com.example.rigel_v1.repositories.UserRepository;
 import com.example.rigel_v1.service.UsersService;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -321,6 +322,59 @@ public class UsersController {
         Iterable<Users> list = userRepository.findAll();
         System.out.println(list);
         return list;
+    }
+
+    @GetMapping("/get")//this function is a get request (fetches sth from the database)
+    //works but since all Maps, etc. must be non-null
+    public List<LoginResponseAdditionalInfo> getAllUsersWithCourseInfo() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<LoginResponseAdditionalInfo> users = new ArrayList<>();
+        for(int i = 1; i <= userRepository.count(); i++ ){
+            Optional<Users> optional = userRepository.findById(Long.valueOf(i));
+            if(optional.isPresent()){
+                Users user = optional.get();
+                if (user instanceof Instructor) {
+                    List<CourseResponseObject> response = new ArrayList<>();
+                    Instructor instructor = (Instructor) optional.get();
+                    for(int j = 0; j < instructor.getCourses().size(); j++){
+                        StudentCourse currCourse = instructor.getCourses().get(j);
+                        //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
+                        CourseResponseObject obj;
+                        //returns the course's last internship report's ID if it exists, else returns it as 0.
+                        if(currCourse.getInternshipReports().size() != 0){
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+
+                        } else{
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
+                        }
+                        response.add(obj);
+                    }
+                    LoginResponseAdditionalInfo data = new LoginResponseAdditionalInfo(true, user.getRole(), user.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
+                    users.add(data);
+                }
+                else if(user instanceof Student){
+                    List<CourseResponseObject> response = new ArrayList<>();
+                    Student student = (Student) optional.get();
+                    for(int j = 0; j < student.getCourses().size(); j++){
+                        StudentCourse currCourse = student.getCourses().get(j);
+                        //CourseResponseObject obj = new CourseResponseObject(currCourse.getStatus(), currCourse.getCourseName(), currCourse.get_TACheck(), currCourse.getCourseTaker().getName());
+                        CourseResponseObject obj;
+                        //returns the course's last internship report's ID if it exists, else returns it as 0.
+                        if(currCourse.getInternshipReports().size() != 0){
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+
+                        } else{
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L,  currCourse.getInternshipReportUploadDeadline().format(formatter));
+                        }
+                        response.add(obj);
+                    }
+                    LoginResponseAdditionalInfo data = new LoginResponseAdditionalInfo(true, user.getRole(), student.getName(), user.getEmail(), user.isNotificationToMail(), user.getDepartment().getId(), user.getId(), response);
+                    users.add(data);
+                }
+            }
+
+        }
+        return users;
     }
 
     //returns all users' information
