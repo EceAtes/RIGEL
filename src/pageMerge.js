@@ -9,6 +9,7 @@ import StudentMainPage from './StudentMainPage.js';
 import SecretaryMainPage from './ömer/SecretaryMainPage.jsx';
 import AdminMainPage from './ömer/AdminMainPage.jsx';
 import FeedbackReportPage from './FeedbackReportPage.js';
+import CriteriaReportPage from './CriteriReportPage.js';
 function Navbar() {
   return (
     <nav>
@@ -39,6 +40,7 @@ const pageMerge = () => {
                     <Route path = "/secretaryMainPage" element = {<SecretaryMainPage/>}/>
                     <Route path = "/adminMainPage" element = {<AdminMainPage/>}/>
                     <Route path = "/feedbackMode" element = {<FeedbackReportPage/>}/>
+                    <Route path = "/criteriaMode" element = {<CriteriaReportPage/>}/>
                 </Routes>
             </>
         </Router>

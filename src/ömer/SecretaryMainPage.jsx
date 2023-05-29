@@ -511,14 +511,11 @@ const SecretaryMainPage = () => {
       }
     };
   
-    useEffect(() => {
-      // Call the update function when the component mounts
-      createData();
-    }, []); 
+
     
     useEffect(() => {
       document.addEventListener('mousedown', handleOutsideClick);
-  
+      createData();
       return () => {
         document.removeEventListener('mousedown', handleOutsideClick);
       };
@@ -549,6 +546,19 @@ const SecretaryMainPage = () => {
         })
         .then(parsedData => {
           console.log(parsedData);
+          if (parsedData.accessDenied) {
+            alert('Access denied');
+          }else if(parsedData.semesterStarted){
+          alert('Semester already started!');
+          } 
+          else if (!parsedData.addDropPeriodFinished) {
+          alert('Add drop period not finished yet!');
+          }
+          else if (!parsedData.atLeastOneInstructorExist) {
+            alert('there is no instructor in the department! At least one required');
+          } else if(!parsedData.atLeastOneStudentExist) {
+            alert('there is no student in the deparment! At least one required');
+          }
         })
       };
       const name = localStorage.getItem("name");

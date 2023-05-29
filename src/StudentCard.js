@@ -54,6 +54,9 @@ function determineBackgroundColor(param) {
 
 let uploadedFile;
 
+const handleFeedbackClick = () => {
+    
+}
 const handleFileOpen = () => {
     if (uploadedFile) {
         const fileUrl = URL.createObjectURL(uploadedFile);
@@ -62,7 +65,7 @@ const handleFileOpen = () => {
 };
 
 function handleSubmit(params) {
-    // upload file
+
     const formData = new FormData();
     formData.append(
         "file",
@@ -72,7 +75,7 @@ function handleSubmit(params) {
     console.log(params.file);
     axios.post('http://localhost:8080/upload',
         {
-            folderId: "1W6MkuCBhdnjjw5C7RtZsAixmj40ZAXYc",
+            folderId: params.folderId,
             file: params.file,
             courseId: params.courseId,
             description: params.description,
@@ -96,6 +99,7 @@ function handleSubmit(params) {
 const UploadHandler = (event, param) => {
 
     const file = event.target.files[0];
+
     if (!file) return;
     uploadedFile = file;
     uploadedFile.isUploading = true;
@@ -185,25 +189,28 @@ function Icons(props, status) {
     }
 }
 
-function Buttons(status) {
-
+function Buttons(status, handleSeeReports) {
     if (status === "Waiting") {
         return (<div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-            <Button variant="contained" sx={{
-                borderRadius: "2vw", width: "12vw", height: "4.5vh",
-                fontSize: "0.9vw", margin: "auto", left: "4.5vw"
-            }}> See Reports</Button>
+            <Link to="/googledrive">
+                <Button onClick = {handleSeeReports} variant="contained" sx={{
+                    borderRadius: "2vw", width: "12vw", height: "4.5vh",
+                    fontSize: "0.9vw", margin: "auto", left: "4.5vw"
+                }}> See Reports</Button>
+            </Link>
         </div>);
     }
     else {
         if (status === "Completed" || status === "Failed" || status === "Withdrawn") {
             return (<div style={{ display: "flex", flexDirection: "column", marginBottom: "1.5vh", marginTop: "8vh", flex: 1 }}>
-                <Button variant="contained" sx={{
+            <Link to= "/googledrive">
+            <Button onClick = {handleSeeReports} variant="contained" sx={{
                     borderRadius: "2vw", width: "12vw", height: "4.5vh",
                     fontSize: "0.9vw", marginBottom: "0.5em", left: "4.5vw"
-                }}>See Reports</Button>
+                }}>See Reports</Button>            
+            </Link>
                 <br /><br />
-                <Button variant="contained" sx={{
+                <Button onClick = {handleFeedbackClick}variant="contained" sx={{
                     borderRadius: "2vw", width: "12vw", height: "4.5vh",
                     fontSize: "0.9vw", left: "4.5vw"
                 }}>See Feedback</Button>
@@ -213,7 +220,7 @@ function Buttons(status) {
         else {
             return (<div style={{ display: "flex", flexDirection: "column", marginBottom: "0.2vh", marginTop: "0.5vh", flex: 1 }}>
                 <Link to="/googledrive">
-                    <Button variant="contained"
+                    <Button onClick = {handleSeeReports} variant="contained"
                         sx={{
                             borderRadius: "2vw", width: "12vw", height: "4.5vh",
                             fontSize: "0.9vw", marginBottom: "0.5vh", left: "4.5vw", top: "5vh"
@@ -225,11 +232,6 @@ function Buttons(status) {
                     fontSize: "0.9vw", marginBottom: "0.5vh", left: "4.5vw", top: "5vh"
                 }}>See Feedback</Button>
                 <br />
-                <Button variant="contained" sx={{
-                    backgroundColor: "#be3c3c",
-                    borderRadius: "2vw", width: "13vw", height: "4.5vh",
-                    fontSize: "0.9vw", marginBottom: "0.5vh", left: "4vw", top: "5vh"
-                }}>Ask for Extension</Button>
             </div>);
         }
     }
@@ -237,6 +239,10 @@ function Buttons(status) {
 }
 
 export function StudentCard(props) {
+    const navigate = useNavigate();
+    const handleSeeReports = () => {
+        navigate("./googleDrive");
+    }
     //first render uploadFile should be set to the file from localhost:8080 with useEffect
     const status = determineStatus(props.status);
 
@@ -261,7 +267,7 @@ export function StudentCard(props) {
             </div>
 
             <React.Fragment>
-                {Buttons(status)}
+                {Buttons(status,handleSeeReports)}
             </React.Fragment>
 
             <React.Fragment>

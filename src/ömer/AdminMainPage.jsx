@@ -256,7 +256,7 @@ function Row(props) {
     const [finalObject, setFinalObject] = React.useState({});
   
     const handleInputChange = (event, attributeName) => {
-      const value = attributeName === 'companyGrade' || attributeName === 'idSelect' ? parseInt(event.target.value) : event.target.value;
+      const value =  event.target.value;
       
       setInputValues(prevValues => ({
         ...prevValues,
@@ -555,10 +555,10 @@ const AdminMainPage = () => {
       const requestData = {
         folderName: 'Spring',
         userId: 1,
-        firstDay: '01-01-2001',
-        lastDay: '04-05-2004',
-        addDropDeadline: '12-05-2002',
-        withdrawDeadline: '12-05-2002'
+        firstDay: '2001-04-01',
+        lastDay: '2004-05-06',
+        addDropDeadline: '2002-07-19',
+        withdrawDeadline: '2002-12-05'
       };
     
       try {

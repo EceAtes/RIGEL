@@ -27,7 +27,7 @@ export function Header () {
 
 export function NameHeader (props) {
   return ( 
-    <div className="nameHeader" style={{width:"100vw" ,height:"5vh",backgroundColor: "#8cc6ff", display:"flex", height:"7vh", alignItems: "flex-center",   justifyContent: "flex-center"}}>
+    <div className="nameHeader" style={{width:"100vw" ,height:"5vh",backgroundColor: "#6CCFF6", display:"flex", height:"7vh", alignItems: "flex-center",   justifyContent: "flex-center"}}>
       <p style={{color: "white", display:"flex", fontSize:"4vh",margin:0, fontWeight:"500", position:"relative", left:"5vw", top:"1.5vh"}}>Welcome {props.name}</p>
     </div>
   );

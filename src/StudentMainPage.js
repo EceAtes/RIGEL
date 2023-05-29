@@ -3,7 +3,7 @@ import StudentCard from "./StudentCard.js";
 import InfoCard from "./InformationCard.js";
 import { useState, useEffect } from 'react'
 import { fetchStudentCourseData, fetchUserData } from "./apiConnect.js";
-
+import logo from './bilkent.png';
 /*
 {courseData.map((student, index) => (
   <div key={index} style={{ marginLeft: "12vw", marginTop: "6vh", marginBottom:"6vh" }}>
@@ -28,6 +28,7 @@ function StudentMainPage(props) {
     const fetchData = async () => {
       try {
         const userId = localStorage.getItem('userId');
+        
         const longValue = parseInt(userId, 10);
         console.log(`/n ${userId} /n`);
 
@@ -62,9 +63,17 @@ function StudentMainPage(props) {
   }
 
   return (courseData && studentData) ? (
-    <div className="StudentMainPage" style = {{width: "100vw", height: "100vh"}}>
-      <Header />
-      <NameHeader name={studentData.name} />
+    <div className="StudentMainPage" style = {{width: "100vw", height: "80vh"}}>
+      <div className="instructorMainPage-header">
+        <div className="instructorMainPage-image-div">
+          <img src={logo} alt="Bilkent University logo" className="instructorMainPage-image" />
+          <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
+        </div>
+        <img className="instructorMainPage-announcement_icon" />
+        <img className="instructorMainPage-nofitication_icon" />
+        <img className="instructorMainPage-logout_icon" />
+      </div>
+      <NameHeader name= {studentData.name}/>
       <div className="courses" style={{ width: "100vw", height: "80vh", display: "flex", flexDirection: "row" }}>
         <div style={{ width: "35vw" }}>
           <InfoCard name={studentData.name} studentid={studentData.studentId} courses={determineCourses(courseData)} email={studentData.email} />
@@ -76,9 +85,9 @@ function StudentMainPage(props) {
                 courseName={course.course_name}
                 instructor={"eray tüzün"}
                 status={course.status}
-                deadline={"01.06.2023"}
+                deadline={course.deadline}
                 courseId= {course.course_id}
-                folderId={"1W6MkuCBhdnjjw5C7RtZsAixmj40ZAXYc"}
+                folderId={course.folder_id}
               />
             </div>
           ))}

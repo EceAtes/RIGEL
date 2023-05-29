@@ -103,7 +103,7 @@ const isStudent  = false;
           });
           
           /*const arr = [username,password];
-          axios.post("http://localhost:8080/users/login", myObject)
+          .axios.post("http://localhost:8080/users/login", myObject)
           .then(res => console.log("uwuwuuw",res))
           .catch(err => console.log(err))
           console.log(arr[0]);
