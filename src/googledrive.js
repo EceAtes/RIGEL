@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './instructorMainPage.css'
 import logo from './bilkent.png'
-const GoogleDrive = () => {
+import axios from 'axios';
 
+const GoogleDrive = () => {
+    const [key, setKey]= useState();
+
+    useEffect(() =>{
+        const fetchData = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/users/1`);
+            const data= response.data;
+            console.log(data);
+            setKey(data.semesterFolderKey)
+          } catch (error) {
+            throw new Error('Failed to fetch user data');
+        }
+    }
+        fetchData();
+    },[]);
+
+    
     return(
         <div style = {{display: "flex", flexDirection: "column"}}>
             
@@ -15,8 +33,8 @@ const GoogleDrive = () => {
             <img className="instructorMainPage-nofitication_icon" />
             <img className="instructorMainPage-logout_icon" />
             </div>
-            <h3 style = {{marginBottom: "0px", fontFamily: "Ariel"}} className="instructorMainPage-header_welcome_message">Reports Page</h3>
-            <iframe src="https://drive.google.com/embeddedfolderview?id=1CtWsQkZJJUHH5lEn9cgap7AukpVonJSc" style={{ width:"100vw", height:"100vh", backgroundColor: 'white'}}/>
+            <h3 className="instructorMainPage-header_welcome_message" style = {{marginTop: "0px",marginBottom: "0px", width: "96%"}}>Reports Page</h3>
+            <iframe src={`https://drive.google.com/embeddedfolderview?id=${key}`} style={{ width:"100vw", height:"100vh", backgroundColor: 'white'}}/>
         </div>
       );
 };

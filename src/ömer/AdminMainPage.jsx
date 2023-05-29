@@ -518,6 +518,7 @@ const AdminMainPage = () => {
     const [text, setText] = useState('2022-2023');
     const containerRef = useRef(null);
     const [buttonVisible, setButtonVisible] = useState(true);
+    const navigate = useNavigate();
     
     const handleButtonClick = () => {
       setIsEditable((prevState) => !prevState);
@@ -562,25 +563,30 @@ const AdminMainPage = () => {
     
       try {
         const response = await axios.post('http://localhost:8080/create-semester', requestData);
-        console.log("yaptim");
         const responseData = response.data; 
 
         if (responseData.accessDenied) {
-          console.log('Access denied');
-        } else if(responseData.missingSecretary){
-          console.log('Missing secretary');
-        }else if(!responseData.semesterConflict){
-          console.log('Semester already created');
-        }else {
-          // Handle other possible response scenarios
-          console.log('Error:', responseData.errorMessage);
+          alert('Access denied');
+        } else if (responseData.missingSecretary) {
+          alert('Missing secretary');
+        } else if (responseData.semesterConflict) {
+          alert('Semester already created');
+        } else {
+          alert('Semester successfully created!');
         }
         } catch (error) {
-        // Handle errors if any
+          console.log(`Error: ${error.errorMessage}`);
       }
     };
     
-    
+    const OpenFrame = () => {
+      console.log("openframe geldi");
+      //if (!data.semesterFolderKey) {
+      //  alert('Semester has not been created yet, no semester found');
+      //} else {
+        navigate('/googledrive');
+      //}
+    };    
 
         const name = localStorage.getItem("name");
     return(
@@ -683,11 +689,11 @@ const AdminMainPage = () => {
                     )}
                     </div>
                 </Box>
-                {buttonVisible && ( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -70}}/>
+                {( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -70}}/>
                     <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>CREATE SEMESTER</Button> 
                     <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/> </> )}
-                {buttonVisible && ( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -10}}/>
-                <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>SEMESTER FOLDERS</Button> 
+                {( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -10}}/>
+                <Button onClick={OpenFrame} sx = {{color: "white" , width: "100%"}}>SEMESTER FOLDERS</Button> 
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/> </> )}
             </Box>
             <CustomTable/>
