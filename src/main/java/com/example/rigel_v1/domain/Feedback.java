@@ -18,5 +18,5 @@ public class Feedback {
 
     public Feedback(String feedback) {
         this.feedback = feedback;
-    }    
+    }
 }

@@ -58,7 +58,8 @@ public class InternshipReportController {
     }
 
     @PatchMapping("/give_feedback/{courseId}")
-    public Feedback addFeedback(@PathVariable Long courseId, @RequestBody String feedback, @RequestBody boolean revisionAsked) {
+    public Feedback addFeedback(@PathVariable Long courseId, @RequestBody String feedback) {
+
         Optional<StudentCourse> optional = courseRepository.findById(courseId);
         if (optional.isPresent()) {
             System.out.println("ENTERED GIVE FEEDBACK");

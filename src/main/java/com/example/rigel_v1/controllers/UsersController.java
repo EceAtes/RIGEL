@@ -47,7 +47,7 @@ public class UsersController {
         this.gradeFormController = gradeFormController;
     }
 
-    //adds a course for a specified instructor //mostly for manue testing
+    //adds a course for a specified instructor //mostly for manual testing
     @RequestMapping("/add_course")
     public void addCourseToInstructor(@NonNull @RequestBody addCourseRequest req) {
         System.out.println(req.getCourseID());
