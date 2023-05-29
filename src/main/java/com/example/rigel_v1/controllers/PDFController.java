@@ -1,7 +1,9 @@
 package com.example.rigel_v1.controllers;
 
+import com.example.rigel_v1.domain.GradeForm;
 import com.example.rigel_v1.domain.StudentCourse;
 import com.example.rigel_v1.domain.enums.Recommendation;
+import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.service.*;
 import com.lowagie.text.DocumentException;
@@ -41,6 +43,11 @@ public class PDFController {
         String recommendation = requestObject.getRecommendation();
         StudentCourse studentCourse = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Student course not found"));
+
+        
+        studentCourse.setRelated(isRelated);
+        studentCourse.setSupervisorEngineer(isSupervisorEngineer);
+        studentCourse.getLastGradeReport().setWillBeRevised(revisionRequired);
         if (recommendation.equals(Recommendation.recommended.toString())) {
             studentCourse.getCriteriaReport().setRecommendation(Recommendation.recommended);
         }
@@ -50,13 +57,33 @@ public class PDFController {
         else {
             studentCourse.getCriteriaReport().setRecommendation(Recommendation.not_recommended);
         }
-        String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
-        System.out.println("SUCCESS");
-        studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
+        
+        if(!isRelated || !isSupervisorEngineer){
+            String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
+            System.out.println("SUCCESS -- PART A FAILED");
+            studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
+            studentCourse.setStatus(Status.gradeUnsatisfactory);
+        }
+        else if(revisionRequired){
+            String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
+            System.out.println("SUCCESS -- REVISION REQUIRED");
+            studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
+            studentCourse.setStatus(Status.uploadRevision);
+            GradeForm gradeForm = new GradeForm();
+            studentCourse.getGradeForms().add(gradeForm);
+        }
+        else{
+            String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
+            System.out.println("SUCCESS -- COMPLETED");
+            studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
+            if(studentCourse.getCriteriaReport().isOverallSatisfactory())
+                studentCourse.setStatus(Status.gradeSatisfactory);
+            else
+                studentCourse.setStatus(Status.gradeUnsatisfactory);
+        }
     }
 }
 
-@Entity
 @Setter @Getter @NoArgsConstructor
 class GradeFormRequestObject {
     private Long courseId;
