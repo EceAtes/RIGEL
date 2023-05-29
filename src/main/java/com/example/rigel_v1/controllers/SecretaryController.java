@@ -41,7 +41,7 @@ public class SecretaryController {
     }
 
     @RequestMapping("/createFromFile/{id}")
-    public void rematch(@PathVariable Long id) {
+    public void createStudentsFromFile(@PathVariable Long id) {
         Optional<Users> optional = userRepository.findById(id);
         if(optional.isPresent() && optional.get() instanceof Secretary){
             ((Secretary) optional.get()).createStudentsFromFile(usersService);

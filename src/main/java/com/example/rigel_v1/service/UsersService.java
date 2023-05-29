@@ -59,6 +59,7 @@ public class UsersService {
         }
     }
 
+
     public Users createUser(String name, String email, String password, boolean notifToMail, Role role, Department department, int studentId, CourseName[] courseTypes){
         System.out.println("ENTERED SERVICE");
         if (role == Role.STUDENT){ //equals()??
