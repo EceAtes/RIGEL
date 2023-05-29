@@ -38,11 +38,12 @@ public class CriteriaReportController {
     }
 
     @PatchMapping("/edit/{id}")
-    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestBody StatusUpdate req){
+
+    public Optional<CriteriaReport> editCriteriaReport(@PathVariable Long id, @RequestBody ReportStatus status){
         Optional<CriteriaReport> optional = criteriaReportRepository.findById(id);
         if(optional.isPresent()){
             CriteriaReport report = optional.get();
-            report.setReportStatus(req.getStatus());
+            report.setReportStatus(status);
             criteriaReportRepository.save(report);
             System.out.println(report.getReportStatus());
 
@@ -127,14 +128,6 @@ public class CriteriaReportController {
 
 
 
-}
-
-@Getter
-@Setter
-@NoArgsConstructor
-class StatusUpdate{
-    @JsonProperty("status")
-    private ReportStatus status;
 }
 
 @Getter

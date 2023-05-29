@@ -52,9 +52,11 @@ public class GradeFormController {
 
 }
 
+
 @Getter @Setter
 @NoArgsConstructor
 class FormUpdate{
     private String generatedFormKey;
     private boolean willBeRevised;
 }
+
