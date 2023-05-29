@@ -75,12 +75,12 @@ public class GoogleDriveService {
                         .setFields("id")
                         .execute();
                 
-                Permission permission = new Permission();
+                /*Permission permission = new Permission();
                 permission.setType("anyone");
-                permission.setRole("commentor");
+                permission.setRole("editor");
                 googleDrive.permissions().create(uploadedFile.getId(), permission)
                         .setFields("id")
-                        .execute();
+                        .execute();*/
 
                 String fileId = uploadedFile.getId();
 

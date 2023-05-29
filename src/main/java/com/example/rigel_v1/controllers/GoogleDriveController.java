@@ -62,13 +62,16 @@ public class GoogleDriveController {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("No file uploaded");
         }
+        System.out.println("test1");
 
         // Check file type
         if (!file.getContentType().equalsIgnoreCase("application/pdf")) {
             return ResponseEntity.badRequest().body("Only PDF files are allowed");
         }
+        System.out.println("test2");
 
         try {
+            System.out.println("test3");
             String fileKey = googleDriveService.uploadInternshipReport(file, folderId, courseId, description);
             return ResponseEntity.ok("File uploaded successfully. File Key: " + fileKey);
         } catch (IOException e) {
@@ -140,7 +143,7 @@ public class GoogleDriveController {
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
                 if (user instanceof Secretary) {
-                    if(!((Secretary)user).getDepartment().isSemesterStarted()){
+                    if(!(((Secretary)user).isSemesterStarted())){
                         if(((Secretary)user).addDropPeriodPassed()){
                             if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
                                 if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
@@ -262,7 +265,7 @@ class StudentFolderCreationResponse{
     @JsonProperty("atLeastOneStudentExist")
     private boolean atLeastOneStudentExist;
 
-    @JsonProperty("")
+    @JsonProperty("semesterStarted")
     private boolean semesterStarted;
 
     public StudentFolderCreationResponse( boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist, boolean semesterStarted){

@@ -41,7 +41,6 @@ public class Admin extends Users {
     public void informSecretary(Secretary secretary){
         secretary.setAddDropDeadline(addDropDeadline);
         secretary.setWithdrawDeadline(withdrawDeadline);
-        secretary.getDepartment().setSemesterStarted(true);
         if( secretary.getDepartment().getName().equals("CS") ){
             secretary.setDepartmentFolderKey(reportFolderKeys.get(0));
             secretary.addFolderKeys(reportFolderKeys.get(1));

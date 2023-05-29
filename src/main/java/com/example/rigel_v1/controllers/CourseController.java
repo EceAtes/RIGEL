@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 @RequestMapping("/courses")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class CourseController {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;

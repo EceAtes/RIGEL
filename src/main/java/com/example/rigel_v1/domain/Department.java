@@ -50,30 +50,24 @@ public class Department {
     @JsonBackReference
     private Secretary secretary;
 
-    private boolean semesterStarted;
-
     public Department(int totalStuNo, int internedStuNo, String name, Map<Long, Student> students_299, Map<Long, Student> students_399, List<Department> sections) {
         this.totalStuNo = totalStuNo;
         this.internedStuNo = internedStuNo;
         this.name = name;
         this.students_299 = students_299;
         this.students_399 = students_399;
-        this.sections = sections;
-        this.semesterStarted = false; 
-    }
+        this.sections = sections;}
 
     public Department(String name) {
         this.name = name;
         this.totalStuNo = 0;
         this.internedStuNo = 0;
-        this.semesterStarted = false; 
     }
 
     public Department(int totalStuNo, int internedStuNo,String name) {
         this.name = name;
         this.totalStuNo = totalStuNo;
         this.internedStuNo = internedStuNo;
-        this.semesterStarted = false; 
     }
 
     public void addStudent(Student student, int courseType){

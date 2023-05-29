@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RequestMapping("/criteria_report")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class CriteriaReportController {
     private CriteriaReportRepository criteriaReportRepository;
     private CourseRepository courseRepository;

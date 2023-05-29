@@ -39,17 +39,18 @@ public class Secretary extends Users{
 
     private String addDropDeadline;            //yyyy-mm-dd
     private String withdrawDeadline;           //yyyy-mm-dd
-    private String departmentFolderKey;    
+    private String departmentFolderKey;
 
     private boolean isSemesterStarted;
 
     @ElementCollection
     private List<String> reportFolderKeys;    //[0] Internship Reports, [1] Summer Training Grade Forms
- 
+
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.SECRETARY, department);
         this.gradeForms = new HashMap<>();
         reportFolderKeys = new ArrayList<String>();
+        isSemesterStarted = false;
     }
 
     /*public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
@@ -127,13 +128,13 @@ public class Secretary extends Users{
                 scanner.close();
                 addUser(usersService, name, email, password, notifToMail, role, studentId, courseNames);
 
-                    // Print the extracted values
+                // Print the extracted values
 
 
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addFolderKeys(String folderKey){
@@ -143,9 +144,10 @@ public class Secretary extends Users{
     public boolean addDropPeriodPassed() {
         LocalDate currentDate = LocalDate.now();
         LocalDate inputDate = LocalDate.parse(addDropDeadline);
-    
+        System.out.println("Input date: " + inputDate.toString());
+        System.out.println("Current date: " + inputDate.toString());
         int comparison = inputDate.compareTo(currentDate);
-    
+
         // true, if the add-drop period has passed
         return comparison <= 0;
     }
@@ -158,8 +160,7 @@ public class Secretary extends Users{
     public void enterCompanyName(StudentCourse studentCourse, String name){
         studentCourse.setCompanyName(name);
     }
-    
-}
 
+}
 
 
