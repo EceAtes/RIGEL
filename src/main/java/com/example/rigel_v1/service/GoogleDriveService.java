@@ -1,30 +1,26 @@
 package com.example.rigel_v1.service;
 
-import com.example.rigel_v1.domain.*;
-import com.example.rigel_v1.domain.enums.ReportStatus;
-import com.example.rigel_v1.repositories.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.rigel_v1.domain.Admin;
+import com.example.rigel_v1.domain.InternshipReport;
+import com.example.rigel_v1.domain.StudentCourse;
+import com.example.rigel_v1.repositories.CourseRepository;
+import com.example.rigel_v1.repositories.DepartmentRepository;
+import com.example.rigel_v1.repositories.ReportRepository;
+import com.example.rigel_v1.repositories.UserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.ByteArrayContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfStamper;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Service
 public class GoogleDriveService {
@@ -78,6 +74,13 @@ public class GoogleDriveService {
                 File uploadedFile = googleDrive.files().create(driveFile, mediaContent)
                         .setFields("id")
                         .execute();
+                
+                /*Permission permission = new Permission();
+                permission.setType("anyone");
+                permission.setRole("editor");
+                googleDrive.permissions().create(uploadedFile.getId(), permission)
+                        .setFields("id")
+                        .execute();*/
 
                 String fileId = uploadedFile.getId();
 
@@ -107,6 +110,13 @@ public class GoogleDriveService {
                 ByteArrayContent mediaContent = new ByteArrayContent("application/pdf", fileBytes);
 
                 File uploadedFile = googleDrive.files().create(driveFile, mediaContent)
+                        .setFields("id")
+                        .execute();
+
+                Permission permission = new Permission();
+                permission.setType("anyone");
+                permission.setRole("reader");
+                googleDrive.permissions().create(uploadedFile.getId(), permission)
                         .setFields("id")
                         .execute();
 
