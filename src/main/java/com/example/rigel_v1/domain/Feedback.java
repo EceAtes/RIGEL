@@ -17,6 +17,7 @@ public class Feedback {
     private Long id;
     private String feedback;
 
+
   /*  @ManyToOne
     @JoinColumn(name = "internship_report_id")
     private InternshipReport report;*/

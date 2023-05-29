@@ -75,7 +75,7 @@ public class StudentCourse {
         //criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
         this.status = Status.waitingSummerTrainingEvaluationFromCompany;
-        this.internshipReportUploadDeadline = LocalDate.now().plusDays(14);
+        this.internshipReportUploadDeadline = LocalDate.now().plusDays(90); //explanation
     }
 
     public StudentCourse(Student courseTaker, CourseName courseName, Instructor instructor) {

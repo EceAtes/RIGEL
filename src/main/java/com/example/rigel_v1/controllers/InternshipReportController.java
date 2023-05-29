@@ -14,6 +14,7 @@ import org.hibernate.internal.build.AllowPrintStacktrace;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -57,21 +58,35 @@ public class InternshipReportController {
     }
 
     @PatchMapping("/give_feedback/{courseId}")
-    public Feedback addFeedback(@PathVariable Long courseId, @RequestBody String feedback){
+    public Feedback addFeedback(@PathVariable Long courseId, @RequestBody FeedbackRequest req){
 
         Optional<StudentCourse> optional = courseRepository.findById(courseId);
         if(optional.isPresent()){
             System.out.println("ENTERED GIVE FEEDBACK");
             StudentCourse course = optional.get();
-            Feedback newFeedback = new Feedback(feedback);
+            Feedback newFeedback = new Feedback(req.getFeedback());
             feedbackRepository.save(newFeedback);
             System.out.println(course.getInternshipReports().size()-1);
             course.getInternshipReports().get(course.getInternshipReports().size()-1).getFeedbacks().add(newFeedback);
+            if(!(req.isSatisfactory())){        //added
+                course.setInternshipReportUploadDeadline(LocalDate.now().plusDays(14));
+                courseRepository.save(course);
+            }
             internshipReportRepository.save(course.getInternshipReports().get(course.getInternshipReports().size()-1));
             return newFeedback;
         }
         return null;
     }
+}
+
+@Getter
+@Setter
+@NoArgsConstructor
+class FeedbackRequest{
+    @JsonProperty("feedback")
+    private String feedback;
+    @JsonProperty("isSatisfactory")
+    private boolean isSatisfactory;
 }
 
 @Getter
