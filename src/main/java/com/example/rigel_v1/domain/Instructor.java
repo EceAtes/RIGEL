@@ -5,14 +5,11 @@ import java.util.*;
 
 import com.example.rigel_v1.domain.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Document("Administrations")
 @Entity
 @Getter
 @Setter
@@ -25,13 +22,12 @@ public class Instructor extends FeedbackUser{
     @JsonBackReference
     private List<StudentCourse> courses = new ArrayList<>();
 
-    private File eSignature = new File("pom.xml");
+    private File eSignature = new File("src/main/resources/sign.png");
 
     //private Statistics statistics;
 
     public Instructor(String name, String email, String password, boolean notificationToMail, Department department) {
         super(name, email, password, notificationToMail, Role.INSTRUCTOR, department, new HashMap<>());
-        //department.addInstructor(this);
         eSignature = new File("src/main/resources/bilkent.png");
     }
 

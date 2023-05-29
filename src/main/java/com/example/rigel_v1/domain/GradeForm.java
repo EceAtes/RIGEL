@@ -3,11 +3,7 @@ package com.example.rigel_v1.domain;
 import lombok.*;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-//@Document("Administrations")
 @Entity
 @Getter @Setter
 public class GradeForm extends Report {
@@ -16,6 +12,7 @@ public class GradeForm extends Report {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;   
     
+    // will be set aoutomatically after criteria report submitted
     String generatedFormKey;
 
     // PART B

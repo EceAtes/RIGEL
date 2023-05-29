@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Document("Administrations")
 @Entity
 @Getter
 @Setter

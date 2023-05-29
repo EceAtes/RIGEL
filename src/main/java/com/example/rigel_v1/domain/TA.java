@@ -1,7 +1,5 @@
 package com.example.rigel_v1.domain;
 
-import java.util.Map;
-import java.util.Set;
 
 public class TA extends FeedbackUser{
     /*public TA() {

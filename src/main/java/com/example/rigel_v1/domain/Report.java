@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Document("Administrations")
 @Entity
 @Getter @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

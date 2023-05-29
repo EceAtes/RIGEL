@@ -1,6 +1,5 @@
 package com.example.rigel_v1.controllers;
 
-import com.example.rigel_v1.domain.CriteriaReport;
 import com.example.rigel_v1.domain.GradeForm;
 import com.example.rigel_v1.repositories.GradeFormRepository;
 import lombok.Getter;
@@ -20,18 +19,18 @@ public class GradeFormController {
     }
 
     @PostMapping
-    public GradeForm createGradeForm(){
+    public GradeForm createGradeForm() {
         GradeForm report = new GradeForm();
         gradeFormRepository.save(report);
         return report;
     }
 
     @PatchMapping("/{id}")
-    public GradeForm updateGradeForm(@PathVariable Long id, @RequestBody FormUpdate req){
+    public GradeForm updateGradeForm(@PathVariable Long id, @RequestBody FormUpdate req) {
         Optional<GradeForm> optional = gradeFormRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             GradeForm form = optional.get();
-            if(req.getGeneratedFormKey() != null && req.getGeneratedFormKey() != ""){
+            if (req.getGeneratedFormKey() != null && req.getGeneratedFormKey() != "") {
                 form.setGeneratedFormKey(req.getGeneratedFormKey());
             }
             form.setWillBeRevised(req.isWillBeRevised());
@@ -41,22 +40,20 @@ public class GradeFormController {
     }
 
     @GetMapping("/{id}")
-    public GradeForm getGradeForm(@PathVariable Long id){
+    public GradeForm getGradeForm(@PathVariable Long id) {
         Optional<GradeForm> optional = gradeFormRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;
     }
 
-
 }
 
-
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
-class FormUpdate{
+class FormUpdate {
     private String generatedFormKey;
     private boolean willBeRevised;
 }
-

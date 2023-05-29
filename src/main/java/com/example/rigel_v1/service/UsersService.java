@@ -106,16 +106,4 @@ public class UsersService {
 
         }
     }
-
-    /*
-   private final UserRepository userRepository;
-
-    public UsersService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public Users findByUsername(String username){
-
-    }*/
-
 }

@@ -44,10 +44,10 @@ public class GoogleDriveController {
     /**
      * Upload an internship report, only pdf files are allowed
      *
-     * @param folderId
+     * @param folderId              
      * @param file
-     * @param courseId
-     * @param description
+     * @param courseId              
+     * @param description           
      * @throws IOException when an error occurs in the API request
      *
      */
@@ -62,16 +62,13 @@ public class GoogleDriveController {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("No file uploaded");
         }
-        System.out.println("test1");
 
         // Check file type
         if (!file.getContentType().equalsIgnoreCase("application/pdf")) {
             return ResponseEntity.badRequest().body("Only PDF files are allowed");
         }
-        System.out.println("test2");
 
         try {
-            System.out.println("test3");
             String fileKey = googleDriveService.uploadInternshipReport(file, folderId, courseId, description);
             return ResponseEntity.ok("File uploaded successfully. File Key: " + fileKey);
         } catch (IOException e) {
@@ -135,7 +132,13 @@ public class GoogleDriveController {
             return new FolderCreationResponse("-", true, false, false, false);
         }
     }
-
+    /**
+     * Start courses and create student folders inside the department,
+     * automatch students with instructors of the department in this function 
+     *
+     * @throws IOException when an error occurs in the API request
+     *
+     */
     @PostMapping("/start-courses")
     public StudentFolderCreationResponse createStudentFolder(@RequestBody Long userId) {
         try {
@@ -182,6 +185,9 @@ public class GoogleDriveController {
         }
     }
 
+    /*
+     * To create semester, admin should create department secretary users
+     */
     public boolean allDepartmentsHasSecretary(){
         Iterable<Department> departments = departmentRepository.findAll();
         for (Department department : departments) {
@@ -192,6 +198,9 @@ public class GoogleDriveController {
         return true;
     }
 
+    /*
+     * To start courses, there should be at least one instructor
+     */
     public boolean atLeastOneInstructorExist(String department){
         Iterable<Instructor> instructors = instructorRepository.findAll();
         for (Instructor instructor : instructors) {
@@ -202,6 +211,9 @@ public class GoogleDriveController {
         return false;
     }
 
+    /*
+     * To start courses, there should be at least one student
+     */
     public boolean atLeastOneStudentExist(String department){
         Iterable<Student> students = studentRepository.findAll();
         for (Student student : students) {
