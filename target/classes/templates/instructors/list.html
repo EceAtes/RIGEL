@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rigel Users Test</title>
+</head>
+<body>
+<h1> Users List</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Notification</th>
+        <th>Role</th>
+    </tr>
+    <tr th:each="instructor : ${instructors}">
+        <td th:text="${instructor.id}">123</td>
+        <td th:text="${instructor.name}">This </td>
+        <td th:text="${instructor.email}">is </td>
+        <td th:text="${instructor.password}">not </td>
+        <td th:text="${instructor.notificationToMail}">working </td>
+        <td th:text="${instructor.role}">:((((</td>
+    </tr>
+</table>
+</body>
+</html>

@@ -513,8 +513,8 @@ const Search = styled('div')(({ theme }) => ({
 
 const AdminMainPage = () => {
     const [isEditable, setIsEditable] = useState(false);
-    const [text1, setText1] = useState('gg.aa.yyyy');
-    const [text2, setText2] = useState('gg.aa.yyyy');
+    const [text1, setText1] = useState('dd.mm.yyyy');
+    const [text2, setText2] = useState('dd.mm.yyyy');
     const [text, setText] = useState('2022-2023');
     const containerRef = useRef(null);
     const [buttonVisible, setButtonVisible] = useState(true);
@@ -548,25 +548,40 @@ const AdminMainPage = () => {
         document.removeEventListener('mousedown', handleOutsideClick);
       };
     }, []);
-
-      const navigate = useNavigate();
     
-      const handleClick = () => {
-        setButtonVisible(false);
-        const data = {
-            myBooleanValue: true, // Set the boolean value you want to send
-          };
-      
-          axios.post('http://localhost:8080', data)
-            .then(response => {
-              // Handle the response from the backend
-              console.log(response.data);
-            })
-            .catch(error => {
-              // Handle any errors that occurred during the request
-              console.error(error);
-            });
-        };
+
+    const handleClick = async () => {
+      const requestData = {
+        folderName: 'Spring',
+        userId: 1,
+        firstDay: '01-01-2001',
+        lastDay: '04-05-2004',
+        addDropDeadline: '12-05-2002',
+        withdrawDeadline: '12-05-2002'
+      };
+    
+      try {
+        const response = await axios.post('http://localhost:8080/create-semester', requestData);
+        console.log("yaptim");
+        const responseData = response.data; 
+
+        if (responseData.accessDenied) {
+          console.log('Access denied');
+        } else if(responseData.missingSecretary){
+          console.log('Missing secretary');
+        }else if(!responseData.semesterConflict){
+          console.log('Semester already created');
+        }else {
+          // Handle other possible response scenarios
+          console.log('Error:', responseData.errorMessage);
+        }
+        } catch (error) {
+        // Handle errors if any
+      }
+    };
+    
+    
+
         const name = localStorage.getItem("name");
     return(
         <div style={{width: "100%", height: "100%", display: "flex", flexDirection: "column"}}>
@@ -579,13 +594,13 @@ const AdminMainPage = () => {
           <img className="instructorMainPage-nofitication_icon" />
           <img className="instructorMainPage-logout_icon" />
           </div>
-          <h3 className="instructorMainPage-header_welcome_message" style = {{marginTop: "0px",marginBottom: "0px", width: "96%"}}>Hello, {name}</h3>
+          <h3 className="instructorMainPage-header_welcome_message" style = {{marginTop: "0px",marginBottom: "0px", width: "96%"}}>Hello, {name}!</h3>
           <div style = {{width: "100vw", height: "75vh"}}>
           <Box sx = {{display: "flex", flexDirection: "row", paddingX: "40px", paddingY: "40px", backgroundColor: "#D4E7FF", alignItems: "center", justifyContent: "center"}}>
             <Box sx = {{height: isVisible ? "50vh" : "30vh", width: "60vh", backgroundColor: "#324966",  marginRight: "200px", borderRadius: 4, display: "flex", flexDirection: "column"}}>
                 <Box sx = {{height: "40vh", width: "100%"}}>
                   <Box sx = {{width: "100%", height: "15%", display: "flex", flexDirection: "row"}}>
-                    <h3 style = {{color: "white", margin: "3vh"}}>Semester Info</h3>
+                    <h3 style = {{color: "white", margin: "3vh"}}>Semester Information</h3>
                     <Button onClick={handleButtonClick} disabled={isEditable} style={{ color: isEditable ? 'white' : 'white' }} sx = {{color: "white", alignContent: "center", height: "25px", borderRadius: 3, margin: "20px", backgroundColor: "#141532"}}>{isEditable ? 'Cancel' : 'Edit'}</Button>
                   </Box>
                   <div ref = {containerRef}>
@@ -649,20 +664,31 @@ const AdminMainPage = () => {
                       <h3 style = {{color: "white", marginTop: 18, marginLeft: 20, marginBottom: 30}}>{text}</h3>
                       </Box>
                       <div sx = {{display: "flex", flexDirection: "column"}}>
-                        <h5 style = {{color: "white", marginLeft: 20, marginTop: -20}}>Add Drop Period Finishes:</h5>
+                        <h5 style = {{color: "white", marginLeft: 20, marginTop: -20}}>Semester Begins:</h5>
+                        <div style={{ color: 'white', marginLeft: 20, marginTop: -25}}>{text1}</div>
+                      </div>
+                      <div sx = {{display: "flex", flexDirection: "column"}}>
+                        <h5 style = {{color: "white", marginLeft: 20, marginTop: 5}}>Add Drop Period Finishes:</h5>
                         <div style={{ color: 'white', marginLeft: 20, marginTop: -25}}>{text1}</div>
                       </div>
                       <div>
-                        <h5 style = {{color: "white", marginLeft: 20, marginTop: 15}}>Withdrawal Period Finishes:</h5>
+                        <h5 style = {{color: "white", marginLeft: 20, marginTop: 3}}>Withdrawal Period Finishes:</h5>
                         <div style={{ color: 'white', marginLeft: 20, marginTop: -25}}>{text2}</div>
+                      </div>
+                      <div sx = {{display: "flex", flexDirection: "column"}}>
+                        <h5 style = {{color: "white", marginLeft: 20, marginTop: 0}}>Semester Ends:</h5>
+                        <div style={{ color: 'white', marginLeft: 20, marginTop: -25}}>{text1}</div>
                       </div>
                       </>
                     )}
                     </div>
                 </Box>
-                {buttonVisible && ( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -50}}/>
+                {buttonVisible && ( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -70}}/>
                     <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>CREATE SEMESTER</Button> 
                     <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/> </> )}
+                {buttonVisible && ( <><hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%", marginTop: -10}}/>
+                <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>SEMESTER FOLDERS</Button> 
+                <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/> </> )}
             </Box>
             <CustomTable/>
             </Box>

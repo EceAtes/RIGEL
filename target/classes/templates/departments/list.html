@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rigel Departments Test</title>
+</head>
+<body>
+<h1> Department List</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Total Students</th>
+        <th>Interned Students</th>
+    </tr>
+    <tr th:each="dep : ${departments}">
+        <td th:text="${dep.id}">:((((( </td>
+        <td th:text="${dep.name}">This </td>
+        <td th:text="${dep.totalStuNo}">is </td>
+        <td th:text="${dep.internedStuNo}">not working </td>
+    </tr>
+</table>
+</body>
+</html>

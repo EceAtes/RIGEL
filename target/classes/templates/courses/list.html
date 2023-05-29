@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rigel Courses Test</title>
+</head>
+<body>
+<h1> Courses List</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Course</th>
+        <th>Instructor</th>
+        <th>Student</th>
+    </tr>
+    <tr th:each="course : ${courses}">
+        <td th:text="${course.id}">123</td>
+        <td th:text="${course.courseName">This </td>
+        <td th:text="${course.instructor.name}">not </td>
+        <td th:text="${course.courseTaker.name}">working </td>
+
+    </tr>
+</table>
+</body>
+</html>
