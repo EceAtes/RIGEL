@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.internal.build.AllowPrintStacktrace;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,8 @@ public class InternshipReportController {
     private final CourseRepository courseRepository;
     private final FeedbackRepository feedbackRepository;
 
-    public InternshipReportController(InternshipReportRepository internshipReportRepository, UserRepository userRepository, CourseRepository courseRepository, FeedbackRepository feedbackRepository) {
+    public InternshipReportController(InternshipReportRepository internshipReportRepository,
+            UserRepository userRepository, CourseRepository courseRepository, FeedbackRepository feedbackRepository) {
         this.internshipReportRepository = internshipReportRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
@@ -92,7 +92,7 @@ class FeedbackRequest{
 @Getter
 @Setter
 @NoArgsConstructor
-class InternReportRequest{
+class InternReportRequest {
     @JsonProperty("student_course_id")
     private int student_course_id;
     @JsonProperty("ownerStudent_id")

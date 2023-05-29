@@ -28,16 +28,14 @@ public class GoogleDriveService {
         private final CourseRepository courseRepository;
         private final ReportRepository reportRepository;
         private final UserRepository userRepository;
-        private final DepartmentRepository departmentRepository;
 
         @Autowired
         public GoogleDriveService(CourseRepository courseRepository, ReportRepository reportRepository,
-                                  UserRepository userRepository, DepartmentRepository departmentRepository)
+                                  UserRepository userRepository)
                 throws IOException {
                 this.courseRepository = courseRepository;
                 this.reportRepository = reportRepository;
                 this.userRepository = userRepository;
-                this.departmentRepository = departmentRepository;
                 // Initialize Google Drive API client
                 InputStream credentials = getClass().getResourceAsStream("/credentials.json");
                 GoogleCredential googleCredential = GoogleCredential.fromStream(credentials)
@@ -75,23 +73,22 @@ public class GoogleDriveService {
                         .setFields("id")
                         .execute();
                 
-                /*Permission permission = new Permission();
+                Permission permission = new Permission();
                 permission.setType("anyone");
-                permission.setRole("editor");
+                permission.setRole("commenter");
                 googleDrive.permissions().create(uploadedFile.getId(), permission)
                         .setFields("id")
-                        .execute();*/
+                        .execute();
 
                 String fileId = uploadedFile.getId();
 
-                // Create an InternshipReport instance
+                //create an InternshipReport instance
                 InternshipReport internshipReport = new InternshipReport(studentCourse.getCourseTaker(), fileId, description);
                 reportRepository.save(internshipReport);
                 // Add the internship report to the student course
                 studentCourse.uploadInternshipReport(internshipReport);
                 // Save the updated student course
                 courseRepository.save(studentCourse);
-
                 return fileId;
         }
 
@@ -122,14 +119,12 @@ public class GoogleDriveService {
 
                 String fileId = uploadedFile.getId();
 
-                // Update the user's database entry with the file link
                 String reportLink = ("https://drive.google.com/uc?id=" + fileId);
                 System.out.println("Uploaded report link: " + reportLink);
-
+                studentCourse.getLastGradeReport().setGeneratedFormKey(fileId);
+                courseRepository.save(studentCourse);
                 return fileId;
         }
-
-
 
         /**
          * Create the semester folder and its subfolders according to reports. Add links

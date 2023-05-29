@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Document("Administrations")
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class InternshipReport extends Report{

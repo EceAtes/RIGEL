@@ -1,27 +1,19 @@
 package com.example.rigel_v1.domain;
 
-import com.example.rigel_v1.controllers.UsersController;
 import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.domain.enums.Role;
-import com.example.rigel_v1.domain.enums.Status;
 import com.example.rigel_v1.service.UsersService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-//@Document("Administrations")
+
 @Component
 @Entity
 @Getter
@@ -52,23 +44,6 @@ public class Secretary extends Users{
         reportFolderKeys = new ArrayList<String>();
         isSemesterStarted = false;
     }
-
-    /*public Secretary(Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
-        super(criteriaReports, eSignature);//, statistics
-        this.EvaluationForm = EvaluationForm;
-        this.gradeForms = gradeForms;
-    }*/
-
-    /*ublic Secretary(String name, String email, String password, boolean notificationToMail, Department department, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
-        super(name, email, password, notificationToMail, Role.SECRETARY, department, criteriaReports, eSignature);//, statistics
-        this.gradeForms = gradeForms;
-    }*/
-
-    /*public Secretary(String name, String email, String password, boolean notificationToMail, Department department, Set<Notification> notification, Map<Integer, CriteriaReport> criteriaReports, File eSignature, Map<Integer, EvaluationForm> EvaluationForm, Map<Integer, GradeForm> gradeForms) {//, Statistics statistics
-        super(name, email, password, notificationToMail, Role.SECRETARY, department, notification, criteriaReports, eSignature);//, statistics
-        this.EvaluationForm = EvaluationForm;
-        this.gradeForms = gradeForms;
-    }*/
 
     public void addUser(UsersService usersService, String name, String email, String password, boolean notifToMail, Role role, int studentId, CourseName[] courseTypes){
         System.out.println("ENTERED USER");
@@ -127,10 +102,6 @@ public class Secretary extends Users{
 
                 scanner.close();
                 addUser(usersService, name, email, password, notifToMail, role, studentId, courseNames);
-
-                // Print the extracted values
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,22 +112,32 @@ public class Secretary extends Users{
         reportFolderKeys.add(folderKey);
     }
 
+    /*
+     *  To start the courses, the secretary waits add drop time to be finished
+     */
     public boolean addDropPeriodPassed() {
         LocalDate currentDate = LocalDate.now();
         LocalDate inputDate = LocalDate.parse(addDropDeadline);
         System.out.println("Input date: " + inputDate.toString());
-        System.out.println("Current date: " + inputDate.toString());
+        System.out.println("Current date: " + currentDate.toString());
         int comparison = inputDate.compareTo(currentDate);
 
         // true, if the add-drop period has passed
-        return comparison <= 0;
+        return comparison > 0;
     }
 
+    /*
+     *  Department secretary manually enters the student score that is given the company 
+     */
     public void enterCompanyGrade(StudentCourse studentCourse, int grade){
         studentCourse.setCompanyScore(grade);
         //studentCourse.setStatus(Status.); //???????????????
     }
 
+    
+    /*
+     *  Department secretary manually enters the company name 
+     */
     public void enterCompanyName(StudentCourse studentCourse, String name){
         studentCourse.setCompanyName(name);
     }
