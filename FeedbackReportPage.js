@@ -19,7 +19,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {sendFeedbackData, fetchInternshipReportKey} from "./api_connection/apiConnect";
 
-function Popup(open, handleOpen, handleClose, handleGiveFeedback, setCompany) {
+import axios from 'axios';
+
+function Popup(props, open, handleOpen, handleClose, handleGiveFeedback) {
     if (!open) return;
 
     return (
@@ -30,44 +32,17 @@ function Popup(open, handleOpen, handleClose, handleGiveFeedback, setCompany) {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                {"Do you want to submit your feedback?"}
+                {props.question}
             </DialogTitle>
             <DialogActions>
-                <React.Fragment>
-                    {RadioButtonsGroup(setCompany)}
-                </React.Fragment>
-                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose}>{props.cancel}</Button>
                 <Button onClick={handleGiveFeedback} autoFocus>
-                    Submit
+                    {props.submit}
                 </Button>
             </DialogActions>
         </Dialog>
 
     );
-}
-
-function RadioButtonsGroup(setCompany) {
-    
-    const handleChange = (event) => {
-        setCompany(event.target.value);
-    };
-    
-  return (
-    <FormControl>
-      <FormLabel sx={{ color: "black" }} id="demo-radio-buttons-group-label"></FormLabel>
-      <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue={null}
-        onChange={handleChange}
-        name="radio-buttons-group"
-      >
-        <FormControlLabel value="I strongly recommend this place for future students" control={<Radio />} label="I strongly recommend this place for future students" />
-        <FormControlLabel value="I am satidfied with this place" control={<Radio />} label="I am satidfied with this place" />
-        <FormControlLabel value="I recommend this place not to be allowed for future students" control={<Radio />} label="I recommend this place not to be allowed for future students" />
-      </RadioGroup>
-    </FormControl>
-  );
-  
 }
 
 function RowRadioButtonsGroup(revision, setRevision) {
@@ -101,37 +76,69 @@ function FeedbackReportPage() {
     const [sent, setSent] = useState({});
     const [open, setOpen]= useState(false);
     const [revision, setRevision] = useState('No');
-    const [company, setCompany] = useState(null);
+    const [criteria, setCriteria]= useState(false);
+    const submit= {question:"Do you want to submit your feedback?", cancel: "Cancel", submit:"Submit"};
+    const goto ={question:"Do you want to go criteria mode?", cancel: "Cancel", submit:"Go To"};
     
     useEffect(() => {
-        const courseInfo= localStorage.getItem('arrayOfStructs');
-        const index= localStorage.getItem('index');
-        const course= courseInfo[index];
-        setData(course);
-        
-        const internship_report= course.lastInternshipReportID;
-        const report_data= fetchInternshipReportKey(internship_report);
-        setKey(report_data.reportKey);
-        
-    }, []);
+        const fetchData = async () => {
+          /*const courseInfo = localStorage.getItem('arrayOfStructs');
+          const index = localStorage.getItem('index');
+          const course = courseInfo[index];
+          setData(course);
+      
+          const internship_report = course.lastInternshipReportID;*/
+          try {
+            const report_data = await fetchInternshipReportKey(6);
+            setKey(report_data.reportKey);
+          } catch (error) {
+            console.log('Error fetching internship report:', error);
+          }
+        };
+      
+        fetchData();
+      }, []);
       
     const handleClose = (event) => {
         setOpen(false);
     };
-    
-    const handleGiveFeedback = (event) => {
+    //        axios.patch(`http://localhost:8080/internship_report/give_feedback/${data.course_id}`, 
+
+    const handleGiveFeedback = (event, company) => {
         setSent({feedback:feedback});
-        const feedbackData= {feedback:feedback};
+        const body = `"${feedback}"`;       
         setOpen(false);
-        console.log("submitted");
-        sendFeedbackData(data.lastInternshipReportID, feedbackData);
+        setCriteria(true);
+        console.log("submitted- "+ body);
+        axios.patch(`http://localhost:8080/internship_report/give_feedback/2`, 
+        {
+            feedback: body,
+        },
+        {
+            headers:
+            {
+                'Content-Type': 'multipart/form-data' // Important: Set the content type for form data
+            }
+        })
     };
     
     const handleOpen = (event) => {
         setOpen(true);
     };
     
-    return (
+    const handleOpenCriteria = (event) => {
+        setCriteria(true);
+    };
+    
+    const  handleCloseCriteria = (event) => {
+        setCriteria(false);
+    };
+    
+    const handleNavigate = (even) => {
+        
+    }
+    
+    return (key)? (
         <div className="EvaluationPage">
             <Header
                 link={linkImg}
@@ -158,11 +165,6 @@ function FeedbackReportPage() {
 
                     <div className="feedbackItems"
                         style={{ width: "80%", height: "100%", display: "flex", flexDirection: "column", jusfyContent: "space-between", margin: "auto", paddingTop: "10vh" }}>
-
-                        <React.Fragment>
-                            {RadioButtonsGroup(company, setCompany)}
-                        </React.Fragment>
-                        <br/><br/>
                         <React.Fragment>
                             {RowRadioButtonsGroup(revision, setRevision)}
                         </React.Fragment>
@@ -191,10 +193,14 @@ function FeedbackReportPage() {
                 </div>
             </div>
             <React.Fragment>
-                {Popup(open, handleOpen, handleClose, handleGiveFeedback )}
+                {Popup(submit, open, handleOpen, handleClose, handleGiveFeedback)}
+            </React.Fragment>
+            
+            <React.Fragment>
+                {Popup(goto, criteria, handleOpenCriteria, handleCloseCriteria, handleNavigate )}
             </React.Fragment>
         </div >
-    );
+    ): null;
 }
 
 export default FeedbackReportPage;
