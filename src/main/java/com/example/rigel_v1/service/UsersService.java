@@ -1,6 +1,9 @@
 package com.example.rigel_v1.service;
 
+import com.example.rigel_v1.controllers.CriteriaReportController;
+import com.example.rigel_v1.controllers.GradeFormController;
 import com.example.rigel_v1.domain.*;
+import com.example.rigel_v1.domain.enums.CourseName;
 import com.example.rigel_v1.domain.enums.Role;
 import com.example.rigel_v1.repositories.CourseRepository;
 import com.example.rigel_v1.repositories.UserRepository;
@@ -19,11 +22,15 @@ import java.util.Optional;
 public class UsersService {
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
+    private final CriteriaReportController criteriaReportController;
+    private final GradeFormController gradeFormController;
 
     @Autowired
-    public UsersService(UserRepository userRepository, CourseRepository courseRepository) {
+    public UsersService(UserRepository userRepository, CourseRepository courseRepository, CriteriaReportController criteriaReportController, GradeFormController gradeFormController) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
+        this.criteriaReportController = criteriaReportController;
+        this.gradeFormController = gradeFormController;
     }
 
     @Transactional
@@ -52,10 +59,23 @@ public class UsersService {
         }
     }
 
-    public Users createUser(String name, String email, String password, boolean notifToMail, Role role, Department department, int studentId){
+    public Users createUser(String name, String email, String password, boolean notifToMail, Role role, Department department, int studentId, CourseName[] courseTypes){
+        System.out.println("ENTERED SERVICE");
         if (role == Role.STUDENT){ //equals()??
             Student student = new Student(name,email,password, notifToMail, department, studentId);
             userRepository.save(student);
+            for(int i = 0; i < courseTypes.length; i++){
+                StudentCourse studentCourse = new StudentCourse(student, courseTypes[i]);
+                courseRepository.save(studentCourse);
+                student.getCourses().add(studentCourse);
+                userRepository.save(student);
+                CriteriaReport cReport = criteriaReportController.createCriteriaReport();
+                GradeForm gForm = gradeFormController.createGradeForm();
+                studentCourse.setCriteriaReport(cReport);
+                courseRepository.save(studentCourse);
+                studentCourse.getGradeForms().add(gForm);
+                courseRepository.save(studentCourse);
+            }
             return student;
         }
         else if (role == Role.INSTRUCTOR) {
