@@ -33,10 +33,10 @@ public class PDFController {
 
     @PostMapping("/grade-form")
     public void generateSummerTrainingGradeForm(@RequestParam("courseId") Long courseId) throws IOException, DocumentException {
-            StudentCourse studentCourse = courseRepository.findById(courseId)
-                                         .orElseThrow(() -> new RuntimeException("Student course not found"));
-            String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
-            System.out.println("SUCCESS");
-            studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
+        StudentCourse studentCourse = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Student course not found"));
+        String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);
+        System.out.println("SUCCESS");
+        studentCourse.getLastGradeReport().setGeneratedFormKey(fileKey);
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Optional;
 
 import lombok.*;
@@ -41,6 +40,17 @@ public class GoogleDriveController {
         this.usersService = usersService;
     }
 
+
+    /**
+     * Upload an internship report, only pdf files are allowed
+     *
+     * @param folderId
+     * @param file
+     * @param courseId
+     * @param description
+     * @throws IOException when an error occurs in the API request
+     *
+     */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadInternshipReport(
             @RequestParam("folderId") String folderId,
@@ -67,10 +77,20 @@ public class GoogleDriveController {
         }
     }
 
+    /**
+     * Create a semester, set semester dates and create parent folders
+     *
+     * @throws IOException when an error occurs in the API request
+     *
+     */
     @PostMapping("/create-semester")
-    public FolderCreationResponse createSemester(@RequestParam("folderName") String folderName, @RequestParam("userId") Long userId,
-                                                 @RequestParam("firstDay") String firstDay, @RequestParam("lastDay") String lastDay,
-                                                 @RequestParam("addDropDeadline") String addDropDeadline, @RequestParam("withdrawDeadline") String withdrawDeadline) throws IOException {
+    public FolderCreationResponse createSemester(@RequestBody SemesterRequest request) throws IOException {
+        String folderName = request.getFolderName();
+        Long userId = request.getUserId();
+        String firstDay = request.getFirstDay();
+        String lastDay = request.getLastDay();
+        String addDropDeadline = request.getAddDropDeadline();
+        String withdrawDeadline = request.getWithdrawDeadline();
         Optional<Users> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
@@ -84,24 +104,24 @@ public class GoogleDriveController {
                         ((Admin)user).setWithdrawDeadline(withdrawDeadline);
                         ((Admin)user).setSemesterStarted(true);
                         // create folders
-                        String parentFolderKey = googleDriveService.createSemesterFolders(folderName, userId); 
-                        
+                        String parentFolderKey = googleDriveService.createSemesterFolders(folderName, userId);
+
                         //set department folder keys of secretaries
                         Iterable<Department> departments = departmentRepository.findAll();
                         for (Department department : departments) {
                             ((Admin)user).informSecretary(department.getSecretary());
                         }
                         userRepository.save(user);
-                                               
+
                         System.out.println("Folder created successfully.");
-                        return new FolderCreationResponse(parentFolderKey, false, true, false, false); 
+                        return new FolderCreationResponse(parentFolderKey, false, true, false, false);
                     }
                     else{ // semester shouldn't be created before
-                        return new FolderCreationResponse(((Admin)user).getSemesterFolderKey(), false, false, false, true); 
+                        return new FolderCreationResponse(((Admin)user).getSemesterFolderKey(), false, false, false, true);
                     }
                 }
                 else{// all departments must have at least one secretary registered to the system
-                    return new FolderCreationResponse("", false, false, true, false); 
+                    return new FolderCreationResponse("", false, false, true, false);
                 }
             }
             else{// unauthorized access
@@ -109,14 +129,14 @@ public class GoogleDriveController {
             }
         }
         else{// unauthorized access
-            return new FolderCreationResponse("2", true, false, false, false); 
-        }            
+            return new FolderCreationResponse("2", true, false, false, false);
+        }
     }
 
     @PostMapping("/start-courses")
     public StudentFolderCreationResponse createStudentFolder(@RequestParam("userId") Long userId) {
         try {
-            Optional<Users> userOptional = userRepository.findById(userId); 
+            Optional<Users> userOptional = userRepository.findById(userId);
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
                 if (user instanceof Secretary) {
@@ -125,36 +145,36 @@ public class GoogleDriveController {
                             if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
                                 if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
                                     ((Secretary) user).automatch(usersService);
-                                    String folderKey_internship = googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(0), true); //isInternshipReportFolderKey
-                                    String folderKey_gradeform = googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(1), false);                                     
+                                    googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(0), true);
+                                    googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(1), false);
                                     System.out.println("Student folders created successfully.");
-                                    return new StudentFolderCreationResponse(folderKey_internship, false, true, true, true, true);                             
+                                    return new StudentFolderCreationResponse( false, true, true, true, true);
                                 }
                                 else{
-                                    return new StudentFolderCreationResponse("", false, false, true, true, false);                             
+                                    return new StudentFolderCreationResponse(false, false, true, true, false);
                                 }
                             }
                             else{
-                                return new StudentFolderCreationResponse("", false, false, true, false, true);                             
+                                return new StudentFolderCreationResponse(false, false, true, false, true);
                             }
                         }
                         else{
-                            return new StudentFolderCreationResponse("", false, false, false, true, true);                             
+                            return new StudentFolderCreationResponse( false, false, false, true, true);
                         }
                     }
                     else{
-                        return new StudentFolderCreationResponse("", false, false, false, true, true);                             
+                        return new StudentFolderCreationResponse(false, false, false, true, true);
                     }
                 }
                 else{
-                    return new StudentFolderCreationResponse("4", true, false, false, true, true);                             
+                    return new StudentFolderCreationResponse( true, false, false, true, true);
                 }
             }
             else{
-                return new StudentFolderCreationResponse("5", true, false, false, true, true);                             
+                return new StudentFolderCreationResponse( true, false, false, true, true);
             }
         }catch (IOException e) {
-            return new StudentFolderCreationResponse("6", false, false, false, false, false);                             
+            return new StudentFolderCreationResponse( false, false, false, false, false);
         }
     }
 
@@ -167,7 +187,7 @@ public class GoogleDriveController {
         }
         return true;
     }
-    
+
     public boolean atLeastOneInstructorExist(String department){
         Iterable<Instructor> instructors = instructorRepository.findAll();
         for (Instructor instructor : instructors) {
@@ -193,7 +213,7 @@ public class GoogleDriveController {
 @Setter
 @NoArgsConstructor
 class FolderCreationResponse{
-    
+
     @JsonProperty("folderKey")
     private String folderKey;
 
@@ -222,7 +242,7 @@ class FolderCreationResponse{
 @Setter
 @NoArgsConstructor
 class StudentFolderCreationResponse{
-    
+
     @JsonProperty("folderKey")
     private String folderKey;
 
@@ -241,13 +261,33 @@ class StudentFolderCreationResponse{
     @JsonProperty("atLeastOneStudentExist")
     private boolean atLeastOneStudentExist;
 
-    public StudentFolderCreationResponse(String folderKey, boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist ){
+    public StudentFolderCreationResponse( boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist ){
         this.accessDenied = accessDenied;
         this.isCreated = isCreated;
-        this.folderKey = folderKey;
         this.addDropPeriodFinished = addDropPeriodFinished;
         this.atLeastOneInstructorExist = atLeastOneInstructorExist;
         this.atLeastOneStudentExist = atLeastOneStudentExist;
 
+    }
+}
+
+@Getter
+@Setter
+@NoArgsConstructor
+class SemesterRequest {
+    private String folderName;
+    private Long userId;
+    private String firstDay;
+    private String lastDay;
+    private String addDropDeadline;
+    private String withdrawDeadline;
+
+    SemesterRequest(String folderName, Long userId, String firstDay, String lastDay, String addDropDeadline, String withdrawDeadline){
+        this.folderName = folderName;
+        this.userId = userId;
+        this.firstDay = firstDay;
+        this.lastDay = lastDay;
+        this.addDropDeadline = addDropDeadline;
+        this.withdrawDeadline = withdrawDeadline;
     }
 }

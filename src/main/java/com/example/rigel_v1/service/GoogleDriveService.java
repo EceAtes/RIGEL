@@ -36,8 +36,8 @@ public class GoogleDriveService {
 
         @Autowired
         public GoogleDriveService(CourseRepository courseRepository, ReportRepository reportRepository,
-                        UserRepository userRepository, DepartmentRepository departmentRepository)
-                        throws IOException {
+                                  UserRepository userRepository, DepartmentRepository departmentRepository)
+                throws IOException {
                 this.courseRepository = courseRepository;
                 this.reportRepository = reportRepository;
                 this.userRepository = userRepository;
@@ -45,11 +45,11 @@ public class GoogleDriveService {
                 // Initialize Google Drive API client
                 InputStream credentials = getClass().getResourceAsStream("/credentials.json");
                 GoogleCredential googleCredential = GoogleCredential.fromStream(credentials)
-                                .createScoped(Collections.singleton(DriveScopes.DRIVE));
+                        .createScoped(Collections.singleton(DriveScopes.DRIVE));
                 this.googleDrive = new Drive.Builder(googleCredential.getTransport(), googleCredential.getJsonFactory(),
-                                googleCredential)
-                                .setApplicationName("RIGEL")
-                                .build();
+                        googleCredential)
+                        .setApplicationName("RIGEL")
+                        .build();
         }
 
         /**
@@ -66,7 +66,7 @@ public class GoogleDriveService {
         public String uploadInternshipReport(MultipartFile file, String folderId, Long studentCourseId, String description) throws IOException {
                 // Update the user's database entry with the file link
                 StudentCourse studentCourse = courseRepository.findById(studentCourseId)
-                                .orElseThrow(() -> new RuntimeException("StudentCourse not found"));
+                        .orElseThrow(() -> new RuntimeException("StudentCourse not found"));
 
                 File driveFile = new File();
                 driveFile.setName(file.getOriginalFilename());
@@ -76,8 +76,8 @@ public class GoogleDriveService {
                 ByteArrayContent mediaContent = new ByteArrayContent(file.getContentType(), fileBytes);
 
                 File uploadedFile = googleDrive.files().create(driveFile, mediaContent)
-                                .setFields("id")
-                                .execute();
+                        .setFields("id")
+                        .execute();
 
                 String fileId = uploadedFile.getId();
 
@@ -95,8 +95,6 @@ public class GoogleDriveService {
         /**
          * Upload the auto generated file to student course object.
          *
-         * @param file                  The auto generated file to upload
-         * @param studentCourseId       The student course which generated report belongs to
          * @return                      The key of the uploaded file
          * @throws IOException when an error occurs in the API request
          *
@@ -126,9 +124,7 @@ public class GoogleDriveService {
         /**
          * Create the semester folder and its subfolders according to reports. Add links
          * to a user's database (admin).
-         * 
-         * @param file
-         * @param folderId
+         *
          * @param userId
          * @return
          * @throws IOException when an error occurs in the API request
@@ -164,46 +160,46 @@ public class GoogleDriveService {
                 String[] subfolderNames = { "CS", "EE", "ME", "IE" };
 
                 for (String subfolderName : subfolderNames) {
-                    // Create department subfolder
-                    File departmentFolder = new File();
-                    departmentFolder.setName(subfolderName);
-                    departmentFolder.setMimeType("application/vnd.google-apps.folder");
-                    departmentFolder.setParents(Collections.singletonList(createdSemesterFolder.getId()));
+                        // Create department subfolder
+                        File departmentFolder = new File();
+                        departmentFolder.setName(subfolderName);
+                        departmentFolder.setMimeType("application/vnd.google-apps.folder");
+                        departmentFolder.setParents(Collections.singletonList(createdSemesterFolder.getId()));
 
-                    File createdDepartmentFolder = googleDrive.files().create(departmentFolder)
-                            .setFields("id")
-                            .execute();
-
-                    String departmentFolderLink = "https://drive.google.com/drive/folders/" + createdDepartmentFolder.getId();
-                    System.out.println("Department Folder (View): " + departmentFolderLink);
-                    admin.saveReportFolderID(createdDepartmentFolder.getId());
-
-                    // Create subfolders within the department folder
-                    String[] subfolderNamesWithinDepartment = { "Internship Reports", "Summer Training Grade Forms" };
-
-                    for (String subfolderNameWithinDepartment : subfolderNamesWithinDepartment) {
-                        File subfolder = new File();
-                        subfolder.setName(subfolderNameWithinDepartment);
-                        subfolder.setMimeType("application/vnd.google-apps.folder");
-                        subfolder.setParents(Collections.singletonList(createdDepartmentFolder.getId()));
-
-                        File createdSubfolder = googleDrive.files().create(subfolder)
+                        File createdDepartmentFolder = googleDrive.files().create(departmentFolder)
                                 .setFields("id")
                                 .execute();
 
-                        String subfolderLink = "https://drive.google.com/drive/folders/" + createdSubfolder.getId();
-                        System.out.println("Subfolder (View): " + subfolderLink);
-                        admin.saveReportFolderID(createdSubfolder.getId());
+                        String departmentFolderLink = "https://drive.google.com/drive/folders/" + createdDepartmentFolder.getId();
+                        System.out.println("Department Folder (View): " + departmentFolderLink);
+                        admin.saveReportFolderID(createdDepartmentFolder.getId());
 
-                    }
+                        // Create subfolders within the department folder
+                        String[] subfolderNamesWithinDepartment = { "Internship Reports", "Summer Training Grade Forms" };
+
+                        for (String subfolderNameWithinDepartment : subfolderNamesWithinDepartment) {
+                                File subfolder = new File();
+                                subfolder.setName(subfolderNameWithinDepartment);
+                                subfolder.setMimeType("application/vnd.google-apps.folder");
+                                subfolder.setParents(Collections.singletonList(createdDepartmentFolder.getId()));
+
+                                File createdSubfolder = googleDrive.files().create(subfolder)
+                                        .setFields("id")
+                                        .execute();
+
+                                String subfolderLink = "https://drive.google.com/drive/folders/" + createdSubfolder.getId();
+                                System.out.println("Subfolder (View): " + subfolderLink);
+                                admin.saveReportFolderID(createdSubfolder.getId());
+
+                        }
                 }
                 userRepository.save(admin);
                 return createdSemesterFolder.getId();
-            }
+        }
 
 
         /**
-         * Create a student course subfolder for each student, this folder will include iterations of either internship or grade forms. 
+         * Create a student course subfolder for each student, this folder will include iterations of either internship or grade forms.
          * Folder name: COURSE NAME + STUDENT ID
          *
          * @param parentFolderKey               Either an Internship Report Folder or Grade Form Folder of the department
@@ -226,8 +222,8 @@ public class GoogleDriveService {
                         permission.setType("anyone");
                         permission.setRole("reader");
                         googleDrive.permissions().create(createdStudentCourseFolder.getId(), permission)
-                                        .setFields("id")
-                                        .execute();
+                                .setFields("id")
+                                .execute();
 
                         System.out.println("Student Course Key: " + createdStudentCourseFolder.getId());
                         String studentFolderLink = "https://drive.google.com/drive/folders/" + createdStudentCourseFolder.getId();
