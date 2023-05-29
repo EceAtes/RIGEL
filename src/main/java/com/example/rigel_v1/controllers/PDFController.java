@@ -11,12 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 @CrossOrigin("http://localhost:3000")
@@ -32,7 +30,7 @@ public class PDFController {
     }
 
     @PostMapping("/grade-form")
-    public void generateSummerTrainingGradeForm(@RequestParam("courseId") Long courseId) throws IOException, DocumentException {
+    public void generateSummerTrainingGradeForm(@RequestParam Long courseId) throws IOException, DocumentException {
         StudentCourse studentCourse = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Student course not found"));
         String fileKey = googleDriveService.uploadGeneratedFile(pdfService.markPDF(studentCourse), studentCourse);

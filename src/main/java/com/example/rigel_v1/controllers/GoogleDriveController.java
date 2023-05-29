@@ -95,14 +95,14 @@ public class GoogleDriveController {
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
             if (user instanceof Admin) {
-                if(allDepartmentsHasSecretary()){
-                    if(!((Admin)user).isSemesterStarted()){
+               if(allDepartmentsHasSecretary()){
+                    if(!((Admin)user).isSemesterCreated()){
                         // set semester dates
                         ((Admin)user).setSemesterFirstDay(firstDay);
                         ((Admin)user).setSemesterLastDay(lastDay);
                         ((Admin)user).setAddDropDeadline(addDropDeadline);
                         ((Admin)user).setWithdrawDeadline(withdrawDeadline);
-                        ((Admin)user).setSemesterStarted(true);
+                        ((Admin)user).setSemesterCreated(true);
                         // create folders
                         String parentFolderKey = googleDriveService.createSemesterFolders(folderName, userId);
 
@@ -113,7 +113,7 @@ public class GoogleDriveController {
                         }
                         userRepository.save(user);
 
-                        System.out.println("Folder created successfully.");
+                        System.out.println("Semester folder created successfully.");
                         return new FolderCreationResponse(parentFolderKey, false, true, false, false);
                     }
                     else{ // semester shouldn't be created before
@@ -121,26 +121,26 @@ public class GoogleDriveController {
                     }
                 }
                 else{// all departments must have at least one secretary registered to the system
-                    return new FolderCreationResponse("", false, false, true, false);
+                    return new FolderCreationResponse("-", false, false, true, false);
                 }
             }
             else{// unauthorized access
-                return new FolderCreationResponse("1", true, false, false, false);
+                return new FolderCreationResponse("-", true, false, false, false);
             }
         }
         else{// unauthorized access
-            return new FolderCreationResponse("2", true, false, false, false);
+            return new FolderCreationResponse("-", true, false, false, false);
         }
     }
 
     @PostMapping("/start-courses")
-    public StudentFolderCreationResponse createStudentFolder(@RequestParam("userId") Long userId) {
+    public StudentFolderCreationResponse createStudentFolder(@RequestBody Long userId) {
         try {
             Optional<Users> userOptional = userRepository.findById(userId);
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
                 if (user instanceof Secretary) {
-                    if(((Secretary)user).getDepartment().isSemesterStarted()){
+                    if(!((Secretary)user).getDepartment().isSemesterStarted()){
                         if(((Secretary)user).addDropPeriodPassed()){
                             if(atLeastOneInstructorExist(((Secretary) user).getDepartment().getName())){
                                 if(atLeastOneStudentExist(((Secretary) user).getDepartment().getName())){
@@ -148,33 +148,34 @@ public class GoogleDriveController {
                                     googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(0), true);
                                     googleDriveService.createStudentCourseFolders(((Secretary)user).getReportFolderKeys().get(1), false);
                                     System.out.println("Student folders created successfully.");
-                                    return new StudentFolderCreationResponse( false, true, true, true, true);
+                                    ((Secretary) user).setSemesterStarted(true);
+                                    return new StudentFolderCreationResponse( false, true, true, true, true, false);
                                 }
                                 else{
-                                    return new StudentFolderCreationResponse(false, false, true, true, false);
+                                    return new StudentFolderCreationResponse(false, false, true, true, false, false);
                                 }
                             }
                             else{
-                                return new StudentFolderCreationResponse(false, false, true, false, true);
+                                return new StudentFolderCreationResponse(false, false, true, false, true, false);
                             }
                         }
-                        else{
-                            return new StudentFolderCreationResponse( false, false, false, true, true);
+                        else{//add drop has not passed
+                            return new StudentFolderCreationResponse( false, false, false, true, true, false);
                         }
                     }
-                    else{
-                        return new StudentFolderCreationResponse(false, false, false, true, true);
+                    else{ // semester already started
+                        return new StudentFolderCreationResponse(false, false, false, true, true, true);
                     }
                 }
-                else{
-                    return new StudentFolderCreationResponse( true, false, false, true, true);
+                else{ // access denied
+                    return new StudentFolderCreationResponse( true, false, false, true, true, false);
                 }
             }
-            else{
-                return new StudentFolderCreationResponse( true, false, false, true, true);
+            else{ // access denied
+                return new StudentFolderCreationResponse( true, false, false, true, true, false);
             }
         }catch (IOException e) {
-            return new StudentFolderCreationResponse( false, false, false, false, false);
+            return new StudentFolderCreationResponse( false, false, false, false, false, false);
         }
     }
 
@@ -261,13 +262,16 @@ class StudentFolderCreationResponse{
     @JsonProperty("atLeastOneStudentExist")
     private boolean atLeastOneStudentExist;
 
-    public StudentFolderCreationResponse( boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist ){
+    @JsonProperty("")
+    private boolean semesterStarted;
+
+    public StudentFolderCreationResponse( boolean accessDenied, boolean isCreated, boolean addDropPeriodFinished, boolean atLeastOneInstructorExist, boolean atLeastOneStudentExist, boolean semesterStarted){
         this.accessDenied = accessDenied;
         this.isCreated = isCreated;
         this.addDropPeriodFinished = addDropPeriodFinished;
         this.atLeastOneInstructorExist = atLeastOneInstructorExist;
         this.atLeastOneStudentExist = atLeastOneStudentExist;
-
+        this.semesterStarted = semesterStarted;
     }
 }
 

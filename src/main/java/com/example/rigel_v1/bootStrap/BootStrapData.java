@@ -45,7 +45,7 @@ public class BootStrapData implements CommandLineRunner {
         departmentRepository.save(ME);
 
         
-        Admin admin = new Admin("admin", "mail", "pass", false, CS);
+        Admin admin = new Admin("admin", "admin@mail.com", "pass", false, CS);
         userRepository.save(admin);
 
  /*     Admin admin = new Admin("admin", "mail", "pass", false, CS);

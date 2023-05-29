@@ -13,7 +13,7 @@ import lombok.*;
 @Setter @Getter @NoArgsConstructor
 public class Admin extends Users {
 
-    private boolean semesterStarted;
+    private boolean semesterCreated;
     private String semesterFolderKey;
     private String folderDomain = "https://drive.google.com/drive/folders/";
 
@@ -31,7 +31,7 @@ public class Admin extends Users {
         super(name, email, password, notificationToMail, Role.ADMIN, department);
         semesterFolderKey = "";
         reportFolderKeys = new ArrayList<>();
-        semesterStarted = false;
+        semesterCreated = false;
     }
 
     public void saveReportFolderID(String reportFolderID){

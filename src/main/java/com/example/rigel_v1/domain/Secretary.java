@@ -40,7 +40,9 @@ public class Secretary extends Users{
     private String addDropDeadline;            //yyyy-mm-dd
     private String withdrawDeadline;           //yyyy-mm-dd
     private String departmentFolderKey;    
-    
+
+    private boolean isSemesterStarted;
+
     private List<String> reportFolderKeys;    //[0] Internship Reports, [1] Summer Training Grade Forms
  
     public Secretary(String name, String email, String password, boolean notificationToMail, Department department) {
