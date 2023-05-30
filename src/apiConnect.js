@@ -11,6 +11,22 @@ export const fetchStudentCourseData = async (courseID) => {
   }
 };
 
+export const updateGradeAndStatus = async (row) => {
+  try {
+    const body = {
+      "grade":row.grade,
+      "courseStatus": row.status
+    }
+
+    // Send PATCH request to the specific URL for the student
+    await axios.patch(`http://localhost:8080/courses/${row.course_id}`, body);
+
+    console.log(`Grade and status updated for ${body}`);
+  } catch (error) {
+    console.error(`Error updating grade and status for ${row.course_id}:`, error);
+  }
+};
+
 export const fetchInternshipReportKey = async (reportId) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/internship_report/${reportId}`);
