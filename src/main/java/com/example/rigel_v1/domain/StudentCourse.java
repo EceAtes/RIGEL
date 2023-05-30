@@ -56,7 +56,7 @@ public class StudentCourse {
 
     //  PART A
     private String companyName;
-    private int companyScore;
+    private int companyScore = -1;
     private boolean isRelated;
     private boolean isSupervisorEngineer;
 
@@ -72,6 +72,7 @@ public class StudentCourse {
         internshipReports = new LinkedList<>();   
         internshipReportFolderKey = "none";
         iterationCount = 0;
+        companyScore = -1;
         //criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
         this.status = Status.waitingSummerTrainingEvaluationFromCompany;
@@ -85,6 +86,7 @@ public class StudentCourse {
         internshipReports = new LinkedList<>();   
         internshipReportFolderKey = "none";
         iterationCount = 0;
+        companyScore = -1;
         criteriaReport = new CriteriaReport();
         gradeForms = new LinkedList<>();
         this.status = Status.waitingSummerTrainingEvaluationFromCompany;

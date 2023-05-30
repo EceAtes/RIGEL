@@ -84,10 +84,10 @@ public class UsersController {
                             CourseResponseObject obj;
                             //returns the course's last internship report's ID if it exists, else returns it as 0.
                             if(currCourse.getInternshipReports().size() != 0){
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
 
                             } else{
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
                             }
                             response.add(obj);
                         }
@@ -102,10 +102,10 @@ public class UsersController {
                             CourseResponseObject obj;
                             //returns the course's last internship report's ID if it exists, else returns it as 0.
                             if(currCourse.getInternshipReports().size() != 0){
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
 
                             } else{
-                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L,  currCourse.getInternshipReportUploadDeadline().format(formatter));
+                                obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L,  currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
                             }
                             response.add(obj);
                         }
@@ -264,10 +264,10 @@ public class UsersController {
                     CourseResponseObject obj;
                     //returns the course's last internship report's ID if it exists, else returns it as 0.
                     if(currCourse.getInternshipReports().size() != 0){
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
 
                     } else{
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
                     }
                     response.add(obj);
                 }
@@ -281,10 +281,10 @@ public class UsersController {
                     CourseResponseObject obj;
                     //returns the course's last internship report's ID if it exists, else returns it as 0.
                     if(currCourse.getInternshipReports().size() != 0){
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
 
                     } else{
-                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
+                        obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
                     }
                     response.add(obj);
                 }
@@ -342,10 +342,10 @@ public class UsersController {
                         CourseResponseObject obj;
                         //returns the course's last internship report's ID if it exists, else returns it as 0.
                         if(currCourse.getInternshipReports().size() != 0){
-                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
 
                         } else{
-                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter));
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L, currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
                         }
                         response.add(obj);
                     }
@@ -361,10 +361,10 @@ public class UsersController {
                         CourseResponseObject obj;
                         //returns the course's last internship report's ID if it exists, else returns it as 0.
                         if(currCourse.getInternshipReports().size() != 0){
-                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter));
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), currCourse.getInternshipReports().get(currCourse.getInternshipReports().size()-1).getId(), currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
 
                         } else{
-                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L,  currCourse.getInternshipReportUploadDeadline().format(formatter));
+                            obj = new CourseResponseObject(currCourse.getId(), currCourse.getStatus(), currCourse.getCourseName(), true, currCourse.getCourseTaker().getName(), currCourse.getInternshipReportFolderKey(), currCourse.getCriteriaReport().getId(), currCourse.getGradeForms().get(currCourse.getGradeForms().size()-1).getId(), 0L,  currCourse.getInternshipReportUploadDeadline().format(formatter),currCourse.getCompanyScore());
                         }
                         response.add(obj);
                     }
@@ -516,8 +516,11 @@ class CourseResponseObject{
     private Long lastInternshipReportID;
     @JsonProperty("deadline")
     private String deadline;
+    @JsonProperty("companyScore")
+    private int companyScore;
 
-    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName, String folder_id, Long criteriaReportID, Long gradeFormID, Long lastInternshipReportID, String deadline) {
+    public CourseResponseObject(Long id, Status status, CourseName name, boolean check, String studentName, String folder_id,
+                                Long criteriaReportID, Long gradeFormID, Long lastInternshipReportID, String deadline, int companyScore) {
         this.id = id;
         this.status = status;
         this.name = name;
@@ -528,5 +531,6 @@ class CourseResponseObject{
         this.gradeFormID = gradeFormID;
         this.lastInternshipReportID = lastInternshipReportID;
         this.deadline = deadline;
+        this.companyScore = companyScore;
     }
 }

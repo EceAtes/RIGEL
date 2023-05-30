@@ -30,6 +30,18 @@ public class CourseController {
         this.userRepository = userRepository;
     }
 
+    /*@PatchMapping("/enter-company-grade/{id}")
+    public String  enterCompanyGrade(@PathVariable Long id, @RequestBody int grade){
+        Optional<StudentCourse> optional = courseRepository.findById(Long.valueOf(id));
+        if (optional.isPresent()) {
+            StudentCourse course = optional.get();
+            course.setCompanyScore(grade);
+            courseRepository.save(course);
+            return "Company Grade is " + course.getCompanyScore();
+        }
+        return "";
+    }*/
+
     @PatchMapping("/{id}")
     public void updateCourse(@PathVariable Long id, @RequestBody CourseResponse response) {// can be modified upon
                                                                                            // request
@@ -45,6 +57,10 @@ public class CourseController {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patternFormat);
                 LocalDate date = LocalDate.parse(response.getDeadline(), formatter);
                 course.setInternshipReportUploadDeadline(date);
+                courseRepository.save(course);
+            }
+            if (response.getGrade() != -1) {
+                course.setCompanyScore(response.getGrade());
                 courseRepository.save(course);
             }
         }
@@ -91,12 +107,12 @@ public class CourseController {
                 return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(),
                         course.getInstructor().getName(), course.getInternshipReportFolderKey(),
                         course.getIterationCount(), criteriaReportId, lastGradeReportId, course.getStatus(),
-                        course.getInternshipReportUploadDeadline().format(formatter));
+                        course.getInternshipReportUploadDeadline().format(formatter), course.getCompanyScore());
             } else {
                 return new CourseResponse(course.getId(), course.getCourseName(), course.getCourseTaker().getId(), "",
                         course.getInternshipReportFolderKey(), course.getIterationCount(), criteriaReportId,
                         lastGradeReportId, course.getStatus(),
-                        course.getInternshipReportUploadDeadline().format(formatter));
+                        course.getInternshipReportUploadDeadline().format(formatter), course.getCompanyScore());
             }
         }
         return null;
@@ -180,10 +196,11 @@ class CourseResponse {
     private Status courseStatus;
     @JsonProperty("deadline")
     private String deadline;
+    @JsonProperty("grade")
+    private int grade;
 
-    public CourseResponse(Long id, CourseName name, Long student_id, String instructor_name,
-            String internshipReportFolderID, int iteration_count, Long criteria_report_id, Long grade_form_id,
-            Status courseStatus, String deadline) {
+    public CourseResponse(Long id, CourseName name, Long student_id, String instructor_name, String internshipReportFolderID,
+                          int iteration_count, Long criteria_report_id, Long grade_form_id, Status courseStatus, String deadline, int grade) {
         this.id = id;
         this.name = name;
         this.student_id = student_id;
@@ -194,5 +211,6 @@ class CourseResponse {
         this.grade_form_id = grade_form_id;
         this.courseStatus = courseStatus;
         this.deadline = deadline;
+        this.grade = grade;
     }
 }
