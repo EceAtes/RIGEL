@@ -68,7 +68,7 @@ function RowRadioButtonsGroup(revision, setRevision,textareaDisabled) {
 }
 
 function FeedbackReportPage() {
-
+    const [studentFailed, setStudentFailed] = useState(false);
     const [option1, setOption1] = useState('not-selected');
     const [option2, setOption2] = useState('not-selected');
     const [textareaDisabled, setTextareaDisabled] = useState(true);
@@ -142,6 +142,8 @@ function FeedbackReportPage() {
         const body = `"${feedback}"`;       
         //setOpen(false);
         setCriteria(true);
+        setOpen(false);
+        navigate("/instructorMainPage");
         console.log("submitted- "+ body);
         axios.patch(`http://localhost:8080/internship_report/give_feedback/${data.course_id}`, 
         {
@@ -150,43 +152,102 @@ function FeedbackReportPage() {
     };
     
     const handleOpen = (event) => {
+        event.preventDefault();
         const courseIdVariable = parseInt(data.course_id, 10);
         console.log(`course id ENTER ${courseIdVariable}`);
         
-        if (option1 === false || option2 === false) {
-          const body = { courseId: courseIdVariable, isRelated: option1, isSupervisorEngineer: option2 };
-          axios
-            .post('http://localhost:8080/grade-form', body)
-            .then((res) => {
-              console.log("submitted -", body);
+        if (option1 === "no" || option2 === "no") {
+            console.log(`student failed status: ${studentFailed}`);
+            setStudentFailed(true);
+          
+            const isOption1True = option1 === "yes";
+            const isOption2True = option2 === "yes";
+          
+            const object = {
+              recommendation: "not_satisfactory",
+              courseId: courseIdVariable,
+              isRelated: isOption1True,
+              isSupervisorEngineer: isOption2True,
+              revisionRequired: false
+            };
+            
+            console.log(`here comes the object, hello object, welcome : ${object}`)
+            const url = "http://localhost:8080/grade-form";
+          try{
+            fetch(url, {
+              method: 'POST',
+              body: JSON.stringify(object),
+              headers: {
+                'Content-Type': 'application/json'
+              }
             })
-            .catch((err) => {
-              // Inform the user about the error
-              console.error(err);
-              // Remove the file (assuming you have a function to handle file removal)
-              // removeFile(uploadedFile.name);
-            });
-        } else {
-          if (revision === "Yes") {
-            const body = { courseId: courseIdVariable, revisionRequired: revision };
-            axios
-              .post('http://localhost:8080/grade-form', body)
-              .then((res) => {
-                console.log("submitted -", body);
+              .then(response => {
+                if (response.ok) {
+                  console.log("OK");
+                  return response.json(); // Parse the JSON if the response is successful (status code 200)
+                } else {
+                  console.log("BAD");
+                  throw new Error('Request failed with status code ' + response.status);
+                }
               })
-              .catch((err) => {
-                // Inform the user about the error
-                console.error(err);
-                // Remove the file (assuming you have a function to handle file removal)
-                // removeFile(uploadedFile.name);
+              .then(parsedData => {
+                console.log(parsedData);
+                navigate("/instructorMainPage");
               });
-          } else {
-            setFirstTime(false);
-            setOpen(true);
+          } catch{
+            navigate("/instructorMainPage");
           }
         }
+          else {
+            if (revision === "Yes") {
+              const object = {
+                recommendation: "satisfactory",
+                courseId: courseIdVariable,
+                revisionRequired: true,
+                isRelated: true,
+                isSupervisorEngineer: true
+              } 
+
+
+
+
+
+              try{
+              const url = "http://localhost:8080/grade-form";
+              console.log(`here comes the object, hello object, welcome : ${JSON.stringify(object)}`)
+              fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(object),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+                .then(response => {
+                  if (response.ok) {
+                    console.log("OK");
+                    return response.json(); // Parse the JSON if the response is successful (status code 200)
+                  } else {
+                    console.log("BAD");
+                    throw new Error('Request failed with status code ' + response.status);
+                  }
+                })
+                .then(parsedData => {
+                  console.log(parsedData);
+                  setRevision("Yes");
+                  localStorage.setItem("status", "r");
+                  navigate("./instructorMainPage");
+                });
+                }catch (error) {
+                    console.error(error);
+                    navigate("./instructorMainPage");
+                }
+            } else {
+              setFirstTime(false);
+              setOpen(true);
+            }
+        }  
         
-    };
+};
     
     const handleOpenCriteria = (event) => {
         setCriteria(true);
@@ -309,10 +370,11 @@ function FeedbackReportPage() {
             <React.Fragment>
                 {Popup(submit, open, handleOpen, handleClose, handleGiveFeedback)}
             </React.Fragment>
-            
+            {!studentFailed ? (
             <React.Fragment>
-                {Popup(goto, criteria, handleOpenCriteria, handleCloseCriteria, handleNavigate )}
+                {Popup(goto, criteria, handleOpenCriteria, handleCloseCriteria, handleNavigate)}
             </React.Fragment>
+            ):null}
         </div >
     ): null;
 }

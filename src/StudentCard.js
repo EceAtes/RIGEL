@@ -61,37 +61,7 @@ const handleFileOpen = () => {
     }
 };
 
-function handleSubmit(params) {
 
-    const formData = new FormData();
-    formData.append(
-        "file",
-        params.file,
-        params.file.name
-    )
-    console.log(params.file);
-    axios.post('http://localhost:8080/upload',
-        {
-            folderId: params.folderId,
-            file: params.file,
-            courseId: params.courseId,
-            description: params.description,
-        },
-        {
-            headers:
-            {
-                'Content-Type': 'multipart/form-data' // Important: Set the content type for form data
-            }
-        })
-        .then((res) => {
-            console.log("uploaded -" + params.file.name);
-        })
-        .catch((err) => {
-            // inform the user
-            console.error(err)
-            //removeFile(uploadedFile.name)
-        });
-}
 
 const UploadHandler = (event, param) => {
     const file = event.target.files[0];
@@ -104,7 +74,7 @@ const UploadHandler = (event, param) => {
     console.log(param.file);
 }
 
-function Icons(props, status, isDeadlinePassed) {
+function Icons(props, status, isDeadlinePassed,handleSubmit) {
     const [file, setFile] = useState();
     const [open, setOpen] = useState(false);
     const [text, setText] =useState();
@@ -197,6 +167,7 @@ function Buttons(status, handleSeeReports, handleFeedbackClick) {
             </Link>
         </div>);
     }
+    
     else {
         if (status === "Completed" || status === "Failed" || status === "Withdrawn") {
             return (<div style={{ display: "flex", flexDirection: "column", marginBottom: "1.5vh", marginTop: "8vh", flex: 1 }}>
@@ -213,6 +184,16 @@ function Buttons(status, handleSeeReports, handleFeedbackClick) {
                 }}>See Feedback</Button>
             </div>
             );
+        }
+        else if (status === "UploadRevision") {
+            return (<div style={{ display: "flex", flexDirection: "column", flex: 1 , margin: "auto"}}>
+                <Link to="/googledrive">
+                    <Button onClick = {handleSeeReports} variant="contained" sx={{
+                        borderRadius: "2vw", width: "12vw", height: "4.5vh",
+                        fontSize: "0.9vw", margin: "auto", left: "4.5vw"
+                    }}> See Reports</Button>
+                </Link>
+            </div>);
         }
         else {
             return (<div style={{ display: "flex", flexDirection: "column", marginBottom: "0.2vh", marginTop: "0.5vh", flex: 1 }}>
@@ -236,6 +217,38 @@ function Buttons(status, handleSeeReports, handleFeedbackClick) {
 }
 
 export function StudentCard(props) {
+    function handleSubmit(params) {
+
+        const formData = new FormData();
+        formData.append(
+            "file",
+            params.file,
+            params.file.name
+        )
+        console.log(params.file);
+        axios.post('http://localhost:8080/upload',
+            {
+                folderId: params.folderId,
+                file: params.file,
+                courseId: params.courseId,
+                description: params.description,
+            },
+            {
+                headers:
+                {
+                    'Content-Type': 'multipart/form-data' // Important: Set the content type for form data
+                }
+            })
+            .then((res) => {
+                console.log("uploaded -" + params.file.name);  
+               
+            })
+            .catch((err) => {
+                // inform the user
+                console.error(err)
+                //removeFile(uploadedFile.name)
+            });
+    }
     const navigate = useNavigate();
     const [url, setUrl]=useState();
 
@@ -306,7 +319,7 @@ export function StudentCard(props) {
             </React.Fragment>
 
             <React.Fragment>
-                {Icons(props, status, isDeadlinePassed(props.deadline))}
+                {Icons(props, status, isDeadlinePassed(props.deadline),handleSubmit)}
             </React.Fragment>
 
         </div>

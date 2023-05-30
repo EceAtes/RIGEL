@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import React, { useState, useEffect } from 'react';
 import { fetchCriteriReportData, fetchInternshipReportKey, sendCriteriReportData, submitCriteriReport } from './apiConnect.js';
-
+import logo from "./bilkent.png";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -148,10 +148,15 @@ function CriteriaReportPage() {
     
     return(fetched) ? (
         <div className="CriteriaReportPage" style={{display:"fixed"}}>
-            <Header
-                link={linkImg}
-                headerText="Evaluate Report"
-            />
+            <div className="instructorMainPage-header">
+                <div className="instructorMainPage-image-div">
+                <img src= {logo} alt="Bilkent University logo" className="instructorMainPage-image" />
+                <h2 className="instructorMainPage-header_title">INTERNSHIP MANAGEMENT SYSTEM</h2>
+                </div>
+                <img className="instructorMainPage-announcement_icon" />
+                <img className="instructorMainPage-nofitication_icon" />
+                <img className="instructorMainPage-logout_icon" />
+            </div>
             <div className="answerDriveReport" style={{display:"flex",displayDirection:"column" }}>
                 <div className="criteria" style={{width:"55vw"}}>
                 <QuestionGrid

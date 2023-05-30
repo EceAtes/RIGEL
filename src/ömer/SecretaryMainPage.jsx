@@ -554,10 +554,13 @@ const SecretaryMainPage = () => {
           else if (!parsedData.addDropPeriodFinished) {
           alert('Add drop period not finished yet!');
           }
-          else if (!parsedData.atLeastOneInstructorExist) {
+          else if (!parsedData.atLeastOneInstructorExist) {          
             alert('there is no instructor in the department! At least one required');
           } else if(!parsedData.atLeastOneStudentExist) {
             alert('there is no student in the deparment! At least one required');
+          }
+          else{
+            alert("Semester is successfully started!");
           }
         })
       };

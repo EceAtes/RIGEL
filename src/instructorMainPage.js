@@ -40,6 +40,10 @@ const InstructorMainPage = () => {
     console.log("reports page gidildi");
     navigate('/feedbackMode');
   }
+  const goToCriteria = () => {
+    console.log("reports page gidildi");
+    navigate('/criteriaMode');
+  }
   const jsonString = localStorage.getItem('arrayOfStructs');
 
     // Convert the JSON string back to an array of structs
@@ -123,6 +127,7 @@ const InstructorMainPage = () => {
         <div className="instructorMainPage-student_profile_body">
         {userArray.map((user, index) => (
         <CustomDiv
+          goToCriteria={goToCriteria}
           goToReportsPage={goToReportsPage}
           handleCardClick={handleCardClick}
           index={index}
@@ -143,7 +148,7 @@ const InstructorMainPage = () => {
 // burada öğrencileri bulmamız lazım alo
 
 
-function CustomDiv({ status , openFrame, course_name, student_name, TA_check, handleCardClick, index, goToReportsPage}) {
+function CustomDiv({ status , openFrame, course_name, student_name, TA_check, handleCardClick, index, goToReportsPage, goToCriteria}) {
    
   return(
     <div className={`instructorMainPage-my-div ${status}`}>
@@ -189,7 +194,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
         status === 'uploadRevision' && (
           <div onClick={() => handleCardClick(index)}>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
-            <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
+            <button className="instructorMainPage-criteria_mode"onClick={goToCriteria}> Criteria Mode </button>
             <div className="instructorMainPage-display_inline">
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
@@ -203,7 +208,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
         status === 'waitingFinalConfirmation' && (
           <div onClick={() => handleCardClick(index)}>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
-            <button className="instructorMainPage-criteria_mode"> Criteria Mode </button>
+            <button className="instructorMainPage-criteria_mode" onClick={goToCriteria}> Criteria Mode </button>
             <div className="instructorMainPage-display_inline">
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
@@ -217,7 +222,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
         (status === 'gradeUnsatisfactory' || status === 'gradeSatisfactory') && (
           <div onClick={() => handleCardClick(index)}>
             <button className="instructorMainPage-all_reports" onClick = {openFrame}> Reports </button>
-            <button className="instructorMainPage-sign_grade_form"> Criteria Form </button>
+            <button className="instructorMainPage-sign_grade_form" onClick={goToCriteria}> Criteria Form </button>
             <button className="instructorMainPage-sign_grade_form"> Grade Form </button>
             <div className="instructorMainPage-display_inline">
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>

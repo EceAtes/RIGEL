@@ -87,7 +87,7 @@ function StudentMainPage(props) {
               <div key={index}>
                 <StudentCard
                   courseName={course.course_name}
-                  instructor={"eray tüzün"}
+                  instructor={"Eray Tüzün"}
                   course_index={index}
                   status={course.status}
                   deadline={course.deadline}
