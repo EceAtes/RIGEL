@@ -159,6 +159,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
             <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
           </div>
           <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+          <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
           <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -170,6 +171,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
             <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
           </div>
           <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+          <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
           <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -183,6 +185,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
             <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -196,6 +199,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
             <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -209,6 +213,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
             <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )
@@ -223,6 +228,7 @@ function CustomDiv({ status , openFrame, course_name, student_name, TA_check, ha
               <h4 className="instructorMainPage-student_name">Name: {student_name}</h4>
             </div>
             <h4 className="instructorMainPage-student_course">Course: {course_name}</h4>
+            <h4 className="instructorMainPage-student_check">TA Check: {TA_check}</h4>
             <h4 className="instructorMainPage-student_status">Status: {status}</h4>
           </div>
         )

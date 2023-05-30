@@ -32,7 +32,8 @@ const pageMerge = () => {
         <Router>
             <>
                 <Routes>
-                    <Route path = "/" element = {<SecretaryMainPage/>}/>
+                    <Route path = "/" element = {<Introduction/>}/>
+                    <Route path = "/secretaryMainPage" element = {<SecretaryMainPage/>}/>
                     <Route path = "/login" element = {<Login/>} />
                     <Route path = "/announcements" element = {<AnnouncementsPage/>}/>
                     <Route path = "/instructorMainPage" element = {<InstructorMainPage/>}/>

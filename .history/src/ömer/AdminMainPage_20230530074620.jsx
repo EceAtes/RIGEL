@@ -204,7 +204,23 @@ function Row(props) {
   };
 
   const BasicModal = () => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/statistics/get-statistics');
+        // Process the response data
+        console.log(response.data);
+      } catch (error) {
+        // Handle any errors
+        console.error(error);
+      }
+    };
 
+    const [statistics, setStatistics] = useState(null);  
+    const handleStatistics = (event) =>{
+    console.log("geldik buraya");
+      fetchData();
+
+  }
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -512,24 +528,7 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
-const SecretaryMainPage = () => {
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/statistics/get-statistics');
-      // Process the response data
-      console.log(response.data);
-    } catch (error) {
-      // Handle any errors
-      console.error(error);
-    }
-  };
-
-  const [statistics, setStatistics] = useState(null);  
-  const handleStatistics = (event) =>{
-  console.log("geldik buraya");
-    fetchData();
-
-}
+const AdminMainPage = () => {
     const [isEditable, setIsEditable] = useState(false);
     const [text1, setText1] = useState('dd.mm.yyyy');
     const [text2, setText2] = useState('dd.mm.yyyy');
@@ -576,7 +575,7 @@ const SecretaryMainPage = () => {
         firstDay: '2001-01-01',
         lastDay: '2004-05-04',
         addDropDeadline: '2002-05-12',
-        withdrawDeadline: '2002-05-12'
+        withdrawDeadline: '2002-05-17'
       };
     
       try {
@@ -723,4 +722,4 @@ const SecretaryMainPage = () => {
         </div>
     );
 }
-export default SecretaryMainPage;
+export default AdminMainPage;
