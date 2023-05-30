@@ -176,7 +176,7 @@ function Row(props) {
     ); 
   };
 
-  const BasicModal = () => {
+  const BasicModal = (navigate) => {
     const [userType, setUserType] = useState(""); // State for user type selection
 
     const handleUserTypeChange = (event) => {
@@ -388,6 +388,7 @@ function Row(props) {
         )}
         </Box>
       </Box>
+
       <Button 
         onClick={handleClose}
         sx = {{marginTop: 3}}
@@ -510,10 +511,25 @@ const SecretaryMainPage = () => {
         setIsEditable(false);
       }
     };
-  
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/statistics/get-statistics');
+        // Process the response data
+        console.log(response.data);
+      } catch (error) {
+        // Handle any errors
+        console.error(error);
+      }
+    };
 
-    
+    const [statistics, setStatistics] = useState(null);  
+    const handleStatistics = (event) =>{
+    console.log("geldik buraya");
+      fetchData();
+
+  }
     useEffect(() => {
+ 
       document.addEventListener('mousedown', handleOutsideClick);
       createData();
       return () => {
@@ -665,7 +681,7 @@ const SecretaryMainPage = () => {
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
                 <Button onClick={handleClick} sx = {{color: "white" , width: "100%"}}>START SEMESTER</Button>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
-                <Button sx = {{color: "white" , width: "100%"}}>Semester Statistics</Button>
+                <Button onClick = {handleStatistics} sx = {{color: "white" , width: "100%"}}>Semester Statistics</Button>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
                 <Button sx = {{color: "white" , width: "100%"}}>All Reports</Button>
                 <hr style = {{color: "white", backgroundColor: "white", height: 2, width: "100%"}}/>
