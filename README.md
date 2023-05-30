@@ -90,3 +90,6 @@ Hi! This project is a internship evaluation managment system for Bilkent Univers
 
 # Technologies
 This project will be implemented using **Spring Boot** for back-end, **MongoDB** for database and **React** for front-end.
+
+# Application Demo Video Link
+https://youtu.be/eYKSEGgo5G0
